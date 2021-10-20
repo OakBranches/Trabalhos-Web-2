@@ -56,5 +56,28 @@ public class Proposta implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "cpf")
 	private Cliente cliente;
+	public Proposta(){};
+	public Proposta(BigDecimal valor, int status, String condPag, Date data, Loja loja, Carro carro, Cliente cliente) {
+		this.valor = valor;
+		this.status = status;
+		this.condPag = condPag;
+		this.data = data;
+		this.loja = loja;
+		this.carro = carro;
+		this.cliente = cliente;
+	}
 
+	@Override
+	public String toString() {
+		return "Proposta{" +
+				"valor=" + valor +
+				", id=" + (id == null? "null": id) +
+				", status=" + status +
+				", condPag='" + condPag + '\'' +
+				", data=" + data +
+				", loja=" + loja +
+				", carro=" + carro +
+				", cliente=" + cliente +
+				'}';
+	}
 }

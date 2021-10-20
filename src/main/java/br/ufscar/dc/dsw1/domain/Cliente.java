@@ -39,5 +39,23 @@ public class Cliente extends Usuario implements Serializable {
 	//todo arrumar a mensagem
 	@Column(nullable = false)
 	private Date nascimento;
+	public Cliente(){};
+	public Cliente(String email, String senha, String nome, int papel, String cpf, String telefone, String sexo, Date nascimento) {
+		super(email, senha, nome, papel);
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.sexo = sexo;
+		this.nascimento = nascimento;
+	}
 
+	@Override
+	public String toString() {
+		return "Cliente{" +
+				"cpf='" + cpf + '\'' +
+				", telefone='" + telefone + '\'' +
+				", sexo='" + sexo + '\'' +
+				", nascimento=" + nascimento +
+				", id=" + (id == null ? "null": id) +
+				'}';
+	}
 }

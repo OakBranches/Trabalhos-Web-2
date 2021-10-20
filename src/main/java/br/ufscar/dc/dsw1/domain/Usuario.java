@@ -40,4 +40,22 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private int papel;
 
+    public Usuario(){};
+    public Usuario(String email, String senha, String nome, int papel) {
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.papel = papel;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", nome='" + nome + '\'' +
+                ", id=" + (id == null ? "null": id) +
+                ", papel=" + papel +
+                '}';
+    }
 }

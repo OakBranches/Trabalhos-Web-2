@@ -53,5 +53,30 @@ public class Carro implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "cnpj")
 	private Loja loja;
+	public Carro(){};
+	public Carro(BigDecimal valor, BigDecimal km, String placa, String modelo, String descricao, String chassi, int ano, Loja loja) {
+		this.valor = valor;
+		this.km = km;
+		this.placa = placa;
+		this.modelo = modelo;
+		this.descricao = descricao;
+		this.chassi = chassi;
+		this.ano = ano;
+		this.loja = loja;
+	}
 
+	@Override
+	public String toString() {
+		return "Carro{" +
+				"valor=" + valor +
+				", km=" + km +
+				", id=" + (id == null ? "null": id) +
+				", placa='" + placa + '\'' +
+				", modelo='" + modelo + '\'' +
+				", descricao='" + descricao + '\'' +
+				", chassi='" + chassi + '\'' +
+				", ano=" + ano +
+				", loja=" + loja +
+				'}';
+	}
 }

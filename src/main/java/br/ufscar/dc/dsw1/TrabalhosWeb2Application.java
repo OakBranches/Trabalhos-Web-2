@@ -22,14 +22,10 @@ public class TrabalhosWeb2Application {
     public CommandLineRunner demo(ILojaDAO lojaDAO, BCryptPasswordEncoder encoder) {
         return (args) -> {
 
-            Loja l1 = new Loja();
+            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", 1, "1111111111111", "BOa loja.");
+            lojaDAO.save(l1);
 
-            l1.setNome("Ensaio Jr");
-            l1.setEmail("loja@loja.com");
-            l1.setPapel(1);
-            l1.setSenha(encoder.encode("loja"));
-            l1.setCnpj("1111111111111");
-            l1.setDescricao("BOa loja.");
+            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", 1, "1111111111111", "BOa loja XD.");
             lojaDAO.save(l1);
 
         };

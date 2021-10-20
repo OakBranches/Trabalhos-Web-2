@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw1.security.spec;
+package br.ufscar.dc.dsw1.services.spec;
 
 import br.ufscar.dc.dsw1.domain.Carro;
 

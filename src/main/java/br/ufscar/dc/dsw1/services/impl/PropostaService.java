@@ -1,8 +1,8 @@
-package br.ufscar.dc.dsw1.security.impl;
+package br.ufscar.dc.dsw1.services.impl;
 
 import br.ufscar.dc.dsw1.dao.IPropostaDAO;
 import br.ufscar.dc.dsw1.domain.Proposta;
-import br.ufscar.dc.dsw1.security.spec.IPropostaService;
+import br.ufscar.dc.dsw1.services.spec.IPropostaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class PropostaService implements IPropostaService {
     }
     @Transactional(readOnly = true)
     public List<Proposta> buscarTodosPorCliente(String cpf){
-        return dao.findAllByCliente_Cpf(cpf);
+        return dao.findAllByCliente_Codigo(cpf);
     }
     @Transactional(readOnly = true)
     public List<Proposta> buscarTodosPorCarro(Long id){

@@ -1,8 +1,8 @@
-package br.ufscar.dc.dsw1.security.impl;
+package br.ufscar.dc.dsw1.services.impl;
 
 import br.ufscar.dc.dsw1.dao.ICarroDAO;
 import br.ufscar.dc.dsw1.domain.Carro;
-import br.ufscar.dc.dsw1.security.spec.ICarroService;
+import br.ufscar.dc.dsw1.services.spec.ICarroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +31,6 @@ public class CarroService implements ICarroService {
     }
     @Transactional(readOnly = true)
     public List<Carro> buscarTodosDaLoja(String cnpj){
-        return dao.findAllByLoja_Cnpj(cnpj);
+        return dao.findAllByLoja_Codigo(cnpj);
     }
 }

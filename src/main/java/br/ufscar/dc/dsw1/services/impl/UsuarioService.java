@@ -1,8 +1,8 @@
-package br.ufscar.dc.dsw1.security.impl;
+package br.ufscar.dc.dsw1.services.impl;
 
 import br.ufscar.dc.dsw1.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw1.domain.Usuario;
-import br.ufscar.dc.dsw1.security.spec.IUsuarioService;
+import br.ufscar.dc.dsw1.services.spec.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,8 @@ public class UsuarioService implements IUsuarioService {
     public Usuario buscaPorCodigo(String codigo){
         return dao.findByCodigo(codigo);
     }
+    @Transactional(readOnly = true)
+    public Usuario buscaPorEmail(String email){return dao.findByEmail(email);}
     @Transactional(readOnly = true)
     public List<Usuario> buscarTodos(){
         return dao.findAll();

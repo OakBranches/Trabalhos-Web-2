@@ -12,5 +12,5 @@ public interface ICarroDAO extends CrudRepository<Carro, String> {
     Carro findById(Long Id);
     Carro deleteById(Long id);
     List<Carro> findAll();
-    List<Carro> findAllByLoja_Cnpj(String cnpj);
+    List<Carro> findAllByLoja_Codigo(String cnpj);
 }

@@ -120,6 +120,10 @@
             <artifactId>jquery-mask-plugin</artifactId>
             <version>1.14.15</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
 
     </dependencies>

@@ -11,5 +11,6 @@ public interface IUsuarioDAO extends CrudRepository<Usuario, String> {
     Usuario save(Usuario s);
     Usuario findByCodigo(String codigo);
     Usuario deleteByCodigo(String codigo);
+    Usuario findByEmail(String email);
     List<Usuario> findAll();
 }

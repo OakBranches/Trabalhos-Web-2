@@ -1,9 +1,9 @@
-package br.ufscar.dc.dsw1.security.impl;
+package br.ufscar.dc.dsw1.services.impl;
 
 import br.ufscar.dc.dsw1.dao.ILojaDAO;
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Loja;
-import br.ufscar.dc.dsw1.security.spec.ILojaService;
+import br.ufscar.dc.dsw1.services.spec.ILojaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +20,11 @@ public class LojaService implements ILojaService {
         dao.save(s);
     }
     public void excluir(String cnpj){
-        dao.deleteByCnpj(cnpj);
+        dao.deleteByCodigo(cnpj);
     }
     @Transactional(readOnly = true)
     public Loja buscaPorCnpj(String cnpj) {
-        return dao.findByCnpj(cnpj);
+        return dao.findByCodigo(cnpj);
     }
     @Transactional(readOnly = true)
     public List<Loja> buscarTodos(){

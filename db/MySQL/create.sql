@@ -78,6 +78,9 @@ insert into Loja(cnpj, descricao) values ('000.000.000/0001-01', 'loja 1');
 insert into Loja(cnpj, descricao) values ('000.000.000/0001-02', 'loja 2');
 
 insert into Usuario(codigo, email, senha, nome, papel)
+values ('000.000.000-00', 'ok@ok.com', 'ok', 'ok', 1);
+
+insert into Usuario(codigo, email, senha, nome, papel)
 values ('000.000.001', 'cliente@cliente.com', 'cliente', 'cliente', 3);
 
 insert into Usuario(codigo, email, senha, nome, papel)

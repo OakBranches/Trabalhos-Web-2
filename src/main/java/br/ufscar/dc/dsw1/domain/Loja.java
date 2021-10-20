@@ -23,7 +23,7 @@ public class Loja extends Usuario implements Serializable {
 	@NotBlank
 	//todo arrumar a mensagem
 	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	protected String cnpj;
 
 	@Column(nullable = true, length = 256)

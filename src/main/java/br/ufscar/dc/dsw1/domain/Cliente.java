@@ -22,7 +22,7 @@ public class Cliente extends Usuario implements Serializable {
 	@NotBlank
 	//todo arrumar a mensagem
 	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	protected String cpf;
 
 	//todo arrumar a mensagem

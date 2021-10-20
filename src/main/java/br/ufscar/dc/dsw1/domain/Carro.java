@@ -45,7 +45,7 @@ public class Carro implements Serializable {
 	@Column(nullable = false, length = 20)
 	private String chassi;
 
-	@NotBlank
+	@NotNull
 	@Column(nullable = false)
 	private int ano;
 

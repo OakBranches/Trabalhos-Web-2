@@ -1,9 +1,7 @@
 package br.ufscar.dc.dsw1;
 
-import br.ufscar.dc.dsw1.dao.ILojaDAO;
-import br.ufscar.dc.dsw1.dao.IUsuarioDAO;
-import br.ufscar.dc.dsw1.domain.Loja;
-import br.ufscar.dc.dsw1.domain.Usuario;
+import br.ufscar.dc.dsw1.dao.*;
+import br.ufscar.dc.dsw1.domain.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @SpringBootApplication
 public class TrabalhosWeb2Application {
@@ -19,14 +19,42 @@ public class TrabalhosWeb2Application {
         SpringApplication.run(TrabalhosWeb2Application.class, args);
     }
     @Bean
-    public CommandLineRunner demo(ILojaDAO lojaDAO, BCryptPasswordEncoder encoder) {
+    public CommandLineRunner demo(ILojaDAO lojaDAO, IUsuarioDAO usuarioDAO, ICarroDAO carroDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, BCryptPasswordEncoder encoder) {
         return (args) -> {
 
-            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", 1, "1111111111111", "BOa loja.");
+            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", 2, "1111111111111", "BOa loja.");
             lojaDAO.save(l1);
 
-            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", 1, "1111111111111", "BOa loja XD.");
-            lojaDAO.save(l1);
+            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", 2, "1111111111112", "BOa loja XD.");
+            lojaDAO.save(l2);
+
+            Usuario u1 = new Usuario("ok@ok.com", encoder.encode("ok"), "Ok", 1);
+            usuarioDAO.save(u1);
+
+            Carro car1 =  new Carro(BigDecimal.valueOf(10000), BigDecimal.valueOf(100),"00001","none","carro antigo","0",1080, l1);
+            carroDAO.save(car1);
+
+            Carro car2 = new Carro(BigDecimal.valueOf(1000), BigDecimal.valueOf(5), "00002","carro","carro antigo 2", "none",1081, l1);
+            carroDAO.save(car2);
+
+            Carro car3 = new Carro(BigDecimal.valueOf(2000), BigDecimal.valueOf(50000), "00003","fusca","aço ino","214",1082, l2);
+            carroDAO.save(car3);
+
+            Date aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-03-01");
+            Cliente c1 = new Cliente("cliente@cleinte.com", encoder.encode("cliente"), "João", 3, "000.000.001", "999999999", "m", aux);
+            clienteDAO.save(c1);
+
+            aux = new SimpleDateFormat("yyyy-MM-dd").parse("2002-03-01");
+            Cliente c2 = new Cliente("joao@cliente.com", encoder.encode("123"), "Clovis", 3, "000.000.002", "992999999", "f",aux);
+            clienteDAO.save(c2);
+
+            aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");
+            Proposta p1 = new Proposta(BigDecimal.valueOf(100), 3, "horrivel", aux, l1, car1, c1);
+            propostaDAO.save(p1);
+
+            aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");
+            Proposta p2 = new Proposta(BigDecimal.valueOf(100), 3, "condicao boa", aux, l2, car2, c2);
+            propostaDAO.save(p2);
 
         };
     }

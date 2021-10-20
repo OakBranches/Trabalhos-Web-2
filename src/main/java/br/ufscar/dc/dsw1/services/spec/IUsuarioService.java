@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface IUsuarioService {
     void salvar(Usuario s);
-    Usuario buscaPorCodigo(String codigo);
+    Usuario buscaPorId(Long Id);
     Usuario buscaPorEmail(String email);
-    void excluir(String codigo);
+    void excluir(Long Id);
     List<Usuario> buscarTodos();
 }

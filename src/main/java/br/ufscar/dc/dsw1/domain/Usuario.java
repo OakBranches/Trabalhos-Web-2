@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw1.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -30,11 +31,10 @@ public class Usuario implements Serializable {
     private String nome;
 
     @Id
-    @NotBlank
 	//todo arrumar a mensagem
-	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
-    protected String codigo;
+    protected Long id;
     
     @NotNull
     @Column(nullable = false)

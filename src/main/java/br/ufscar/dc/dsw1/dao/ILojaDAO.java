@@ -10,7 +10,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public interface ILojaDAO extends CrudRepository<Loja, String> {
     Loja save(Cliente s);
-    Loja findByCodigo(String cnpj);
-    Loja deleteByCodigo(String cnpj);
+    Loja findByCnpj(String cnpj);
+    Loja deleteByCnpj(String cnpj);
     List<Loja> findAll();
 }

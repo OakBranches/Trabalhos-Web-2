@@ -31,6 +31,6 @@ public class CarroService implements ICarroService {
     }
     @Transactional(readOnly = true)
     public List<Carro> buscarTodosDaLoja(String cnpj){
-        return dao.findAllByLoja_Codigo(cnpj);
+        return dao.findAllByLoja_Cnpj(cnpj);
     }
 }

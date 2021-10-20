@@ -20,11 +20,11 @@ public class LojaService implements ILojaService {
         dao.save(s);
     }
     public void excluir(String cnpj){
-        dao.deleteByCodigo(cnpj);
+        dao.deleteByCnpj(cnpj);
     }
     @Transactional(readOnly = true)
     public Loja buscaPorCnpj(String cnpj) {
-        return dao.findByCodigo(cnpj);
+        return dao.findByCnpj(cnpj);
     }
     @Transactional(readOnly = true)
     public List<Loja> buscarTodos(){

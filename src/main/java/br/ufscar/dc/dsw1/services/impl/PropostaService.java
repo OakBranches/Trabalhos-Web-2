@@ -31,7 +31,7 @@ public class PropostaService implements IPropostaService {
     }
     @Transactional(readOnly = true)
     public List<Proposta> buscarTodosPorCliente(String cpf){
-        return dao.findAllByCliente_Codigo(cpf);
+        return dao.findAllByCliente_Cpf(cpf);
     }
     @Transactional(readOnly = true)
     public List<Proposta> buscarTodosPorCarro(Long id){

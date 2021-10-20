@@ -9,7 +9,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public interface IClienteDAO extends CrudRepository<Cliente, String> {
     Cliente save(Cliente s);
-    Cliente findByCodigo(String cpf);
-    Cliente deleteByCodigo(String cpf);
+    Cliente findByCpf(String cpf);
+    Cliente deleteByCpf(String cpf);
     List<Cliente> findAll();
 }

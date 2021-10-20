@@ -20,6 +20,12 @@ import javax.validation.constraints.Size;
 @Setter
 public class Loja extends Usuario implements Serializable {
 
+	@NotBlank
+	//todo arrumar a mensagem
+	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
+	@Column(nullable = false)
+	protected String cnpj;
+
 	@Column(nullable = true, length = 256)
 	private String descricao;
 

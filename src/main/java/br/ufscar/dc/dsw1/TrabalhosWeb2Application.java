@@ -28,7 +28,7 @@ public class TrabalhosWeb2Application {
             l1.setEmail("loja@loja.com");
             l1.setPapel(1);
             l1.setSenha(encoder.encode("loja"));
-            l1.setCodigo("1111111111111");
+            l1.setCnpj("1111111111111");
             l1.setDescricao("BOa loja.");
             lojaDAO.save(l1);
 

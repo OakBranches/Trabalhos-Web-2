@@ -13,7 +13,7 @@ public interface IPropostaDAO extends CrudRepository<Proposta, String> {
     Proposta findById(Long id);
     Proposta deleteById(Long id);
     List<Proposta> findAll();
-    List<Proposta> findAllByCliente_Codigo(String cpf);
+    List<Proposta> findAllByCliente_Cpf(String cpf);
     List<Proposta> findAllByCarro_Id(Long id);
 
 }

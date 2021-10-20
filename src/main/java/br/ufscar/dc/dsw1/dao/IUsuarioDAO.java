@@ -9,8 +9,8 @@ import java.util.List;
 public interface IUsuarioDAO extends CrudRepository<Usuario, String> {
 
     Usuario save(Usuario s);
-    Usuario findByCodigo(String codigo);
-    Usuario deleteByCodigo(String codigo);
+    Usuario findById(Long id);
+    Usuario deleteById(Long id);
     Usuario findByEmail(String email);
     List<Usuario> findAll();
 }

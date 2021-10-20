@@ -17,12 +17,12 @@ public class UsuarioService implements IUsuarioService {
     public void salvar(Usuario s){
         dao.save(s);
     }
-    public void excluir(String codigo){
-        dao.deleteByCodigo(codigo);
+    public void excluir(Long id){
+        dao.deleteById(id);
     }
     @Transactional(readOnly = true)
-    public Usuario buscaPorCodigo(String codigo){
-        return dao.findByCodigo(codigo);
+    public Usuario buscaPorId(Long id){
+        return dao.findById(id);
     }
     @Transactional(readOnly = true)
     public Usuario buscaPorEmail(String email){return dao.findByEmail(email);}

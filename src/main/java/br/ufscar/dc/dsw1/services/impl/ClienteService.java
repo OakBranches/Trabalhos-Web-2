@@ -19,11 +19,11 @@ public class ClienteService implements IClienteService {
         dao.save(s);
     }
     public void excluir(String cpf){
-        dao.deleteByCodigo(cpf);
+        dao.deleteByCpf(cpf);
     }
     @Transactional(readOnly = true)
     public Cliente buscaPorCpf(String cpf){
-        return dao.findByCodigo(cpf);
+        return dao.findByCpf(cpf);
     }
     @Transactional(readOnly = true)
     public List<Cliente> buscarTodos(){

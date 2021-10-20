@@ -19,6 +19,12 @@ import javax.validation.constraints.Size;
 @Table(name = "Cliente")
 public class Cliente extends Usuario implements Serializable {
 
+	@NotBlank
+	//todo arrumar a mensagem
+	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
+	@Column(nullable = false)
+	protected String cpf;
+
 	//todo arrumar a mensagem
 	@NotBlank(message = "")
 	@Column(nullable = true, length = 256)

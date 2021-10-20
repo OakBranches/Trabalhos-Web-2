@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org/" >
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,6 +13,19 @@
 
 </head>
 <body class="text-center">
-login
+
+<div th:if="${param.error}">
+    <div class="alert alert-danger">
+        <span th:text="blabla"></span>
+    </div>
+</div>
+
+<form action="" method="post">
+    <label for="username">E-mail</label><br>
+    <input type="email" id="username" name="username" value=""><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password" value=""><br><br>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

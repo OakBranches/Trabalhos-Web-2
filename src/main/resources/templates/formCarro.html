@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org/" >
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,41 @@
     <!-- Custom styles for this template -->
 
 </head>
-<body class="text-center">
-default page
+<body>
+<form action="" method="post" enctype= "multipart/form-data">
+
+    <label for="placa" th:text="#{placa}"></label><br>
+    <input type="text" required="required" id="placa" name="placa" value=""><br>
+
+
+    <label for="modelo" th:text="#{modelo}"></label><br>
+    <input type="text" required="required" id="modelo" name="modelo" value=""><br>
+
+
+    <label for="chassi" th:text="#{chassi}"></label><br>
+    <input type="text" required="required" id="chassi" name="chassi" value=""><br>
+
+
+    <label for="ano" th:text="#{ano}"></label><br>
+    <input type="number" required="required" id="ano" name="ano" value=""><br>
+
+
+    <label for="km" th:text="#{km}"></label><br>
+    <input type="number" required="required" id="km" name="km" value="" step="0.1"><br>
+
+
+    <label for="descricao" th:text="#{descricao}"></label><br>
+    <input type="text" required="required" id="descricao" name="descricao" value=""><br>
+
+
+    <label for="valor" th:text="#{valor}"></label><br>
+    <input type="number" required="required" id="valor" name="valor" value="" step="0.01"><br><br>
+
+    <input class="arquivos" type="file" required="required" name="imagem 1" multiple/><br>
+
+    <input type="submit" value="Submit" ><br>
+
+
+</form>
 </body>
 </html>

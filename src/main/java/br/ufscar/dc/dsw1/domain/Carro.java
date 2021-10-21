@@ -50,7 +50,7 @@ public class Carro implements Serializable {
 	private int ano;
 
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "cnpj")
 	private Loja loja;
 	public Carro(){};

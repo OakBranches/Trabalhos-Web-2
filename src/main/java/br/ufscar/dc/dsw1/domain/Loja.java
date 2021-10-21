@@ -36,6 +36,9 @@ public class Loja extends Usuario implements Serializable {
 		this.descricao = descricao;
 	}
 
+	@OneToMany(mappedBy = "loja")
+	private List<Carro> carros;
+
 	@Override
 	public String toString() {
 		return "Loja{" +

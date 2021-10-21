@@ -6,10 +6,11 @@ import br.ufscar.dc.dsw1.domain.Loja;
 import java.util.List;
 
 public interface ILojaService {
-    void salvar(Cliente s);
+    void salvar(Loja s);
     Loja buscaPorCnpj(String cnpj);
     Loja buscaPorId(Long id);
     void excluirPorId(Long id);
     void excluir(String cnpj);
+    boolean LojaTemCarros(Long id);
     List<Loja> buscarTodos();
 }

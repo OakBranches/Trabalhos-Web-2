@@ -16,7 +16,7 @@ public class LojaService implements ILojaService {
     @Autowired
     ILojaDAO dao;
 
-    public void salvar(Cliente s){
+    public void salvar(Loja s){
         dao.save(s);
     }
     public void excluir(String cnpj){
@@ -25,9 +25,14 @@ public class LojaService implements ILojaService {
     public void excluirPorId(Long id){
         dao.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public boolean LojaTemCarros(Long id){
+        return !(dao.findLojaById(id).getCarros().isEmpty());
+    }
     @Transactional(readOnly = true)
     public Loja buscaPorId(Long id){
-        return dao.findById(id);
+        return dao.findLojaById(id);
     }
     @Transactional(readOnly = true)
     public Loja buscaPorCnpj(String cnpj) {

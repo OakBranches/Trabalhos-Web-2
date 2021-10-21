@@ -76,7 +76,7 @@
             <label th:text="#{senha}" for="nome"></label>
             <input type="text" class="form-control" id="senha" autofocus="autofocus"
                    th:field="*{senha}" th:placeholder="#{senha}"
-                   th:classappend="${#fields.hasErrors('senha')} ? is-invalid" th:readonly="${cliente.id != null}"/>
+                   th:classappend="${#fields.hasErrors('senha')} ? is-invalid" th:readonly="${cliente!= null && cliente.id != null}"/>
 
             <div class="invalid-feedback">
                 <span th:errors="*{senha}"></span>

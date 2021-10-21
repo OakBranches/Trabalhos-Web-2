@@ -28,6 +28,7 @@ public class ClienteController {
 
     @GetMapping("/create")
     public String formClient(Model model) {
+        model.addAttribute("cliente", new Cliente());
         return "formCliente";
     }
 
@@ -39,12 +40,14 @@ public class ClienteController {
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable("id") Long id, ModelMap model) {
+
         if (service.clienteTemPropostas(id)) {
             model.addAttribute("fail", "client.delete.fail");
         } else {
             service.excluirPorId(id);
             model.addAttribute("sucess", "client.delete.sucess");
         }
+        System.out.println("redor");
         return "redirect:/cliente/listar";
     }
 
@@ -60,7 +63,7 @@ public class ClienteController {
         return "redirect:/cliente/listar";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/salvar")
     public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 
         if (result.hasErrors()) {

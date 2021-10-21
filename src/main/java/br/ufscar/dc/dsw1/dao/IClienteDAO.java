@@ -7,11 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public interface IClienteDAO extends CrudRepository<Cliente, String> {
+public interface IClienteDAO extends CrudRepository<Cliente, Long> {
     Cliente save(Cliente s);
-    Cliente findByCpf(String cpf);
-    Cliente deleteByCpf(String cpf);
-    Cliente findById(Long id);
-    Cliente deleteById(Long id);
+    Cliente findClienteById(Long id);
     List<Cliente> findAll();
 }

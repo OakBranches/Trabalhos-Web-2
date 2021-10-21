@@ -18,23 +18,16 @@ public class ClienteService implements IClienteService {
     public void salvar(Cliente s){
         dao.save(s);
     }
-    public void excluir(String cpf){
-        dao.deleteByCpf(cpf);
-    }
-    @Transactional(readOnly = true)
-    public Cliente buscaPorCpf(String cpf){
-        return dao.findByCpf(cpf);
-    }
     public void excluirPorId(Long id){
         dao.deleteById(id);
     }
     @Transactional(readOnly = true)
     public Cliente buscaPorId(Long id){
-        return dao.findById(id);
+        return dao.findClienteById(id);
     }
     @Transactional(readOnly = true)
     public boolean clienteTemPropostas(Long id){
-        return !(dao.findById(id).getPropostas().isEmpty());
+        return !(dao.findClienteById(id).getPropostas().isEmpty());
     }
     @Transactional(readOnly = true)
     public List<Cliente> buscarTodos(){

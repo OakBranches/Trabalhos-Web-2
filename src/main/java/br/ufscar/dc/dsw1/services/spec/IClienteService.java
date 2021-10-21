@@ -7,6 +7,9 @@ import java.util.List;
 public interface IClienteService {
     void salvar(Cliente s);
     Cliente buscaPorCpf(String cpf);
+    Cliente buscaPorId(Long id);
+    void excluirPorId(Long id);
     void excluir(String cpf);
     List<Cliente> buscarTodos();
+    boolean clienteTemPropostas(Long id);
 }

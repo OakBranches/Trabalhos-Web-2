@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw1.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,24 +38,25 @@ public class Proposta implements Serializable {
 
 	//todo arrumar a mensagem
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 
 	//todo arrumar a mensagem
 	@NotNull
-	@OneToOne
-	@JoinColumn(name = "cnpj")
+	@ManyToOne
+	@JoinColumn(name = "loja_id")
 	private Loja loja;
 
 	//todo arrumar a mensagem
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "carro_id")
 	private Carro carro;
 
 	//todo arrumar a mensagem
 	@NotNull(message = "")
-	@OneToOne
-	@JoinColumn(name = "cpf")
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	public Proposta(){};
 	public Proposta(BigDecimal valor, int status, String condPag, Date data, Loja loja, Carro carro, Cliente cliente) {

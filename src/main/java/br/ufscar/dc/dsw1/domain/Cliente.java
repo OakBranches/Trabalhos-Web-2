@@ -2,10 +2,13 @@ package br.ufscar.dc.dsw1.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,9 +38,12 @@ public class Cliente extends Usuario implements Serializable {
 	@Column(nullable = false, length = 256)
 	private String sexo;
 
+	@OneToMany(mappedBy = "cliente")
+	private List<Proposta> propostas;
 
 	//todo arrumar a mensagem
 	@Column(nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date nascimento;
 	public Cliente(){};
 	public Cliente(String email, String senha, String nome, int papel, String cpf, String telefone, String sexo, Date nascimento) {
@@ -47,7 +53,10 @@ public class Cliente extends Usuario implements Serializable {
 		this.sexo = sexo;
 		this.nascimento = nascimento;
 	}
-
+	public String getNascimentoStr(){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(nascimento);
+	}
 	@Override
 	public String toString() {
 		return "Cliente{" +

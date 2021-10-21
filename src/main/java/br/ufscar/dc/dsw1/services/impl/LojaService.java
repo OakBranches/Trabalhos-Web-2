@@ -22,6 +22,13 @@ public class LojaService implements ILojaService {
     public void excluir(String cnpj){
         dao.deleteByCnpj(cnpj);
     }
+    public void excluirPorId(Long id){
+        dao.deleteById(id);
+    }
+    @Transactional(readOnly = true)
+    public Loja buscaPorId(Long id){
+        return dao.findById(id);
+    }
     @Transactional(readOnly = true)
     public Loja buscaPorCnpj(String cnpj) {
         return dao.findByCnpj(cnpj);

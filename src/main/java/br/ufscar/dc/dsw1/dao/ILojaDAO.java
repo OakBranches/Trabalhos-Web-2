@@ -15,6 +15,5 @@ public interface ILojaDAO extends CrudRepository<Loja, Long> {
     Loja deleteByCnpj(String cnpj);
     Loja findLojaById(Long id);
     Loja deleteLojaById(Long id);
-    boolean LojaTemCarros(Long id);
     List<Loja> findAll();
 }

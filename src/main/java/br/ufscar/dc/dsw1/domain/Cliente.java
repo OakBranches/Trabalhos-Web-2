@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw1.domain;
 
+import br.ufscar.dc.dsw1.validation.UniqueCPF;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +27,7 @@ public class Cliente extends Usuario implements Serializable {
 	//todo arrumar a mensagem
 	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
 	@Column(nullable = false, unique = true)
+	@UniqueCPF
 	protected String cpf;
 
 	//todo arrumar a mensagem
@@ -53,6 +55,7 @@ public class Cliente extends Usuario implements Serializable {
 		this.sexo = sexo;
 		this.nascimento = nascimento;
 	}
+
 	public String getNascimentoStr(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		return format.format(nascimento);

@@ -83,11 +83,8 @@ public class LojaController {
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("editoras",service.buscarTodos());
+        model.addAttribute("lojas",service.buscarTodos());
         return "listarLojas";
     }
-
-
-
 
 }

@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
 @Entity
@@ -31,6 +32,7 @@ public class Carro implements Serializable {
 	private Long id;
 
 	@NotBlank
+	@Size(min = 7, max = 7, message = "{size.carro.placa}")
 	@Column(nullable = false, length = 10)
 	private String placa;
 

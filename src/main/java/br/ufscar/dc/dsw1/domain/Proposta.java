@@ -19,6 +19,8 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Proposta implements Serializable {
 
+
+
 	@NotNull
 	@Column(columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal valor;

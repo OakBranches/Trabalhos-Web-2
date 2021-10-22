@@ -10,5 +10,6 @@ import java.util.List;
 public interface IClienteDAO extends CrudRepository<Cliente, Long> {
     Cliente save(Cliente s);
     Cliente findClienteById(Long id);
+    Cliente findByCpf(String cpf);
     List<Cliente> findAll();
 }

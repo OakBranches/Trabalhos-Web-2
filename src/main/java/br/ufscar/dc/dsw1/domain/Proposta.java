@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressWarnings("serial")
@@ -69,6 +70,11 @@ public class Proposta implements Serializable {
 		this.loja = loja;
 		this.carro = carro;
 		this.cliente = cliente;
+	}
+
+	public String getDataStr() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(data);
 	}
 
 	@Override

@@ -10,5 +10,6 @@ public interface IPropostaService {
     Proposta buscaPorId(Long id);
     List<Proposta> buscarTodos();
     List<Proposta> buscarTodosPorCliente(String cpf);
+    List<Proposta> buscarTodosPorClienteId(Long id);
     List<Proposta> buscarTodosPorCarro(Long id);
 }

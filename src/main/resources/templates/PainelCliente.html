@@ -13,6 +13,13 @@
 
 </head>
 <body class="text-center">
-default page
+<table border="1" style="width: 400px; border: 1px solid black">
+    <tr th:each="proposta : ${propostas}">
+        <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
+        <td> <span th:text="${proposta.valor}"></span></td>
+        <td> <span th:text="${proposta.getDataStr()}"></span></td>
+        <td> <span th:text="${proposta.loja.getNome()}"></span></td>
+    </tr>
+</table>
 </body>
 </html>

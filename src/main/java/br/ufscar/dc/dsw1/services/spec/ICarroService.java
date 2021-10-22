@@ -10,5 +10,6 @@ public interface ICarroService {
     Carro buscaPorId(Long Id);
     void excluir(Long id);
     List<Carro> buscarTodos();
+    List<Carro> buscarTodosComNome(String nome);
     List<Carro> buscarTodosDaLoja(String cnpj);
 }

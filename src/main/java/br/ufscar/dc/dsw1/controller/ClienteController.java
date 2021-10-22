@@ -82,7 +82,7 @@ public class ClienteController {
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("editoras",service.buscarTodos());
+        model.addAttribute("clientes",service.buscarTodos());
         return "listarClientes";
     }
 

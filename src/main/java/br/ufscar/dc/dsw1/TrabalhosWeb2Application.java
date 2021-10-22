@@ -31,13 +31,13 @@ public class TrabalhosWeb2Application {
             Usuario u1 = new Usuario("ok@ok.com", encoder.encode("ok"), "Ok", 1);
             usuarioDAO.save(u1);
 
-            Carro car1 =  new Carro(BigDecimal.valueOf(10000), BigDecimal.valueOf(100),"00001","none","carro antigo","0",1080, l1);
+            Carro car1 =  new Carro(BigDecimal.valueOf(10000), BigDecimal.valueOf(100),"0000001","none","carro antigo","0",1080, l1);
             carroDAO.save(car1);
 
-            Carro car2 = new Carro(BigDecimal.valueOf(1000), BigDecimal.valueOf(5), "00002","carro","carro antigo 2", "none",1081, l1);
+            Carro car2 = new Carro(BigDecimal.valueOf(1000), BigDecimal.valueOf(5), "0000002","carro","carro antigo 2", "none",1081, l1);
             carroDAO.save(car2);
 
-            Carro car3 = new Carro(BigDecimal.valueOf(2000), BigDecimal.valueOf(50000), "00003","fusca","aço ino","214",1082, l2);
+            Carro car3 = new Carro(BigDecimal.valueOf(2000), BigDecimal.valueOf(50000), "0000003","fusca","aço ino","214",1082, l2);
             carroDAO.save(car3);
 
             Date aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-03-01");

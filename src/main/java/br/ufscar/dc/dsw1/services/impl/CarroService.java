@@ -22,6 +22,10 @@ public class CarroService implements ICarroService {
         dao.deleteById(id);
     }
     @Transactional(readOnly = true)
+    public List<Carro> buscarTodosComNome(String nome){
+        return dao.findAllByModeloContains(nome);
+    }
+    @Transactional(readOnly = true)
     public Carro buscaPorId(Long id){
         return dao.findById(id);
     }

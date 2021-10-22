@@ -53,8 +53,9 @@ public class Carro implements Serializable {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "cnpj")
+	@JoinColumn(name = "loja_id")
 	private Loja loja;
+
 	public Carro(){};
 	public Carro(BigDecimal valor, BigDecimal km, String placa, String modelo, String descricao, String chassi, int ano, Loja loja) {
 		this.valor = valor;

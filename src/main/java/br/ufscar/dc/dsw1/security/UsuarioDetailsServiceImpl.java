@@ -1,5 +1,7 @@
 package br.ufscar.dc.dsw1.security;
 
+import br.ufscar.dc.dsw1.dao.IClienteDAO;
+import br.ufscar.dc.dsw1.dao.ILojaDAO;
 import br.ufscar.dc.dsw1.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw1.domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;

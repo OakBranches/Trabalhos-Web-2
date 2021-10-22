@@ -20,9 +20,9 @@ public class UsuarioDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String papel = usuario.getPapel() == 1 ? "ROLE_ADMIN" : usuario.getPapel() == 2 ?  "ROLE_LOJA" : "ROLE_USER";
-        //todo arrumar o papel
+
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(papel);
-        System.out.println(papel);
+
         return Arrays.asList(authority);
     }
  

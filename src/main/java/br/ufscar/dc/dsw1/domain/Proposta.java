@@ -47,12 +47,6 @@ public class Proposta implements Serializable {
 	//todo arrumar a mensagem
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "loja_id")
-	private Loja loja;
-
-	//todo arrumar a mensagem
-	@NotNull
-	@ManyToOne
 	@JoinColumn(name = "carro_id")
 	private Carro carro;
 
@@ -62,12 +56,11 @@ public class Proposta implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	public Proposta(){};
-	public Proposta(BigDecimal valor, int status, String condPag, Date data, Loja loja, Carro carro, Cliente cliente) {
+	public Proposta(BigDecimal valor, int status, String condPag, Date data, Carro carro, Cliente cliente) {
 		this.valor = valor;
 		this.status = status;
 		this.condPag = condPag;
 		this.data = data;
-		this.loja = loja;
 		this.carro = carro;
 		this.cliente = cliente;
 	}
@@ -85,7 +78,6 @@ public class Proposta implements Serializable {
 				", status=" + status +
 				", condPag='" + condPag + '\'' +
 				", data=" + data +
-				", loja=" + loja +
 				", carro=" + carro +
 				", cliente=" + cliente +
 				'}';

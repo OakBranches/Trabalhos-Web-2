@@ -1,22 +1,33 @@
 package br.ufscar.dc.dsw1.controller;
 
+import br.ufscar.dc.dsw1.dao.IClienteDAO;
+import br.ufscar.dc.dsw1.domain.Carro;
+import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Proposta;
+import br.ufscar.dc.dsw1.domain.Usuario;
+import br.ufscar.dc.dsw1.security.UsuarioDetails;
+import br.ufscar.dc.dsw1.services.spec.ICarroService;
+import br.ufscar.dc.dsw1.services.spec.IClienteService;
 import br.ufscar.dc.dsw1.services.spec.IPropostaService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/proposta")
@@ -24,9 +35,28 @@ public class PropostaController {
     @Autowired
     private IPropostaService service;
 
-    @GetMapping("/create")
-    public String formClient(Model model) {
-        model.addAttribute("Proposta", new Proposta());
+    @Autowired
+    private ICarroService carservice;
+
+    @Autowired
+    private IClienteService cliservice;
+
+    @GetMapping("/create/{id}")
+    public String formClient(@PathVariable("id") Long id, Model model) {
+        Carro carro = carservice.buscaPorId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+
+        if (cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
+            return "redirect:/home";
+        }
+
+        Cliente cli = cliservice.buscaPorId(user.getId());
+        Proposta proposta =  new Proposta();
+        proposta.setCliente(cli);
+        proposta.setCarro(carro);
+
+        model.addAttribute("proposta",proposta);
         return "formProposta";
     }
 
@@ -46,26 +76,57 @@ public class PropostaController {
         service.salvar(Proposta);
         attr.addFlashAttribute("sucess", "client.edit.sucess");
 
-        return "redirect:/Proposta/listar";
+        return "redirect:/proposta/listar";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Proposta Proposta, BindingResult result, RedirectAttributes attr) {
-
+    public String salvar(@Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr) {
         if (result.hasErrors()) {
             return "formProposta";
         }
-
-        service.salvar(Proposta);
+        Proposta proposta = new Proposta();
+        proposta.setCondPag(propostaForm.condPag);
+        proposta.setData(propostaForm.data);
+        proposta.setValor(BigDecimal.valueOf(propostaForm.valor));
+        Cliente cli = cliservice.buscaPorId((long)propostaForm.cli_id);
+        Carro car = carservice.buscaPorId((long) propostaForm.car_id);
+        System.out.println(propostaForm.cli_id);
+        System.out.println(propostaForm.car_id);
+        proposta.setCliente(cli);
+        proposta.setCarro(car);
+        System.out.println(proposta);
+        service.salvar(proposta);
         attr.addFlashAttribute("sucess", "client.create.sucess");
 
-        return "redirect:/Proposta/listar";
+        return "redirect:/proposta/listar";
     }
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("propostas",service.buscarTodos());
+        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+        model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
+
         return "PainelCliente";
+    }
+
+    @Setter
+    @Getter
+    private class PropostaForm {
+        @NotNull
+        private String condPag;
+        @NotNull
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private Date data;
+        @NotNull
+        private float valor;
+        @NotNull
+        private int cli_id;
+        @NotNull
+        private int car_id;
+
+        public PropostaForm() {
+        }
     }
 }

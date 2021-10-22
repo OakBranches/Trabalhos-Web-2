@@ -26,7 +26,7 @@
                                                                           onkeyUp="getCarros('${pageContext.request.contextPath}')">
             <div id="carros">
 
-                <p>Quantidade: <span id="qtd">${fn:length(bean.carros)}</span></p>
+                <p>Quantidade: <span id="qtd" th:text="${carros.size()}"></span></p>
                 <table id="table table-striped" border="1" style="width: 400px; border: 1px solid black">
                     <thead>
 

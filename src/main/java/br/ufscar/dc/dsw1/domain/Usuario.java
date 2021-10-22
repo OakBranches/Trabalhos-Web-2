@@ -18,8 +18,6 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
-
-
     @NotBlank
     @Column(nullable = false, length = 256, unique = true)
     private String email;

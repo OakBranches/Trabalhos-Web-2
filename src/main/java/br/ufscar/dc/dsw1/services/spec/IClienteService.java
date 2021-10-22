@@ -9,5 +9,6 @@ public interface IClienteService {
     Cliente buscaPorId(Long id);
     void excluirPorId(Long id);
     List<Cliente> buscarTodos();
+    boolean clienteTemPropostasAbertasNoCarro(Long id, Long car_id);
     boolean clienteTemPropostas(Long id);
 }

@@ -13,6 +13,24 @@
 
 </head>
 <body class="text-center">
-default page
+
+<div th:each="car : ${carros}">
+    <br>
+    <table border="1" style="width: 400px; border: 1px solid black">
+        <tr th:each="proposta: ${car.propostas}">
+            <td> <span th:text="${proposta.valor}"></span></td>
+            <td> <span th:text="${proposta.condPag}"></span></td>
+            <td> <span th:text="${proposta.data}"></span></td>
+            <td> <span th:text="${proposta.cliente.nome}"></td>
+            <td th:switch="${proposta.status}">
+                <span th:case="'0'">Aberto</span>
+                <span th:case="'1'">Aceito</span>
+                <span th:case="'2'">Não Aceito</span>
+            </td>
+            <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>
+            <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/reject/'+${proposta.id}}">rejeitar</a></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

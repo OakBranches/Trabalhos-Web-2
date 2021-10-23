@@ -49,11 +49,11 @@ public class TrabalhosWeb2Application {
             clienteDAO.save(c2);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");
-            Proposta p1 = new Proposta(BigDecimal.valueOf(100), 3, "horrivel", aux, car1, c1);
+            Proposta p1 = new Proposta(BigDecimal.valueOf(100), 0, "horrivel", aux, car1, c1);
             propostaDAO.save(p1);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");
-            Proposta p2 = new Proposta(BigDecimal.valueOf(100), 3, "condicao boa", aux, car2, c2);
+            Proposta p2 = new Proposta(BigDecimal.valueOf(100), 0, "condicao boa", aux, car2, c2);
             propostaDAO.save(p2);
 
         };

@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -55,6 +56,9 @@ public class Carro implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "loja_id")
 	private Loja loja;
+
+	@OneToMany(mappedBy = "carro")
+	private List<Proposta> propostas;
 
 	public Carro(){};
 	public Carro(BigDecimal valor, BigDecimal km, String placa, String modelo, String descricao, String chassi, int ano, Loja loja) {

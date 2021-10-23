@@ -28,6 +28,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.Date;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/proposta")
@@ -66,6 +67,27 @@ public class PropostaController {
         return "formProposta";
     }
 
+    @GetMapping("/accept/{id}")
+    public String accept(@PathVariable("id") Long id, ModelMap model) {
+        return setStatus(id, model, 1);
+    }
+
+    @GetMapping("/reject/{id}")
+    public String reject(@PathVariable("id") Long id, ModelMap model) {
+        return setStatus(id, model, 2);
+    }
+
+    public String setStatus(@PathVariable("id") Long id, ModelMap model,int status) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+        Proposta proposta = service.buscaPorId(id);
+        if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
+            return "redirect:/proposta/list";
+        }
+        proposta.setStatus(status);
+        service.salvar(proposta);
+        return "redirect:/proposta/list";
+    }
 
     @PostMapping("/edit")
     public String editClient(@Valid Proposta Proposta, BindingResult result, RedirectAttributes attr) {
@@ -90,16 +112,14 @@ public class PropostaController {
         proposta.setValor(BigDecimal.valueOf(propostaForm.valor));
         Cliente cli = cliservice.buscaPorId((long)propostaForm.cli_id);
         Carro car = carservice.buscaPorId((long) propostaForm.car_id);
-        System.out.println(propostaForm.cli_id);
-        System.out.println(propostaForm.car_id);
         proposta.setCliente(cli);
         proposta.setCarro(car);
-        System.out.println(proposta);
         service.salvar(proposta);
         attr.addFlashAttribute("sucess", "client.create.sucess");
 
         return "redirect:/proposta/listar";
     }
+
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {

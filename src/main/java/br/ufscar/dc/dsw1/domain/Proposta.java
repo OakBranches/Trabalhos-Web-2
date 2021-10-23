@@ -54,6 +54,7 @@ public class Proposta implements Serializable {
 	@NotNull(message = "")
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
+
 	private Cliente cliente;
 	public Proposta(){};
 	public Proposta(BigDecimal valor, int status, String condPag, Date data, Carro carro, Cliente cliente) {

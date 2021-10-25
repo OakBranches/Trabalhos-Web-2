@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
 <head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <title>Title</title>
 </head>
 <body>
+<div layout:fragment="header_home"></div>
+<div layout:fragment="corpo" class="row col justify-content-center align-items-center">
+    <form class="w-25" th:action="@{/loja/salvar}" method="post">
+        <h1 class="h3 mb-3 fw-normal">Cadastro</h1>
 
+        <div class="form-floating">
+            <input type="number" class="form-control" name="cnpj" id="floatingInput" placeholder="99.999.999/9999-99">
+            <label for="floatingInput">CNPJ</label>
+        </div>
+        <div class="form-floating">
+            <input type="password"  class="form-control" name="password"  id="floatingPassword" placeholder="1234">
+            <label for="floatingPassword">Senha</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="loja@loja.com">
+            <label for="floatingEmail">E-mail</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" name="username" id="floatingNome" placeholder="João">
+            <label for="floatingNome">Nome</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" name="description" id="floatingDesc" placeholder="Descrição">
+            <label for="floatingDesc">Descrição</label>
+        </div>
+
+        <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Cadastrar</button>
+    </form>
+</div>
 </body>
 </html>

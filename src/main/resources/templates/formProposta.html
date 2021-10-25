@@ -36,7 +36,7 @@
             <input type="hidden" name="car_id" th:value="${proposta.carro.id}" id="carro">
             <input type="hidden" name="cli_id" th:value="${proposta.cliente.id}" id="cliente">
 
-            <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Log in</button>
+            <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit" th:text="#{fazer_proposta}"></button>
         </form>
     </div>
 

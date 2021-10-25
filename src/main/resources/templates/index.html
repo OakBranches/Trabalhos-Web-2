@@ -9,7 +9,7 @@
     <script src="/js/ListaCarrosAJAX.js"></script>
 </head>
 <body>
-<div layout:fragment="header_default"></div>
+<div layout:fragment="header_default" style=""></div>
 <div layout:fragment="sidebar" style=""></div>
 <div layout:fragment="corpo" class="text-center">
 <br />
@@ -50,7 +50,7 @@
                                 <td style="text-align: center" th:text="${carro.ano}"></td>
                                 <td style="text-align: center" th:text="${carro.km}"></td>
                                 <td style="text-align: center" th:text="${carro.valor}"></td>
-                                <td style="text-align: center"><a th:href="@{/proposta/create}" th:text="#{fazer_proposta}"></a></td>
+                                <td style="text-align: center"><a th:href="@{/proposta/create/{id} (id=${carro.id})}" th:text="#{fazer_proposta}"></a></td>
 
                             <!--
 

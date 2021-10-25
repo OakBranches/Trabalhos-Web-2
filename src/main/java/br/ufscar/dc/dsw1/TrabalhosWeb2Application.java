@@ -22,10 +22,10 @@ public class TrabalhosWeb2Application {
     public CommandLineRunner demo(ILojaDAO lojaDAO, IUsuarioDAO usuarioDAO, ICarroDAO carroDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, BCryptPasswordEncoder encoder) {
         return (args) -> {
 
-            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", 2, "1111111111111", "BOa loja.");
+            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", "1111111111111", "BOa loja.");
             lojaDAO.save(l1);
 
-            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", 2, "1111111111112", "BOa loja XD.");
+            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", "1111111111112", "BOa loja XD.");
             lojaDAO.save(l2);
 
             Usuario u1 = new Usuario("ok@ok.com", encoder.encode("ok"), "Ok", 1);
@@ -41,11 +41,11 @@ public class TrabalhosWeb2Application {
             carroDAO.save(car3);
 
             Date aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-03-01");
-            Cliente c1 = new Cliente("cliente@cleinte.com", encoder.encode("cliente"), "João", 3, "000.000.001", "999999999", "m", aux);
+            Cliente c1 = new Cliente("cliente@cleinte.com", encoder.encode("cliente"), "João", "000.000.001", "999999999", "m", aux);
             clienteDAO.save(c1);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2002-03-01");
-            Cliente c2 = new Cliente("joao@cliente.com", encoder.encode("123"), "Clovis", 3, "000.000.002", "992999999", "f",aux);
+            Cliente c2 = new Cliente("joao@cliente.com", encoder.encode("123"), "Clovis", "000.000.002", "992999999", "f",aux);
             clienteDAO.save(c2);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");

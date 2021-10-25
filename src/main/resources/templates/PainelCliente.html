@@ -1,18 +1,13 @@
-<html xmlns:th="http://www.thymeleaf.org/" >
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <title>titulo</title>
-
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-    <link th:href="@{/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css}" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-<body class="text-center">
+<body>
+<div layout:fragment="header_home"></div>
 <table border="1" style="width: 400px; border: 1px solid black">
     <tr th:each="proposta : ${propostas}">
         <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
@@ -21,5 +16,8 @@
         <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
     </tr>
 </table>
+<div layout:fragment="corpo" >
+
+</div>
 </body>
 </html>

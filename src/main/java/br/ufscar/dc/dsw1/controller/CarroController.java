@@ -22,7 +22,7 @@ public class CarroController {
     @Autowired
     ILojaService service;
 
-    @GetMapping("/list")
+    @GetMapping("/listar")
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();

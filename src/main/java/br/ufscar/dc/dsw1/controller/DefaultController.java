@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw1.controller;
 
 import br.ufscar.dc.dsw1.domain.Cliente;
+import br.ufscar.dc.dsw1.domain.Usuario;
 import br.ufscar.dc.dsw1.security.UsuarioDetails;
 import br.ufscar.dc.dsw1.services.spec.ICarroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,22 @@ public class DefaultController {
     public String home(Model model){
         model.addAttribute("carros", service.buscarTodos());
         return "index";
+    }
+
+    @GetMapping("/painel")
+    public String painel(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+
+        switch (user.getPapel()){
+            case 2:
+                return "redirect:/carro/listar";
+            case 3:
+                return "redirect:/proposta/listar";
+            case 1:
+                return "redirect:/loja/listar";
+            default:
+                return "redirect:/home";
+        }
     }
 }

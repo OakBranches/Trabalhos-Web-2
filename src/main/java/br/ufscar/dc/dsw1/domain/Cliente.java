@@ -48,8 +48,8 @@ public class Cliente extends Usuario implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date nascimento;
 	public Cliente(){};
-	public Cliente(String email, String senha, String nome, int papel, String cpf, String telefone, String sexo, Date nascimento) {
-		super(email, senha, nome, papel);
+	public Cliente(String email, String senha, String nome, String cpf, String telefone, String sexo, Date nascimento) {
+		super(email, senha, nome, 3);
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.sexo = sexo;

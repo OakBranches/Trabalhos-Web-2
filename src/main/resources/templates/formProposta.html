@@ -1,47 +1,46 @@
-<html>
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <title>titulo</title>
-
-    <!-- Bootstrap core CSS -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-    <link th:href="@{/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css}" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-<body class="text-center">
+<body>
+<div layout:fragment="header_home"></div>
 
-<div class="row justify-content-center align-items-center">
-    <form class="w-25" th:action="@{/proposta/salvar}" method="post" th:object="${proposta}">
-        <h1 class="h3 mb-3 fw-normal" th:text="#{fazer_proposta}"></h1>
+<div layout:fragment="corpo">
 
-<!--        this.loja = loja;-->
-<!--        this.carro = carro;-->
+    <div class="row justify-content-center align-items-center">
+        <form class="w-25" th:action="@{/proposta/salvar}" method="post" th:object="${proposta}">
+            <h1 class="h3 mb-3 fw-normal" th:text="#{fazer_proposta}"></h1>
 
-        <div class="form-floating">
-            <input type="text" class="form-control" name="condPag" id="floatingCond" th:placeholder="#{condPag}">
-            <label for="floatingCond" th:text="#{condPag}"></label>
-        </div>
+            <!--        this.loja = loja;-->
+            <!--        this.carro = carro;-->
 
-        <div class="form-floating">
-            <input type="number" step="0.1" class="form-control" name="valor"  id="floatingValue" th:placeholder="#{valor}">
-            <label for="floatingValue" th:text="#{valor}"></label>
-        </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="condPag" id="floatingCond" th:placeholder="#{condPag}">
+                <label for="floatingCond" th:text="#{condPag}"></label>
+            </div>
 
-        <div class="form-floating">
-            <input type="date" class="form-control" name="data" id="floatingData" th:placeholder="#{data}">
-            <label for="floatingData" th:text="#{data}"></label>
-        </div>
+            <div class="form-floating">
+                <input type="number" step="0.1" class="form-control" name="valor"  id="floatingValue" th:placeholder="#{valor}">
+                <label for="floatingValue" th:text="#{valor}"></label>
+            </div>
 
-        <input type="hidden" name="car_id" th:value="${proposta.carro.id}" id="carro">
-        <input type="hidden" name="cli_id" th:value="${proposta.cliente.id}" id="cliente">
+            <div class="form-floating">
+                <input type="date" class="form-control" name="data" id="floatingData" th:placeholder="#{data}">
+                <label for="floatingData" th:text="#{data}"></label>
+            </div>
 
-        <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Log in</button>
-    </form>
+            <input type="hidden" name="car_id" th:value="${proposta.carro.id}" id="carro">
+            <input type="hidden" name="cli_id" th:value="${proposta.cliente.id}" id="cliente">
+
+            <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Log in</button>
+        </form>
+    </div>
+
 </div>
-
 </body>
 </html>
+

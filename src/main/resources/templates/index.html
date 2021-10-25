@@ -1,52 +1,47 @@
-<html xmlns:th="http://www.thymeleaf.org/"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity" >
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-
-    <title>titulo</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
     <script src="/js/ListaCarrosAJAX.js"></script>
-    <!-- Bootstrap core CSS -->
-
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-    <link th:href="@{/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css}" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-
 </head>
-<body class="text-center">
-    <br />
+<body>
+<div layout:fragment="header_default"></div>
+<div layout:fragment="sidebar" style=""></div>
+<div layout:fragment="corpo" class="text-center">
+<br />
 
-    <input type='hidden' name='${boo}' value='${boo}' id='propor'/>
-    <form name='form'>
+<input type='hidden' name='${boo}' value='${boo}' id='propor'/>
+<form name='form'>
 
-        <div align="center">
-            <p th:text="#{lista_de_carros}"></p>
-            <label for="carro" th:text="#{modelo}"></label> <input id="carro" name="carro"
-                                                                          onkeyUp="getCarros('${pageContext.request.contextPath}')">
-            <div id="carros">
+    <div align="center">
+        <p th:text="#{lista_de_carros}"></p>
+        <label for="carro" th:text="#{modelo}"></label> <input id="carro" name="carro"
+                                                               onkeyUp="getCarros('${pageContext.request.contextPath}')">
+        <div id="carros">
 
-                <p>Quantidade: <span id="qtd" th:text="${carros.size()}"></span></p>
-                <table id="table table-striped" border="1" style="width: 400px; border: 1px solid black">
-                    <thead>
+            <p>Quantidade: <span id="qtd" th:text="${carros.size()}"></span></p>
+            <table id="table table-striped" border="1" style="width: 400px; border: 1px solid black">
+                <thead>
 
-                    <tr>
-                        <th style="width: 70%;text-align: center" th:text="#{imagem}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{modelo}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{placa}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{chassi}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{descricao}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{ano}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{km}"></th>
-                        <th style="width: 70%;text-align: center" th:text="#{valor}"></th>
-                        <th style="width: 70%;" th:text="#{propor}"></th>
+                <tr>
+                    <th style="width: 70%;text-align: center" th:text="#{imagem}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{modelo}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{placa}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{chassi}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{descricao}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{ano}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{km}"></th>
+                    <th style="width: 70%;text-align: center" th:text="#{valor}"></th>
+                    <th style="width: 70%;" th:text="#{propor}"></th>
 
-                    </tr>
-                    </thead>
-                    <tbody id="tbody">
-                        <span th:each="carro : ${carros}">
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <span th:each="carro : ${carros}">
                         <tr>
                             <td style="text-align: center" th:text="${carro.modelo}"></td>
                                 <td style="text-align: center" th:text="${carro.placa}"></td>
@@ -57,35 +52,36 @@
                                 <td style="text-align: center" th:text="${carro.valor}"></td>
                                 <td style="text-align: center"><a th:href="@{/proposta/create}" th:text="#{fazer_proposta}"></a></td>
 
-<!--
+                            <!--
 
-<div id="carouselExampleControls${carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">-->
-<!--                                    <div class="carousel-inner">-->
+                            <div id="carouselExampleControls${carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">-->
+                            <!--                                    <div class="carousel-inner">-->
 
-<!--                                        <c:forEach var="img" items="${carro.getImages(pageContext.servletContext.getRealPath('upload'))}" varStatus="loopimg">-->
-<!--                                            <div class="carousel-item ${loopimg.index == 0? 'active':''}">-->
-<!--                                                <img src="${img}" class="d-block w-100" height="200px" alt="...">-->
-<!--                                            </div>-->
-<!--                                        </c:forEach>-->
+                            <!--                                        <c:forEach var="img" items="${carro.getImages(pageContext.servletContext.getRealPath('upload'))}" varStatus="loopimg">-->
+                            <!--                                            <div class="carousel-item ${loopimg.index == 0? 'active':''}">-->
+                            <!--                                                <img src="${img}" class="d-block w-100" height="200px" alt="...">-->
+                            <!--                                            </div>-->
+                            <!--                                        </c:forEach>-->
 
-<!--                                    </div>-->
+                            <!--                                    </div>-->
 
-<!--                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="prev">-->
-<!--                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                                        <span class="visually-hidden">Previous</span>-->
-<!--                                    </button>-->
-<!--                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="next">-->
-<!--                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                                        <span class="visually-hidden">Next</span>-->
-<!--                                    </button>-->
-<!--                                </div>-->
+                            <!--                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="prev">-->
+                            <!--                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                            <!--                                        <span class="visually-hidden">Previous</span>-->
+                            <!--                                    </button>-->
+                            <!--                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="next">-->
+                            <!--                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                            <!--                                        <span class="visually-hidden">Next</span>-->
+                            <!--                                    </button>-->
+                            <!--                                </div>-->
                             </tr>
                         </span>
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
-    </form>
-    <br />
+    </div>
+</form>
+<br />
+</div>
 </body>
 </html>

@@ -1,11 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org/" >
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<div layout:fragment="header_home"></div>
 
-<table border="1" style="width: 400px; border: 1px solid black">
+<table layout:fragment="corpo" style="width: 400px; border: 1px solid black">
     <tr th:each="loj : ${lojas}">
         <td> <span th:text="${loj.cnpj}"></span></td>
         <td> <span th:text="${loj.descricao}"></span></td>

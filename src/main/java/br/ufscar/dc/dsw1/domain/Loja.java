@@ -35,8 +35,8 @@ public class Loja extends Usuario implements Serializable {
 	private String descricao;
 	public Loja(){};
 
-	public Loja(String email, String senha, String nome, int papel, String cnpj, String descricao) {
-		super(email, senha, nome, papel);
+	public Loja(String email, String senha, String nome, String cnpj, String descricao) {
+		super(email, senha, nome, 2);
 		this.cnpj = cnpj;
 		this.descricao = descricao;
 	}

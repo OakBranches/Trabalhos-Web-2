@@ -62,12 +62,6 @@ public class PropostaController {
         return "formProposta";
     }
 
-    @GetMapping("/edit/{id}")
-    public String formEditClient(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("Proposta", service.buscaPorId(id));
-        return "formProposta";
-    }
-
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("id", id);
@@ -75,6 +69,17 @@ public class PropostaController {
     }
 
     @GetMapping("/reject/{id}")
+    public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
+        model.addAttribute("id", id);
+        return "formRecusa";
+    }
+
+    @PostMapping("/accept/{id}")
+    public String accept(@PathVariable("id") Long id, ModelMap model) {
+        return setStatus(id, model, 1);
+    }
+
+    @PostMapping("/reject/{id}")
     public String reject(@PathVariable("id") Long id, ModelMap model) {
         return setStatus(id, model, 2);
     }
@@ -84,24 +89,13 @@ public class PropostaController {
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
         Proposta proposta = service.buscaPorId(id);
         if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
-            return "redirect:/proposta/list";
+            return "redirect:/carro/listar";
         }
         proposta.setStatus(status);
         service.salvar(proposta);
-        return "redirect:/proposta/list";
+        return "redirect:/carro/listar";
     }
 
-    @PostMapping("/edit")
-    public String editClient(@Valid Proposta Proposta, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            return "formProposta";
-        }
-
-        service.salvar(Proposta);
-        attr.addFlashAttribute("sucess", "client.edit.sucess");
-
-        return "redirect:/proposta/listar";
-    }
 
     @PostMapping("/salvar")
     public String salvar(@Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr) {
@@ -119,7 +113,7 @@ public class PropostaController {
         service.salvar(proposta);
         attr.addFlashAttribute("sucess", "client.create.sucess");
 
-        return "redirect:/proposta/listar";
+        return "redirect:/carro/listar";
     }
 
 

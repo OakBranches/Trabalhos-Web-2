@@ -26,7 +26,6 @@
                 <td class="bg-primary">Km</td>
                 <td class="bg-primary">Valor</td>
                 <td class="bg-primary">Loja</td>
-                <td class="bg-primary">Propor</td>
             </tr>
             </thead>
             <tbody>
@@ -42,15 +41,10 @@
                 <td> <span th:text="${carro.km}"></span></td>
                 <td> <span th:text="${carro.valor}"></span></td>
                 <td> <span th:text="${carro.loja.nome}"></span></td>
-                <td>
-                    <a class="btn btn-info btn-sm" th:href="@{/proposta/create/{id} (id=${carro.id}) }"
-                       role="button">
-                        <ion-icon name="bookmark-outline"></ion-icon>
-                    </a>
-                </td>
+
             </tr>
             <tr >
-                <td th:colspan="10">
+                <td th:colspan="9">
                 <div class="accordion" th:id="${'accordionExample' + carro.id}">
                     <div class="accordion-item">
                         <h2 class="accordion-header"  th:id="${'headingOne' + carro.id}">

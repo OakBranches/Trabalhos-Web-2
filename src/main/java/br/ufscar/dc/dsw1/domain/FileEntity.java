@@ -1,12 +1,15 @@
 package br.ufscar.dc.dsw1.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 @Entity
+@Setter
+@Getter
 @Table(name = "FileDB")
 public class FileEntity extends AbstractEntity<Long> {
 
@@ -16,42 +19,24 @@ public class FileEntity extends AbstractEntity<Long> {
 	@Column(nullable = false, length = 30)
 	private String type;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "carro_id")
+	private Carro carro;
+
 	@Lob
 	private byte[] data;
 
 	public FileEntity() {
 	}
 
-	public FileEntity(String name, String type, byte[] data) {
+	public FileEntity(String name, String type, byte[] data, Carro carro) {
+		this.carro = carro;
 		this.name = name;
 		this.type = type;
 		this.data = data;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public byte[] getData() {
-		return data;
-	}
-
-	public void setData(byte[] data) {
-		this.data = data;
-	}
-	
 	public boolean isImage() {
 		return this.type.contains("image");
 	}

@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw1.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -59,6 +60,9 @@ public class Carro implements Serializable {
 
 	@OneToMany(mappedBy = "carro")
 	private List<Proposta> propostas;
+
+	@OneToMany(mappedBy = "carro")
+	private List<FileEntity> imagens;
 
 	public Carro(){};
 	public Carro(BigDecimal valor, BigDecimal km, String placa, String modelo, String descricao, String chassi, int ano, Loja loja) {

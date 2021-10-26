@@ -9,16 +9,15 @@
 <body>
 <div layout:fragment="header_home" style="" class=""></div>
 <div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
-    <div style="width: fit-content;border-radius: 10px;background-color: whitesmoke">
+
     <form
             th:action="${cliente.id == null} ? @{/cliente/salvar} : @{/cliente/edit}"
             th:object="${cliente}" method="POST"
             style="width:fit-content"
     >
-
+        <h1 class="h3 mb-3 fw-normal">Cadastro</h1>
         <div class="form-row">
             <div class="form-group">
-                <label th:text="#{nome}" for="nome"></label>
                 <input type="text" class="form-control" id="nome" autofocus="autofocus"
                        th:field="*{nome}" th:placeholder="#{nome}"
                        th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
@@ -28,7 +27,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <label th:text="#{telefone}" for="nome"></label>
                 <input type="text" class="form-control" id="telefone" autofocus="autofocus"
                        th:field="*{telefone}" th:placeholder="#{telefone}"
                        th:classappend="${#fields.hasErrors('telefone')} ? is-invalid" />
@@ -39,7 +37,6 @@
             </div>
 
             <div class="form-group">
-                <label th:text="#{sexo}" for="nome"></label>
                 <input type="text" class="form-control" id="sexo" autofocus="autofocus"
                        th:field="*{sexo}" th:placeholder="#{sexo}"
                        th:classappend="${#fields.hasErrors('sexo')} ? is-invalid" />
@@ -50,7 +47,6 @@
             </div>
 
             <div class="form-group">
-                <label th:text="#{dataNasc}" for="nome"></label>
                 <input type="date" class="form-control" id="nascimento" autofocus="autofocus"
                        th:placeholder="#{dataNasc}"
                        th:field="*{nascimento}"
@@ -61,7 +57,6 @@
             </div>
 
             <div class="form-group">
-                <label th:text="#{email}" for="nome"></label>
                 <input type="email" class="form-control" id="email" autofocus="autofocus"
                        th:field="*{email}" th:placeholder="#{email}"
                        th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
@@ -72,7 +67,6 @@
             </div>
 
             <div class="form-group">
-                <label th:text="#{senha}" for="nome"></label>
                 <input type="text" class="form-control" id="senha" autofocus="autofocus"
                        th:field="*{senha}" th:placeholder="#{senha}"
                        th:classappend="${#fields.hasErrors('senha')} ? is-invalid" th:readonly="${cliente!= null && cliente.id != null}"/>
@@ -83,7 +77,6 @@
             </div>
 
             <div class="form-group">
-                <label th:text="#{cpf}" for="cpf"></label>
                 <input type="text" class="form-control" id="cpf" autofocus="autofocus"
                        th:field="*{cpf}" placeholder="___.___.___-__"
                        data-mask="000.000.000-00" data-mask-reverse="true"
@@ -101,7 +94,6 @@
         <button type="submit" th:text="#{enviar}"
                 class="btn btn-primary btn-sm"></button>
     </form>
-</div>
 </div>
 </body>
 </html>

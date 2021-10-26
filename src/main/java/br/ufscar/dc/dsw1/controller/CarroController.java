@@ -32,7 +32,11 @@ public class CarroController {
     }
 
     @GetMapping("/create")
-    public String formsCar(Model model) {
+    public String list(ModelMap model) throws IOException {
+        if (model.getAttribute("form") == null)
+            model.addAttribute("form", new CarroForm());
+        model.addAttribute("files", service.buscarTodos());
+
         return "formCarro";
     }
 

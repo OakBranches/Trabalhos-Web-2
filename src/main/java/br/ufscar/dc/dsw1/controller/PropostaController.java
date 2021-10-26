@@ -69,8 +69,9 @@ public class PropostaController {
     }
 
     @GetMapping("/accept/{id}")
-    public String accept(@PathVariable("id") Long id, ModelMap model) {
-        return setStatus(id, model, 1);
+    public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
+        model.addAttribute("id", id);
+        return "formAceito";
     }
 
     @GetMapping("/reject/{id}")

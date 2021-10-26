@@ -1,0 +1,38 @@
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="header_default" style="" class=""></div>
+
+<div layout:fragment="corpo" class="col">
+
+    <div class="row justify-content-center align-items-center">
+        <form class="w-25" th:action="@{/proposta/reject/{id} (id=${id})}" method="post">
+                <h1 class="h3 mb-3 fw-normal">Recusar</h1>
+
+            <div class="form-floating">
+                <input type="number" disabled="" class="form-control" name="username" id="floatingV" placeholder="10000,00">
+                <label for="floatingV">Valor</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" disabled="" class="form-control" name="username" id="floatingCond" placeholder="Parcelar em 3x">
+                <label for="floatingCond">Condição de Pagamento</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text"  disabled="" class="form-control" name="password"  id="floatingD" placeholder="xx/xx/xxxx">
+                <label for="floatingD">Data</label>
+            </div>
+
+            <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Recusar</button>
+            </form>
+    </div>
+</div>
+</body>
+</html>

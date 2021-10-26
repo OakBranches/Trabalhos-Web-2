@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface ICarroService {
-    void salvar(Carro s);
+    Carro salvar(Carro s);
     Carro buscaPorId(Long Id);
     void excluir(Long id);
     List<Carro> buscarTodos();

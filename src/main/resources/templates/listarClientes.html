@@ -25,7 +25,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="cli : ${clientes}">
+    <trhead>
+            <th>cpf</th>
+            <th>Nome</th>
+            <th>Sexo</th>
+            <th>Telefone</th>
+            <th>Nascimento</th>
+            <th>Email</th>
+            <th>Apertavel</th>
+
+
+    </trhead>
+    <tr class="info" th:each="cli : ${clientes}">
         <td> <span th:text="${cli.cpf}"></span></td>
         <td> <span th:text="${cli.getNome()}"></span></td>
         <td> <span th:text="${cli.getSexo()}"></span></td>

@@ -15,8 +15,8 @@ public class CarroService implements ICarroService {
     @Autowired
     ICarroDAO dao;
 
-    public void salvar(Carro s){
-        dao.save(s);
+    public Carro salvar(Carro s){
+        return dao.save(s);
     }
     public void excluir(Long id){
         dao.deleteById(id);

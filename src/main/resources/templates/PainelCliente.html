@@ -7,17 +7,16 @@
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="header_home"></div>
-<table border="1" style="width: 400px; border: 1px solid black">
-    <tr th:each="proposta : ${propostas}">
-        <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
-        <td> <span th:text="${proposta.valor}"></span></td>
-        <td> <span th:text="${proposta.getDataStr()}"></span></td>
-        <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
-    </tr>
-</table>
+<div layout:fragment="header_home" style="" class=""></div>
 <div layout:fragment="corpo" >
-
+    <table border="1" style="width: 400px; border: 1px solid black">
+        <tr th:each="proposta : ${propostas}">
+            <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
+            <td> <span th:text="${proposta.valor}"></span></td>
+            <td> <span th:text="${proposta.getDataStr()}"></span></td>
+            <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

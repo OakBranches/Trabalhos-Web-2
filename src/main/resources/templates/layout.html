@@ -30,7 +30,11 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <!-- Custom styles for this template -->
-
+  <style>
+    ::-webkit-scrollbar {
+      width: 0px!important;
+    }
+  </style>
 </head>
 
 <body class="d-flex flex-column" style="min-height:100vh;">
@@ -93,7 +97,7 @@
 </header>
 
 
-<nav class="row mx-2 sidebar sidebar-open" style="flex:1 1 auto; flex-direction: row; background-color:beige;">
+<nav class="row sidebar sidebar-open" style="flex:1 1 auto; flex-direction: row; background-color:beige;">
   <div layout:fragment="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-auto" style="width: fit-content;height: 100%;">
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
       <span class="fs-4">Opções</span>

@@ -10,7 +10,7 @@
 <div layout:fragment="header_home" style="" class=""></div>
 <div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
 <div style="width: fit-content;">
-    <form method="POST" th:action="@{/teste}" th:object="${form}" enctype="multipart/form-data">
+    <form method="POST" th:action="@{/carro/create}" th:object="${form}" enctype="multipart/form-data">
         <div class="form-floating">
             <input type="number" class="form-control" th:field="*{valor}" id="floatingInput" placeholder="40000.00" th:classappend="${#fields.hasErrors('valor')} ? 'is-invalid'" />
 

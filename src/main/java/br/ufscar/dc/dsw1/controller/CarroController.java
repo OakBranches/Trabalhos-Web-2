@@ -66,6 +66,8 @@ public class CarroController {
     public String createCar(@ModelAttribute("form") @Valid CarroForm form, BindingResult result, RedirectAttributes attr) {
 
         if (result.hasErrors()) {
+            System.out.println("Há erros");
+            System.out.println(result.getAllErrors());
             return "formCarro";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -73,7 +75,7 @@ public class CarroController {
         Loja loja = service.buscaPorId(user.getId());
         Carro carro = new Carro(BigDecimal.valueOf(form.getValor()), BigDecimal.valueOf(form.getKm()), form.getPlaca(), form.getModelo(), form.getDescricao(), form.getChassi(), form.getAno(), loja);
         carro = carservice.salvar(carro);
-
+        System.out.println(carro);
         int count = 0;
 
         List<MultipartFile> file = form.getImagens();
@@ -83,9 +85,10 @@ public class CarroController {
 			try {
                 String fileName = StringUtils.cleanPath(file.get(i).getOriginalFilename());
                 FileEntity entity = new FileEntity(fileName, file.get(i).getContentType(), file.get(i).getBytes(), carro);
-
+                System.out.println(entity);
                 if (entity.isImage()) {
                     count++;
+                    System.out.println("salvando");
                     fileService.salvar(entity);
                 }
 
@@ -97,7 +100,7 @@ public class CarroController {
                 System.out.println("Ocorreu um erro ao pegar as imagens");
             }
 		}
-
+        System.out.println("terminou o cadastro");
         return "redirect:/example";
     }
 

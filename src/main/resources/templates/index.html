@@ -48,29 +48,22 @@
                 </thead>
                 <tbody>
                 <tr th:each="carro : ${carros}">
-                    <td> <span>Imagem</span>
-                        <!--
-
-                                    <div id="carouselExampleControls${carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">-->
-                        <!--                                    <div class="carousel-inner">-->
-
-                        <!--                                        <c:forEach var="img" items="${carro.getImages(pageContext.servletContext.getRealPath('upload'))}" varStatus="loopimg">-->
-                        <!--                                            <div class="carousel-item ${loopimg.index == 0? 'active':''}">-->
-                        <!--                                                <img src="${img}" class="d-block w-100" height="200px" alt="...">-->
-                        <!--                                            </div>-->
-                        <!--                                        </c:forEach>-->
-
-                        <!--                                    </div>-->
-
-                        <!--                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="prev">-->
-                        <!--                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-                        <!--                                        <span class="visually-hidden">Previous</span>-->
-                        <!--                                    </button>-->
-                        <!--                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls${carro.id}" data-bs-slide="next">-->
-                        <!--                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-                        <!--                                        <span class="visually-hidden">Next</span>-->
-                        <!--                                    </button>-->
-                        <!--                                </div>-->
+                    <td> <span th:if="${carro.getImagens().isEmpty()}">Não há Imagem</span>
+                        <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
+                            <div class="carousel-inner">
+                                   <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">
+                                        <img th:src="@{/download/{id} (id=${file.id})}" width="160px"/>
+                                    </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
 
 
                     </td>

@@ -74,16 +74,16 @@ public class Carro implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Carro{" +
-				"valor=" + valor +
-				", km=" + km +
-				", id=" + (id == null ? "null": id) +
-				", placa='" + placa + '\'' +
-				", modelo='" + modelo + '\'' +
-				", descricao='" + descricao + '\'' +
-				", chassi='" + chassi + '\'' +
-				", ano=" + ano +
-				", loja=" + loja +
+		return "{" +
+				"\"valor\":" + valor +
+				", \"km\":" + km +
+				", \"id\":" + (id == null ? "null": id) +
+				", \"placa\":\"" + placa + "\"" +
+				", \"modelo\":\"" + modelo + "\"" +
+				", \"descricao\":\"" + descricao + "\"" +
+				", \"chassi\":\"" + chassi + "\"" +
+				", \"ano\":" + ano +
+				", \"loja\":\"" + loja.getNome() + "\"" +
 				'}';
 	}
 }

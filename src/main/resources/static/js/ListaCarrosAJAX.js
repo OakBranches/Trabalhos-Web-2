@@ -30,24 +30,31 @@ function atualizaTabelaCarros(context) {
     if (xmlHttp.readyState === 4 || xmlHttp.readyState === "complete") {
         console.log(xmlHttp.responseText);
         //todo refazer a lógica
-        //var carros = JSON.parse(xmlHttp.responseText);
+
+
+
+
+
+
+
         //
-        // // CRIA UMA TABELA DINAMICA
+        var carros = JSON.parse(xmlHttp.responseText);
+        console.log(carros[0]);
+        // //
+        // // // CRIA UMA TABELA DINAMICA
         // var sessionVar = document.getElementById('propor').value;
         // console.log("propor "+ sessionVar);
         // var oldtbody = document.getElementById("tbody");
         // var table = document.createElement("tbody");
         // table.setAttribute("id", "tbody");
-        //
-        //
         // table.border = "1";
         // table.style.border = "1px solid black";
         // table.style.width = "400px";
-        //
-        //
-        // // CRIA DEMAIS LINHAS COM OS VALORES
-        //
-        // for (var i = 0; i < carros.length; i++) {
+
+
+        // CRIA DEMAIS LINHAS COM OS VALORES
+
+        for (var i = 0; i < 0; i++) {
         //
         //
         //
@@ -165,7 +172,7 @@ function atualizaTabelaCarros(context) {
         //         a.innerHTML = "+";
         //         col9.appendChild(a);
         //     }
-        // }
+        }
         //
         //
         // // Pega o span COM A QUANTIDADE DE CARROS

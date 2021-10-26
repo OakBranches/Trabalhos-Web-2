@@ -19,8 +19,11 @@ public class RestfulController {
     ICarroService service;
 
     @GetMapping(value = "/results/{modelo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Carro> getResult(@PathVariable String modelo) {
-        return service.buscarTodosComNome(modelo);
+    public String getResult(@PathVariable String modelo) {
+        return service.buscarTodosComNome(modelo).toString();
     }
-
+    @GetMapping(value = "/results/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAll() {
+        return service.buscarTodos().toString();
+    }
 }

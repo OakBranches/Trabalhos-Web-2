@@ -8,14 +8,31 @@
 </head>
 <body>
 <div layout:fragment="header_home" style="" class=""></div>
-<div layout:fragment="corpo" >
-    <table border="1" style="width: 400px; border: 1px solid black">
+<div layout:fragment="corpo" style="width: fit-content">
+    <table class="table table-striped table-hover table-bordered align-middle position-relative" style="width: fit-content; border: 1px solid black;border-radius: 10px;">
+        <thead class="bg-success">
+        <tr>
+            <td class="bg-primary" th:text="#{modelo}"></td>
+            <td class="bg-primary" th:text="#{valor}"></td>
+            <td class="bg-primary" th:text="#{dataProp}"></td>
+            <td class="bg-primary"> LOJA </td>
+            <td class="bg-primary" th:text="#{km}"></td>
+            <td class="bg-primary" th:text="#{descricao}"></td>
+            <td class="bg-primary" th:text="#{status}"></td>
+
+        </tr>
+        </thead>
+        <tbody>
         <tr th:each="proposta : ${propostas}">
             <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
             <td> <span th:text="${proposta.valor}"></span></td>
             <td> <span th:text="${proposta.getDataStr()}"></span></td>
             <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
+            <td> <span th:text="${proposta.carro.km}"></span></td>
+            <td> <span th:text="${proposta.carro.descricao}"></span></td>
+            <td> <span th:text="${proposta.getStatus() == 0? 'ABERTO' : (proposta.getStatus() == 1? 'ACEITO': 'NÃO ACEITO')}"></span></td>
         </tr>
+        </tbody>
     </table>
 </div>
 </body>

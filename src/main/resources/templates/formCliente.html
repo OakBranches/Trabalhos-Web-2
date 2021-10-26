@@ -9,7 +9,7 @@
 <body>
 <div layout:fragment="header_home" style="" class=""></div>
 <div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
-
+    <div style="width: fit-content">
     <form
             th:action="${cliente.id == null} ? @{/cliente/salvar} : @{/cliente/edit}"
             th:object="${cliente}" method="POST"
@@ -29,7 +29,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="telefone" autofocus="autofocus"
                        th:field="*{telefone}" th:placeholder="#{telefone}"
-                       th:classappend="${#fields.hasErrors('telefone')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('telefone')} ?  is-invalid" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{telefone}"></span>
@@ -94,6 +94,6 @@
         <button type="submit" th:text="#{enviar}"
                 class="btn btn-primary btn-sm"></button>
     </form>
-</div>
+</div></div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import br.ufscar.dc.dsw1.domain.Carro;
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Proposta;
 import br.ufscar.dc.dsw1.domain.Usuario;
+import br.ufscar.dc.dsw1.forms.PropostaForm;
 import br.ufscar.dc.dsw1.security.UsuarioDetails;
 import br.ufscar.dc.dsw1.services.spec.ICarroService;
 import br.ufscar.dc.dsw1.services.spec.IClienteService;
@@ -107,11 +108,11 @@ public class PropostaController {
             return "formProposta";
         }
         Proposta proposta = new Proposta();
-        proposta.setCondPag(propostaForm.condPag);
-        proposta.setData(propostaForm.data);
-        proposta.setValor(BigDecimal.valueOf(propostaForm.valor));
-        Cliente cli = cliservice.buscaPorId((long)propostaForm.cli_id);
-        Carro car = carservice.buscaPorId((long) propostaForm.car_id);
+        proposta.setCondPag(propostaForm.getCondPag());
+        proposta.setData(propostaForm.getData());
+        proposta.setValor(BigDecimal.valueOf(propostaForm.getValor()));
+        Cliente cli = cliservice.buscaPorId((long)propostaForm.getCli_id());
+        Carro car = carservice.buscaPorId((long) propostaForm.getCar_id());
         proposta.setCliente(cli);
         proposta.setCarro(car);
         service.salvar(proposta);
@@ -131,22 +132,5 @@ public class PropostaController {
         return "PainelCliente";
     }
 
-    @Setter
-    @Getter
-    private class PropostaForm {
-        @NotNull
-        private String condPag;
-        @NotNull
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private Date data;
-        @NotNull
-        private float valor;
-        @NotNull
-        private int cli_id;
-        @NotNull
-        private int car_id;
 
-        public PropostaForm() {
-        }
-    }
 }

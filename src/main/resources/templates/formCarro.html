@@ -8,43 +8,80 @@
 </head>
 <body>
 <div layout:fragment="header_home" style="" class=""></div>
-<form action="" method="post" enctype= "multipart/form-data">
+<div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
+<div style="width: fit-content;">
+    <form method="POST" th:action="@{/teste}" th:object="${form}" enctype="multipart/form-data">
+        <div class="form-floating">
+            <input type="number" class="form-control" th:field="*{valor}" id="floatingInput" placeholder="40000.00" th:classappend="${#fields.hasErrors('valor')} ? 'is-invalid'" />
 
-    <label for="placa" th:text="#{placa}"></label><br>
-    <input type="text" required="required" id="placa" name="placa" value=""><br>
+            <div class="invalid-feedback">
+                <span th:errors="*{valor}"></span>
+            </div>
+            <label for="floatingInput" th:text="#{valor}"></label>
+        </div>
+        <div class="form-floating">
+            <input type="number" class="form-control" th:field="*{km}" id="floatingKM" placeholder="0" th:classappend="${#fields.hasErrors('km')} ? 'is-invalid'" />
 
+            <div class="invalid-feedback">
+                <span th:errors="*{km}"></span>
+            </div>
+            <label for="floatingKM" th:text="#{km}"></label>
+        </div>
+        <div class="form-floating">
+            <input type="number" class="form-control" th:field="*{ano}" id="floatingAno" placeholder="2018" th:classappend="${#fields.hasErrors('ano')} ? 'is-invalid'" />
 
-    <label for="modelo" th:text="#{modelo}"></label><br>
-    <input type="text" required="required" id="modelo" name="modelo" value=""><br>
+            <div class="invalid-feedback">
+                <span th:errors="*{ano}"></span>
+            </div>
+            <label for="floatingAno" th:text="#{ano}"></label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" th:field="*{chassi}" id="floatingChassi" placeholder="aço inox" th:classappend="${#fields.hasErrors('chassi')} ? 'is-invalid'" />
 
+            <div class="invalid-feedback">
+                <span th:errors="*{chassi}"></span>
+            </div>
+            <label for="floatingChassi" th:text="#{chassi}"></label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" th:field="*{descricao}" id="floatingDesc" placeholder="carro bom" th:classappend="${#fields.hasErrors('descricao')} ? 'is-invalid'" />
 
-    <label for="chassi" th:text="#{chassi}"></label><br>
-    <input type="text" required="required" id="chassi" name="chassi" value=""><br>
+            <div class="invalid-feedback">
+                <span th:errors="*{descricao}"></span>
+            </div>
+            <label for="floatingDesc" th:text="#{descricao}"></label>
+        </div>
 
+        <div class="form-floating">
+            <input type="text" class="form-control" th:field="*{modelo}" id="floatingMod" placeholder="Fiat 147"th:classappend="${#fields.hasErrors('modelo')} ? 'is-invalid'" />
 
-    <label for="ano" th:text="#{ano}"></label><br>
-    <input type="number" required="required" id="ano" name="ano" value=""><br>
+            <div class="invalid-feedback">
+                <span th:errors="*{modelo}"></span>
+            </div>
+            <label for="floatingMod" th:text="#{modelo}"></label>
+        </div>
 
+        <div class="form-floating">
+            <input type="text" class="form-control" th:field="*{placa}" id="floatingPlaca" placeholder="1234567" th:classappend="${#fields.hasErrors('placa')} ? 'is-invalid'" />
 
-    <label for="km" th:text="#{km}"></label><br>
-    <input type="number" required="required" id="km" name="km" value="" step="0.1"><br>
+            <div class="invalid-feedback">
+                <span th:errors="*{placa}"></span>
+            </div>
+            <label for="floatingPlaca" th:text="#{placa}"></label>
+        </div>
 
+        <div class="mb-3">
+            <label for="formFile" class="form-label" th:text="#{imagem}"></label>
+            <input class="form-control" multiple th:field="*{imagens}" type="file" id="formFile" th:classappend= "${#fields.hasErrors('imagens')} ? 'is-invalid'">
+            <div class="invalid-feedback">
+                <span th:errors="*{imagens}"></span>
+            </div>
+        </div>
 
-    <label for="descricao" th:text="#{descricao}"></label><br>
-    <input type="text" required="required" id="descricao" name="descricao" value=""><br>
+        <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Cadastrar</button>
 
-
-    <label for="valor" th:text="#{valor}"></label><br>
-    <input type="number" required="required" id="valor" name="valor" value="" step="0.01"><br><br>
-
-    <input class="arquivos" type="file" required="required" name="imagem 1" multiple/><br>
-
-    <input type="submit" value="Submit" ><br>
-
-
-</form>
-<div layout:fragment="corpo">
-
+    </form>
+</div>
 </div>
 </body>
 </html>

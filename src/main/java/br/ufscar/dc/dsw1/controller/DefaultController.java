@@ -19,26 +19,6 @@ public class DefaultController {
     @Autowired
     ICarroService service;
 
-    @PostMapping("/result")
-    public String result(){
-        //todo fazer logica
-
-//        Gson gsonBuilder = new GsonBuilder().create();
-//        List<String> carros = new ArrayList<>();
-//
-//        List<Carro> listaCarros = service.buscarTodosComNome(nome);
-//        for (Carro carro : listaCarros) {
-//            carro.setImagens(carro.getImages(getServletContext().getRealPath("upload")));
-//            carros.add(carro.toString());
-//        }
-//
-//        System.out.println(gsonBuilder.toJson(carros));
-//        response.getWriter().write(gsonBuilder.toJson(carros));
-//
-
-        return "ablublue";
-    }
-
     @GetMapping("/home")
     public String home(Model model){
         model.addAttribute("carros", service.buscarTodos());

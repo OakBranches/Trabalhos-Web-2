@@ -1,6 +1,5 @@
 package br.ufscar.dc.dsw1.domain;
 
-import br.ufscar.dc.dsw1.validation.UniqueCNPJ;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,6 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 //import br.ufscar.dc.dsw.validation.UniqueCNPJ;
@@ -23,16 +21,18 @@ import javax.validation.constraints.Size;
 public class Loja extends Usuario implements Serializable {
 
 
+	@NotBlank(message= "{NotBlank}")
 
-	@NotBlank
-	@UniqueCNPJ
 	//todo arrumar a mensagem
-	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
+	@Size(min = 14, max = 14, message = "{Size.loja.CNPJ}")
 	@Column(nullable = false, unique = true)
 	protected String cnpj;
 
+	@NotBlank(message= "{NotBlank}")
+	@Size(max = 256, message = "{Size.loja.descricao}")
 	@Column(nullable = true, length = 256)
 	private String descricao;
+
 	public Loja(){};
 
 	public Loja(String email, String senha, String nome, String cnpj, String descricao) {

@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw1.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,25 +17,25 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
-    @NotBlank
+    @NotBlank(message= "{NotBlank}")
+    @Size(max = 256, message = "{Size.usuario.email}")
     @Column(nullable = false, length = 256, unique = true)
     private String email;
     
-	@NotBlank
+	@NotBlank(message= "{NotBlank}")
     @Column(nullable = false, length = 256)
     private String senha;
        
-    @NotBlank
+    @NotBlank(message= "{NotBlank}")
     @Column(nullable = false, length = 256)
     private String nome;
 
     @Id
-	//todo arrumar a mensagem
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
     protected Long id;
     
-    @NotNull
+    @NotNull(message= "{NotBlank}")
     @Column(nullable = false)
     private int papel;
 

@@ -15,31 +15,47 @@
 <body>
 <div layout:fragment="header_home" style="" class=""></div>
 <div layout:fragment="corpo" class="row col justify-content-center align-items-center">
-    <form class="w-25" th:action="@{/loja/salvar}" method="post">
+    <form class="w-25" th:action="@{/loja/salvar}" th:object="${Loja}" method="post">
         <h1 class="h3 mb-3 fw-normal">Cadastro</h1>
+        <input type="number" hidden class="form-control" th:field="*{id}" id="id" placeholder="Descrição" >
 
         <div class="form-floating">
-            <input type="number" class="form-control" name="cnpj" id="floatingInput" placeholder="99.999.999/9999-99">
+            <input type="number" class="form-control" th:field="*{cnpj}" id="floatingInput" placeholder="99.999.999/9999-99" th:classappend="${#fields.hasErrors('cnpj')} ? 'is-invalid'">
             <label for="floatingInput">CNPJ</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{cnpj}"></span>
+            </div>
         </div>
         <div class="form-floating">
-            <input type="password"  class="form-control" name="password"  id="floatingPassword" placeholder="1234">
+            <input type="text" class="form-control" th:field="*{senha}" th:readonly="${Loja.id != null}" id="floatingPassword" placeholder="1234" th:classappend="${#fields.hasErrors('senha')} ? 'is-invalid'">
             <label for="floatingPassword">Senha</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{senha}"></span>
+            </div>
         </div>
 
         <div class="form-floating">
-            <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="loja@loja.com">
+            <input type="email" class="form-control" th:field="*{email}" id="floatingEmail" placeholder="loja@loja.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
             <label for="floatingEmail">E-mail</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{email}"></span>
+            </div>
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" name="username" id="floatingNome" placeholder="João">
+            <input type="text" class="form-control" th:field="*{nome}" id="floatingNome" placeholder="João" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'">
             <label for="floatingNome">Nome</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{nome}"></span>
+            </div>
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" name="description" id="floatingDesc" placeholder="Descrição">
+            <input type="text" class="form-control" th:field="*{descricao}" id="floatingDesc" placeholder="Descrição" th:classappend="${#fields.hasErrors('descricao')} ? 'is-invalid'">
             <label for="floatingDesc">Descrição</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{descricao}"></span>
+            </div>
         </div>
 
         <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Cadastrar</button>

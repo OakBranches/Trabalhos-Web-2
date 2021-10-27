@@ -1,22 +1,20 @@
 package br.ufscar.dc.dsw1.controller;
 
-import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Loja;
-import br.ufscar.dc.dsw1.services.spec.IClienteService;
+import br.ufscar.dc.dsw1.domain.Usuario;
 import br.ufscar.dc.dsw1.services.spec.ILojaService;
+import br.ufscar.dc.dsw1.services.spec.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/loja")
@@ -26,22 +24,25 @@ public class LojaController {
     private ILojaService service;
 
     @Autowired
+    private IUsuarioService usrservice;
+
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
     @GetMapping("/create")
-    public String formClient(Model model) {
+    public String formLoja(Model model) {
         model.addAttribute("Loja", new Loja());
         return "formLoja";
     }
 
     @GetMapping("/edit/{id}")
-    public String formEditClient(@PathVariable("id") Long id, ModelMap model) {
+    public String formEditLoja(ModelMap model, @PathVariable("id") Long id) {
         model.addAttribute("Loja", service.buscaPorId(id));
         return "formLoja";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteClient(@PathVariable("id") Long id, ModelMap model) {
+    public String deleteLoja(ModelMap model, @PathVariable("id") Long id) {
 
         if (service.LojaTemCarros(id)) {
             model.addAttribute("fail", "client.delete.fail");
@@ -49,25 +50,22 @@ public class LojaController {
             service.excluirPorId(id);
             model.addAttribute("sucess", "client.delete.sucess");
         }
-        return "redirect:/Loja/listar";
-    }
-
-    @PostMapping("/edit")
-    public String editClient(@Valid Loja Loja, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            return "formLoja";
-        }
-
-        service.salvar(Loja);
-        attr.addFlashAttribute("sucess", "client.edit.sucess");
-
-        return "redirect:/Loja/listar";
+        return "redirect:/loja/listar";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Loja Loja, BindingResult result, RedirectAttributes attr) {
+    public String salvar(@ModelAttribute("Loja") @Valid Loja Loja, BindingResult result, RedirectAttributes attr) {
+
+        System.out.println(Loja.getId());
+        if(!cnpjIsValid(Loja.getCnpj(), Loja.getId())){
+            result.rejectValue("cnpj", "Unique.loja.CNPJ");
+        }
+        if(!emailIsValid(Loja.getEmail(), Loja.getId())){
+            result.rejectValue("email", "Unique.usuario.email");
+        }
 
         if (result.hasErrors()) {
+
             return "formLoja";
         }
 
@@ -78,7 +76,7 @@ public class LojaController {
         service.salvar(Loja);
         attr.addFlashAttribute("sucess", "client.create.sucess");
 
-        return "redirect:/Loja/listar";
+        return "redirect:/loja/listar";
     }
 
     @GetMapping("/listar")
@@ -86,5 +84,14 @@ public class LojaController {
         model.addAttribute("lojas",service.buscarTodos());
         return "listarLojas";
     }
-
+    public boolean isValid(Usuario loja, Long Id) {
+        boolean teste = Objects.equals(loja.getId(), Id);
+        return loja == null || teste;
+    }
+    public boolean cnpjIsValid(String cnpj, Long Id){
+        return  isValid(service.buscaPorCnpj(cnpj), Id);
+    }
+    public boolean emailIsValid(String email, Long Id){
+        return  isValid(usrservice.buscaPorEmail(email), Id);
+    }
 }

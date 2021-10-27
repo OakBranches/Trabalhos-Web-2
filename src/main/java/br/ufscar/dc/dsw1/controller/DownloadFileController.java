@@ -25,9 +25,6 @@ public class DownloadFileController {
 
 		// set content type
 		response.setContentType(entity.getType());
-		
-		// add response header (caso queira forçar o download)
-		// response.addHeader("Content-Disposition", "attachment; filename=" + entity.getName());
 
 		try {
 			// copies all bytes to an output stream

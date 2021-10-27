@@ -13,9 +13,6 @@ public class PropostaForm {
     @NotNull
     private String condPag;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date data;
-    @NotNull
     private float valor;
     @NotNull
     private int cli_id;

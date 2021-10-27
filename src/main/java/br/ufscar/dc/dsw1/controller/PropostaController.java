@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -82,11 +83,11 @@ public class PropostaController {
     @PostMapping("/accept/{id}")
     public String accept(@ModelAttribute("form") @Valid FormAccept form, BindingResult result, RedirectAttributes attr,  @PathVariable("id") Long id, ModelMap model) {
         if (result.hasErrors()) {
-            attr.addFlashAttribute("fail", "proposta.create.fail");
+            attr.addFlashAttribute("fail", "proposta.accept.fail");
             System.out.println("Campos devem ser preenchidos");
             return "formAceito";
         }
-        attr.addFlashAttribute("sucess", "proposta.create.sucess");
+        attr.addFlashAttribute("sucess", "proposta.accept.sucess");
         return setStatus(id, 1);
     }
 
@@ -94,7 +95,7 @@ public class PropostaController {
     public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
 
 
-        attr.addFlashAttribute("sucess", "proposta.create.sucess");
+        attr.addFlashAttribute("sucess", "proposta.reject.sucess");
         return setStatus(id, 2);
     }
 
@@ -114,20 +115,21 @@ public class PropostaController {
     @PostMapping("/salvar")
     public String salvar(@Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr) {
         if (result.hasErrors()) {
+            attr.addFlashAttribute("sucess", "proposta.create.fail");
             return "formProposta";
         }
         Proposta proposta = new Proposta();
         proposta.setCondPag(propostaForm.getCondPag());
-        proposta.setData(propostaForm.getData());
+        proposta.setData(new Date());
         proposta.setValor(BigDecimal.valueOf(propostaForm.getValor()));
         Cliente cli = cliservice.buscaPorId((long)propostaForm.getCli_id());
         Carro car = carservice.buscaPorId((long) propostaForm.getCar_id());
         proposta.setCliente(cli);
         proposta.setCarro(car);
         service.salvar(proposta);
-        attr.addFlashAttribute("sucess", "client.create.sucess");
+        attr.addFlashAttribute("sucess", "proposta.create.sucess");
 
-        return "redirect:/carro/listar";
+        return "redirect:/proposta/listar";
     }
 
 

@@ -28,11 +28,6 @@
                 <label for="floatingValue" th:text="#{valor}"></label>
             </div>
 
-            <div class="form-floating">
-                <input type="date" class="form-control" name="data" id="floatingData" th:placeholder="#{data}">
-                <label for="floatingData" th:text="#{data}"></label>
-            </div>
-
             <input type="hidden" name="car_id" th:value="${proposta.carro.id}" id="carro">
             <input type="hidden" name="cli_id" th:value="${proposta.cliente.id}" id="cliente">
 

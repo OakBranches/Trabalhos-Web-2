@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw1.services.impl;
 import br.ufscar.dc.dsw1.dao.IClienteDAO;
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Proposta;
+import br.ufscar.dc.dsw1.domain.Usuario;
 import br.ufscar.dc.dsw1.services.spec.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = false)
-public class ClienteService implements IClienteService {
+public class ClienteService extends UsuarioService implements IClienteService {
     @Autowired
     IClienteDAO dao;
 
@@ -38,7 +39,17 @@ public class ClienteService implements IClienteService {
         return dao.findClienteById(id).getPropostas().stream().anyMatch(filtro);
     }
     @Transactional(readOnly = true)
-    public List<Cliente> buscarTodos(){
+    public List<Cliente> buscarTodosClientes(){
         return dao.findAll();
+    }
+    @Transactional(readOnly = true)
+    public boolean emailIsValid(Usuario usr){
+        Usuario loja = buscaPorEmail(usr.getEmail());
+        Long Id = usr.getId();
+        return loja == null || Objects.equals(loja.getId(), Id);
+    }
+    @Transactional(readOnly = true)
+    public Cliente buscaPorCpf(String cpf){
+        return dao.findByCpf(cpf);
     }
 }

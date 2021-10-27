@@ -11,7 +11,7 @@
 <div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
     <div style="width: fit-content">
     <form
-            th:action="${cliente.id == null} ? @{/cliente/salvar} : @{/cliente/edit}"
+            th:action="@{/cliente/salvar}"
             th:object="${cliente}" method="POST"
             style="width:fit-content"
     >
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="nome" autofocus="autofocus"
                        th:field="*{nome}" th:placeholder="#{nome}"
-                       th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{nome}"></span>
@@ -29,7 +29,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="telefone" autofocus="autofocus"
                        th:field="*{telefone}" th:placeholder="#{telefone}"
-                       th:classappend="${#fields.hasErrors('telefone')} ?  is-invalid" />
+                       th:classappend="${#fields.hasErrors('telefone')} ?  'is-invalid'" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{telefone}"></span>
@@ -39,7 +39,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="sexo" autofocus="autofocus"
                        th:field="*{sexo}" th:placeholder="#{sexo}"
-                       th:classappend="${#fields.hasErrors('sexo')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('sexo')} ? 'is-invalid'" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{sexo}"></span>
@@ -50,7 +50,7 @@
                 <input type="date" class="form-control" id="nascimento" autofocus="autofocus"
                        th:placeholder="#{dataNasc}"
                        th:field="*{nascimento}"
-                       th:classappend="${#fields.hasErrors('nascimento')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('nascimento')} ? 'is-invalid'" />
                 <div class="invalid-feedback">
                     <span th:errors="*{nascimento}"></span>
                 </div>
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <input type="email" class="form-control" id="email" autofocus="autofocus"
                        th:field="*{email}" th:placeholder="#{email}"
-                       th:classappend="${#fields.hasErrors('email')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{email}"></span>
@@ -69,7 +69,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="senha" autofocus="autofocus"
                        th:field="*{senha}" th:placeholder="#{senha}"
-                       th:classappend="${#fields.hasErrors('senha')} ? is-invalid" th:readonly="${cliente!= null && cliente.id != null}"/>
+                       th:classappend="${#fields.hasErrors('senha')} ? 'is-invalid'" th:readonly="${cliente!= null && cliente.id != null}"/>
 
                 <div class="invalid-feedback">
                     <span th:errors="*{senha}"></span>
@@ -80,7 +80,7 @@
                 <input type="text" class="form-control" id="cpf" autofocus="autofocus"
                        th:field="*{cpf}" placeholder="___.___.___-__"
                        data-mask="000.000.000-00" data-mask-reverse="true"
-                       th:classappend="${#fields.hasErrors('Cpf')} ? is-invalid" />
+                       th:classappend="${#fields.hasErrors('cpf')} ? 'is-invalid'" />
 
                 <div class="invalid-feedback">
                     <span th:errors="*{cpf}"></span>

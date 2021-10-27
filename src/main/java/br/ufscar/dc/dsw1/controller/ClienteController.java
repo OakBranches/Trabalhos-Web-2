@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw1.controller;
 
 import br.ufscar.dc.dsw1.domain.Cliente;
+import br.ufscar.dc.dsw1.domain.Usuario;
 import br.ufscar.dc.dsw1.services.spec.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,13 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/cliente")
@@ -47,26 +46,21 @@ public class ClienteController {
             service.excluirPorId(id);
             model.addAttribute("sucess", "client.delete.sucess");
         }
-        System.out.println("redor");
-        return "redirect:/cliente/listar";
-    }
-
-    @PostMapping("/edit")
-    public String editClient(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            return "formCliente";
-        }
-
-        service.salvar(cliente);
-        attr.addFlashAttribute("sucess", "client.edit.sucess");
-
         return "redirect:/cliente/listar";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+    public String salvar(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+
+        if(!service.emailIsValid(cliente)){
+            result.rejectValue("email", "Unique.usuario.email");
+        }
+        if(!cpfIsValid(cliente.getCpf(), cliente.getId())){
+            result.rejectValue("cpf", "Unique.cliente.CPF");
+        }
 
         if (result.hasErrors()) {
+            System.out.println(result.getAllErrors());
             return "formCliente";
         }
 
@@ -82,8 +76,12 @@ public class ClienteController {
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("clientes",service.buscarTodos());
+        model.addAttribute("clientes",service.buscarTodosClientes());
         return "listarClientes";
     }
 
+    public boolean cpfIsValid(String cpf, Long Id){
+        Usuario loja = service.buscaPorCpf(cpf);
+        return loja == null || Objects.equals(loja.getId(), Id);
+    }
 }

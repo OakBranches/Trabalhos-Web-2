@@ -24,9 +24,6 @@ public class LojaController {
     private ILojaService service;
 
     @Autowired
-    private IUsuarioService usrservice;
-
-    @Autowired
     private BCryptPasswordEncoder encoder;
 
     @GetMapping("/create")
@@ -60,7 +57,7 @@ public class LojaController {
         if(!cnpjIsValid(Loja.getCnpj(), Loja.getId())){
             result.rejectValue("cnpj", "Unique.loja.CNPJ");
         }
-        if(!emailIsValid(Loja.getEmail(), Loja.getId())){
+        if(!service.emailIsValid(Loja)){
             result.rejectValue("email", "Unique.usuario.email");
         }
 
@@ -81,17 +78,13 @@ public class LojaController {
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("lojas",service.buscarTodos());
+        model.addAttribute("lojas",service.buscarTodasLojas());
         return "listarLojas";
     }
-    public boolean isValid(Usuario loja, Long Id) {
+
+    public boolean cnpjIsValid(String cnpj, Long Id){
+        Usuario loja = service.buscaPorCnpj(cnpj);
         boolean teste = Objects.equals(loja.getId(), Id);
         return loja == null || teste;
-    }
-    public boolean cnpjIsValid(String cnpj, Long Id){
-        return  isValid(service.buscaPorCnpj(cnpj), Id);
-    }
-    public boolean emailIsValid(String email, Long Id){
-        return  isValid(usrservice.buscaPorEmail(email), Id);
     }
 }

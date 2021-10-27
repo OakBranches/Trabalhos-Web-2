@@ -56,7 +56,7 @@ public class CarroController {
     public String list(ModelMap model) throws IOException {
         if (model.getAttribute("form") == null)
             model.addAttribute("form", new CarroForm());
-        model.addAttribute("files", service.buscarTodos());
+        model.addAttribute("files", service.buscarTodasLojas());
 
         return "formCarro";
     }

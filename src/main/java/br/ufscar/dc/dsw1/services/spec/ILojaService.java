@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw1.services.spec;
 
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Loja;
+import br.ufscar.dc.dsw1.domain.Usuario;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface ILojaService {
     void excluirPorId(Long id);
     void excluir(String cnpj);
     boolean LojaTemCarros(Long id);
-    List<Loja> buscarTodos();
+    List<Loja> buscarTodasLojas();
+    boolean emailIsValid(Usuario usr);
 }

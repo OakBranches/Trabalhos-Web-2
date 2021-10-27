@@ -27,7 +27,6 @@ public class Cliente extends Usuario implements Serializable {
 	//todo arrumar a mensagem
 	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
 	@Column(nullable = false, unique = true)
-	@UniqueCPF
 	protected String cpf;
 
 	//todo arrumar a mensagem

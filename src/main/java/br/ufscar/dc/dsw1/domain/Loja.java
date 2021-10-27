@@ -24,12 +24,12 @@ public class Loja extends Usuario implements Serializable {
 	@NotBlank(message= "{NotBlank}")
 
 	//todo arrumar a mensagem
-	@Size(min = 18, max = 18, message = "{Size.loja.CNPJ}")
+	@Size(min = 18, max = 18, message = "{Size.Loja.cnpj}")
 	@Column(nullable = false, unique = true)
 	protected String cnpj;
 
 	@NotBlank(message= "{NotBlank}")
-	@Size(max = 256, message = "{Size.loja.descricao}")
+	@Size(max = 256, message = "{Size.Loja.descricao}")
 	@Column(nullable = true, length = 256)
 	private String descricao;
 
@@ -43,8 +43,6 @@ public class Loja extends Usuario implements Serializable {
 
 	@OneToMany(mappedBy = "loja")
 	private List<Carro> carros;
-
-
 
 	@Override
 	public String toString() {

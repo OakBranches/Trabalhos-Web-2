@@ -20,9 +20,7 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Proposta implements Serializable {
 
-
-
-	@NotNull
+	@NotNull(message = "{NotBlank}")
 	@Column(columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal valor;
 
@@ -30,28 +28,25 @@ public class Proposta implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull
 	@Column
 	private int status;
 
-	@NotBlank
+	@NotBlank(message = "{NotBlank}")
 	@Column
 	private String condPag;
 
-
 	//todo arrumar a mensagem
 	@Column(nullable = false)
+	@NotNull(message = "{NotBlank}")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 
 	//todo arrumar a mensagem
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "carro_id")
 	private Carro carro;
 
 	//todo arrumar a mensagem
-	@NotNull(message = "")
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 

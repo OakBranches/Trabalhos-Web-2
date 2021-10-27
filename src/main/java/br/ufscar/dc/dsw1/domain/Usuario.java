@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
 
     @NotBlank(message= "{NotBlank}")
-    @Size(max = 256, message = "{Size.usuario.email}")
+    @Size(max = 256, message = "{Size.Usuario.email}")
     @Column(nullable = false, length = 256, unique = true)
     private String email;
     

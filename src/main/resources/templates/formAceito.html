@@ -18,22 +18,31 @@
 <body class="text-center">
 <div layout:fragment="header_home" class="" style=""></div>
 <div layout:fragment="corpo" class="row justify-content-center align-items-center col">
-    <form class="w-25" th:action="@{/proposta/accept/{id} (id=${id})}" method="post">
+    <form class="w-25" th:action="@{/proposta/accept/{id} (id=${id})}" th:object="${form}" method="post" >
         <h1 class="h3 mb-3 fw-normal">Aceitar</h1>
 
         <div class="form-floating">
-            <input type="number" class="form-control" name="username" id="floatingInput" placeholder="10000,00">
-            <label for="floatingInput">Valor</label>
+            <input type="datetime-local" class="form-control" th:field="*{data}" id="floatingData" th:placeholder="#{data}"  th:classappend="${#fields.hasErrors('data')} ? 'is-invalid'" >
+            <label for="floatingData" th:text="#{data}"></label>
+            <div class="invalid-feedback">
+                <span th:errors="*{data}"></span>
+            </div>
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" name="condPag" id="floatingCondPag" placeholder="Parcelar em 3x">
-            <label for="floatingCondPag">Condição de Pagamento</label>
+            <input type="text" class="form-control" th:field="*{link}" id="floatingLinkReu" th:placeholder="meet.com"  th:classappend="${#fields.hasErrors('link')} ? 'is-invalid'" >
+            <label for="floatingLinkReu">Link da reunião</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{link}"></span>
+            </div>
         </div>
 
         <div class="form-floating">
-            <input type="text"  class="form-control" name="data"  id="floatingData" placeholder="xx/xx/xxxx">
-            <label for="floatingData">Data</label>
+            <input type="text" class="form-control" th:field="*{mensagem}" id="floatingMensage" th:placeholder="Gostei"  th:classappend="${#fields.hasErrors('mensagem')} ? 'is-invalid'" >
+            <label for="floatingMensage">Mensagem</label>
+            <div class="invalid-feedback">
+                <span th:errors="*{mensagem}"></span>
+            </div>
         </div>
 
         <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Aceitar</button>

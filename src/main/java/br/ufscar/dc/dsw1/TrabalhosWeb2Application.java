@@ -41,11 +41,11 @@ public class TrabalhosWeb2Application {
             carroDAO.save(car3);
 
             Date aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-03-01");
-            Cliente c1 = new Cliente("cliente@cleinte.com", encoder.encode("cliente"), "João", "000.000.001", "999999999", "m", aux);
+            Cliente c1 = new Cliente("cliente@cleinte.com", encoder.encode("cliente"), "João", "000.000.001-10", "999999999", "m", aux);
             clienteDAO.save(c1);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2002-03-01");
-            Cliente c2 = new Cliente("joao@cliente.com", encoder.encode("123"), "Clovis", "000.000.002", "992999999", "f",aux);
+            Cliente c2 = new Cliente("joao@cliente.com", encoder.encode("123"), "Clovis", "000.000.002-10", "992999999", "f",aux);
             clienteDAO.save(c2);
 
             aux = new SimpleDateFormat("yyyy-MM-dd").parse("2001-02-22");

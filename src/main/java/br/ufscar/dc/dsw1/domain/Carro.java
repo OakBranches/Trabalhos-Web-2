@@ -21,11 +21,11 @@ import javax.validation.constraints.Size;
 @Table(name = "Carro")
 public class Carro implements Serializable {
 
-	@NotNull
+	@NotNull(message = "{NotBlank}")
 	@Column(columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal valor;
 
-	@NotNull
+	@NotNull(message = "{NotBlank}")
 	@Column(columnDefinition = "DECIMAL(8,2) DEFAULT 0.0")
 	private BigDecimal km;
 
@@ -33,27 +33,27 @@ public class Carro implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
-	@Size(min = 7, max = 7, message = "{size.carro.placa}")
+	@NotBlank(message = "{NotBlank}")
+	@Size(min = 7, max = 7, message = "{Size.Carro.placa}")
 	@Column(nullable = false, length = 10)
 	private String placa;
 
-	@NotBlank
-	@Column(nullable = false, length = 20)
+	@NotBlank(message = "{NotBlank}")
+	@Column(nullable = false)
 	private String modelo;
 
 	@Column
 	private String descricao;
 
-	@NotBlank
-	@Column(nullable = false, length = 20)
+	@NotBlank(message = "{NotBlank}")
+	@Column(nullable = false)
 	private String chassi;
 
-	@NotNull
+	@NotNull(message = "{NotBlank}")
 	@Column(nullable = false)
 	private int ano;
 
-	@NotNull
+
 	@ManyToOne
 	@JoinColumn(name = "loja_id")
 	private Loja loja;

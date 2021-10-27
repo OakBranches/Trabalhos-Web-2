@@ -5,6 +5,8 @@ import br.ufscar.dc.dsw1.domain.Carro;
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Proposta;
 import br.ufscar.dc.dsw1.domain.Usuario;
+import br.ufscar.dc.dsw1.forms.FormAccept;
+import br.ufscar.dc.dsw1.forms.FormReject;
 import br.ufscar.dc.dsw1.forms.PropostaForm;
 import br.ufscar.dc.dsw1.security.UsuarioDetails;
 import br.ufscar.dc.dsw1.services.spec.ICarroService;
@@ -65,26 +67,37 @@ public class PropostaController {
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("id", id);
+        model.addAttribute("form", new FormAccept());
         return "formAceito";
     }
 
     @GetMapping("/reject/{id}")
     public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("id", id);
+        model.addAttribute("form", new FormReject());
         return "formRecusa";
     }
 
     @PostMapping("/accept/{id}")
-    public String accept(@PathVariable("id") Long id, ModelMap model) {
-        return setStatus(id, model, 1);
+    public String accept(@ModelAttribute("form") @Valid FormAccept form, BindingResult result, RedirectAttributes attr,  @PathVariable("id") Long id, ModelMap model) {
+        if (result.hasErrors()) {
+            attr.addFlashAttribute("fail", "proposta.create.fail");
+            System.out.println("Campos devem ser preenchidos");
+            return "formAceito";
+        }
+        attr.addFlashAttribute("sucess", "proposta.create.sucess");
+        return setStatus(id, 1);
     }
 
     @PostMapping("/reject/{id}")
-    public String reject(@PathVariable("id") Long id, ModelMap model) {
-        return setStatus(id, model, 2);
+    public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
+
+
+        attr.addFlashAttribute("sucess", "proposta.create.sucess");
+        return setStatus(id, 2);
     }
 
-    public String setStatus(@PathVariable("id") Long id, ModelMap model,int status) {
+    public String setStatus(@PathVariable("id") Long id,int status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
         Proposta proposta = service.buscaPorId(id);

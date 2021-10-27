@@ -25,17 +25,17 @@ public class Cliente extends Usuario implements Serializable {
 
 	@NotBlank
 	//todo arrumar a mensagem
-	@Size(min = 11, max = 20, message = "{Size.editora.CNPJ}")
+	@Size(min = 14, max = 14, message = "{Size.Cliente.cpf}")
 	@Column(nullable = false, unique = true)
 	protected String cpf;
 
 	//todo arrumar a mensagem
-	@NotBlank(message = "")
+	@NotBlank(message = "{NotBlank}")
 	@Column(nullable = true, length = 256)
 	private String telefone;
 
 	//todo arrumar a mensagem
-	@NotBlank(message = "")
+	@NotBlank(message = "{NotBlank}")
 	@Column(nullable = false, length = 256)
 	private String sexo;
 
@@ -44,8 +44,10 @@ public class Cliente extends Usuario implements Serializable {
 
 	//todo arrumar a mensagem
 	@Column(nullable = false)
+	@NotNull(message = "{NotBlank}")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date nascimento;
+
 	public Cliente(){};
 	public Cliente(String email, String senha, String nome, String cpf, String telefone, String sexo, Date nascimento) {
 		super(email, senha, nome, 3);

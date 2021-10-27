@@ -19,31 +19,31 @@ import java.util.List;
 @Setter
 @Getter
 public class CarroForm {
-    @NotNull (message = "{nome}")
+    @NotNull (message = "{NotBlank}")
     private float valor;
 
-    @NotNull (message = "{nome}")
+    @NotNull (message = "{NotBlank}")
     private float km;
 
-    @NotBlank (message = "{nome}")
-    @Size(min = 7, max = 7, message = "{size.carro.placa}")
+    @NotBlank (message = "{NotBlank}")
+    @Size(min = 7, max = 7, message = "{Size.Carro.Placa}")
     private String placa;
 
-    @NotBlank (message = "{nome}")
+    @NotBlank (message = "{NotBlank}")
     private String modelo;
 
-    @NotBlank (message = "{nome}")
+    @NotBlank (message = "{NotBlank}")
     private String descricao;
 
-    @NotBlank (message = "{nome}")
+    @NotBlank (message = "{NotBlank}")
     private String chassi;
 
-    @NotNull (message = "{nome}")
+    @NotNull (message = "{NotBlank}")
     private int ano;
 
-    @NotNull (message = "{nome}")
-    @NotEmpty (message = "{nome}")
-    @Multipart (message = "{imagens}")
+    @NotNull (message = "{NotBlank}")
+    @NotEmpty (message = "{NotBlank}")
+    @Multipart
     private List<MultipartFile> imagens;
 
     @Override

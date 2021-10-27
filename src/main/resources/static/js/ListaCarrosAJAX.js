@@ -53,134 +53,45 @@ function atualizaTabelaCarros(context) {
 
 
         // CRIA DEMAIS LINHAS COM OS VALORES
+        let iHtml = ""
 
-        for (var i = 0; i < 0; i++) {
-        //
-        //
-        //
-        //     var tmp = carros[i];
-        //     console.log(tmp);
-        //     var lista = tmp.split(";");
-        //     var id = lista[0];
-        //     var modelo = lista[1];
-        //     tr = table.insertRow(-1);
-        //     var cellimg = tr.insertCell(-1);
-        //     cellimg.setAttribute("id", "image"+id);
-        //     var cnpj = lista[2];
-        //     var placa = lista[3];
-        //     var chassi = lista[4];
-        //     var descricao = lista[5];
-        //     var ano = lista[6];
-        //     var km = lista[7];
-        //     var valor = lista[8];
-        //     var listaImagens = lista[9].replace("[","").replace("]","").split(",");
-        //     var externalCarousel = document.createElement("div");
-        //     externalCarousel.setAttribute("id","carouselExampleControls" + id);
-        //     externalCarousel.setAttribute("class","carousel slide");
-        //     externalCarousel.setAttribute("data-bs-ride","carousel");
-        //     externalCarousel.setAttribute("style","width: 300px")
-        //     var internalCarousel = document.createElement("div");
-        //     internalCarousel.setAttribute("class", "carousel-inner");
-        //     let count = 0;
-        //     listaImagens.forEach((item, index) => {
-        //         if(item.length > 0) {
-        //             count += 1;
-        //             var div_carousel = document.createElement("div");
-        //             var classe = "carousel-item";
-        //             if (count == 1)
-        //                 classe += " active"
-        //             div_carousel.setAttribute("class", classe);
-        //             var img = document.createElement("img");
-        //             img.setAttribute("src", item);
-        //             img.setAttribute("class", "d-block w-100")
-        //             img.setAttribute("height", "200px");
-        //             img.setAttribute("alt", "...");
-        //             div_carousel.appendChild(img);
-        //             internalCarousel.appendChild(div_carousel);
-        //         }
-        //     })
-        //
-        //     if (count > 0) {
-        //         externalCarousel.appendChild(internalCarousel);
-        //
-        //         var button1 = document.createElement("button");
-        //         button1.setAttribute("class","carousel-control-prev");
-        //         button1.setAttribute("type","button");
-        //         button1.setAttribute("data-bs-target","#carouselExampleControls"+ id);
-        //         button1.setAttribute("data-bs-slide","prev");
-        //         var span1 = document.createElement("span");
-        //         span1.setAttribute("class","carousel-control-prev-icon");
-        //         span1.setAttribute("aria-hidden","true");
-        //         var span2 = document.createElement("span");
-        //         span2.setAttribute("class","visually-hidden")
-        //         span2.innerHTML = "Previous"
-        //         button1.appendChild(span1);
-        //         button1.appendChild(span2);
-        //         externalCarousel.appendChild(button1);
-        //
-        //         var button2 = document.createElement("button");
-        //         button2.setAttribute("class","carousel-control-next");
-        //         button2.setAttribute("type","button");
-        //         button2.setAttribute("data-bs-target","#carouselExampleControls"+ id);
-        //         button2.setAttribute("data-bs-slide","next");
-        //         var span3 = document.createElement("span");
-        //         span3.setAttribute("class","carousel-control-next-icon");
-        //         span3.setAttribute("aria-hidden","true");
-        //         var span4 = document.createElement("span");
-        //         span4.setAttribute("class","visually-hidden")
-        //         span4.innerHTML = "Next"
-        //         button2.appendChild(span3);
-        //         button2.appendChild(span4);
-        //         externalCarousel.appendChild(button2);
-        //         cellimg.appendChild(externalCarousel);
-        //
-        //     }
-        //
-        //     var col2 = tr.insertCell(-1);
-        //     col2.style.textAlign = "center";
-        //     col2.innerHTML = modelo;
-        //
-        //     var col3 = tr.insertCell(-1);
-        //     col3.style.textAlign = "center";
-        //     col3.innerHTML = placa;
-        //
-        //     var col4 = tr.insertCell(-1);
-        //     col4.style.textAlign = "center";
-        //     col4.innerHTML = chassi;
-        //
-        //     var col5 = tr.insertCell(-1);
-        //     col5.style.textAlign = "center";
-        //     col5.innerHTML = descricao;
-        //
-        //     var col6 = tr.insertCell(-1);
-        //     col6.style.textAlign = "center";
-        //     col6.innerHTML = ano;
-        //
-        //     var col7 = tr.insertCell(-1);
-        //     col7.style.textAlign = "center";
-        //     col7.innerHTML = km;
-        //
-        //     var col8 = tr.insertCell(-1);
-        //     col8.style.textAlign = "center";
-        //     col8.innerHTML = valor;
-        //     if (sessionVar !== "false") {
-        //         var col9 = tr.insertCell(-1);
-        //         col9.style.textAlign = "center";
-        //
-        //         var a = document.createElement("a");
-        //         a.setAttribute("href", context+"/proposta/"+id);
-        //         a.innerHTML = "+";
-        //         col9.appendChild(a);
-        //     }
+        for (let i = 0; i < carros.length; i++) {
+            let carro = carros[i]
+            iHtml += `<tr><td>`
+            if (carro['imagens'].length === 0){
+                iHtml+='<span>Não há Imagem</span>'
+            }else {
+                iHtml+= `<div id="${'carouselExampleControls'+ carro['id']}" class="carousel slide" data-bs-ride="carousel" style="width: 300px"><div class="carousel-inner">`
+                for (let j = 0; j < carro['imagens'].length; j++) {
+                    iHtml+= `<div class="${'carousel-item' +  (j === 0? ' active':'')}">`
+                    iHtml+= `<img src="/download/${carro['imagens'][j]['id']}" width="160px"/></div>`
+                }
+                iHtml +=`</div><button class="carousel-control-prev" type="button" data-bs-target="${'#carouselExampleControls'+ carro['id']}" data-bs-slide="prev">`
+                iHtml += `<span class="carousel-control-prev-icon" aria-hidden="true"></span>`
+                iHtml += `<span class="visually-hidden">Previous</span></button>`
+                iHtml += `<button class="carousel-control-next" type="button" data-bs-target="${'#carouselExampleControls'+ carro['id']}" data-bs-slide="next">`
+                iHtml += ` <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div>`
+            }
+            iHtml+= `</td>`
+            iHtml+= `<td> <span>${carro['modelo']}</span></td>`
+            iHtml+= `<td> <span>${carro['placa']}</span></td>`
+            iHtml+= `<td> <span>${carro['chassi']}</span></td>`
+            iHtml+= `<td> <span>${carro['descricao']}</span></td>`
+            iHtml+= `<td> <span>${carro['ano']}</span></td>`
+            iHtml+= `<td> <span>${carro['km']}</span></td>`
+            iHtml+= `<td> <span>${carro['valor']}</span></td>`
+            iHtml+= `<td> <span>${carro['loja']}</span></td>`
+            iHtml+= `<td><a class="btn btn-info btn-sm" href="/proposta/create/${carro['id']}" role="button">`
+            iHtml+= `<ion-icon name="bookmark-outline"></ion-icon></a></td></tr>`
         }
-        //
-        //
-        // // Pega o span COM A QUANTIDADE DE CARROS
-        //
-        // var p = document.getElementById('qtd');
-        // p.innerHTML = carros.length;
-        //
-        //
-        // oldtbody.parentNode.replaceChild(table,oldtbody);
+
+        table.innerHTML = iHtml;
+
+        // Pega o span COM A QUANTIDADE DE CARROS
+
+        let p = document.getElementById('qtd');
+        p.innerHTML = carros.length;
+
+        oldtbody.parentNode.replaceChild(table,oldtbody);
     }
 }

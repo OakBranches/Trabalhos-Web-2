@@ -81,6 +81,7 @@ public class Carro implements Serializable {
 		return "{" +
 				"\"valor\":" + valor +
 				", \"km\":" + km +
+				", \"imagens\":" + (imagens != null ? imagens.toString() : "null") +
 				", \"id\":" + (id == null ? "null": id) +
 				", \"placa\":\"" + placa + "\"" +
 				", \"modelo\":\"" + modelo + "\"" +

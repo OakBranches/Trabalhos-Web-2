@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
 @SuppressWarnings("serial")
 @Entity
@@ -35,6 +36,15 @@ public class FileEntity extends AbstractEntity<Long> {
 		this.name = name;
 		this.type = type;
 		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+				"\"name\":\"" + name + '"' +
+				", \"type\":\"" + type + '"' +
+				", \"id\":" + this.getId() +
+				'}';
 	}
 
 	public boolean isImage() {

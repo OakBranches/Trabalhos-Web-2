@@ -39,13 +39,13 @@ public class LojaController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteLoja(ModelMap model, @PathVariable("id") Long id) {
+    public String deleteLoja(ModelMap model, @PathVariable("id") Long id, RedirectAttributes attr) {
 
         if (service.LojaTemCarros(id)) {
-            model.addAttribute("fail", "client.delete.fail");
+            attr.addFlashAttribute("fail", "loja.delete.fail");
         } else {
             service.excluirPorId(id);
-            model.addAttribute("sucess", "client.delete.sucess");
+            attr.addFlashAttribute("sucess", "loja.delete.sucess");
         }
         return "redirect:/loja/listar";
     }
@@ -62,7 +62,7 @@ public class LojaController {
         }
 
         if (result.hasErrors()) {
-
+            attr.addFlashAttribute("fail", "loja.create.fail");
             return "formLoja";
         }
 
@@ -71,7 +71,7 @@ public class LojaController {
         Loja.setSenha(encoder.encode(Loja.getSenha()));
 
         service.salvar(Loja);
-        attr.addFlashAttribute("sucess", "client.create.sucess");
+        attr.addFlashAttribute("sucess", "loja.create.sucess");
 
         return "redirect:/loja/listar";
     }

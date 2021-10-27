@@ -38,15 +38,16 @@ public class ClienteController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteClient(@PathVariable("id") Long id, ModelMap model) {
+    public String deleteClient(@PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
 
         if (service.clienteTemPropostas(id)) {
-            model.addAttribute("fail", "client.delete.fail");
+            System.out.println("não foi possivel deletar");
+            attr.addFlashAttribute("fail", "client.delete.fail");
         } else {
             service.excluirPorId(id);
-            model.addAttribute("sucess", "client.delete.sucess");
+            System.out.println("foi possivel deletar");
+            attr.addFlashAttribute("sucess", "client.delete.sucess");
         }
-        System.out.println("Tentativa de deletar");
         return "redirect:/cliente/listar";
     }
 
@@ -62,6 +63,7 @@ public class ClienteController {
 
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
+            attr.addFlashAttribute("fail", "client.create.fail");
             return "formCliente";
         }
 

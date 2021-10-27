@@ -30,7 +30,23 @@
             </thead>
             <tbody>
             <tr>
-                <td> <span>Imagem</span>
+                <td> <span th:if="${carro.getImagens().isEmpty()}">Não há Imagem</span>
+                    <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
+                        <div class="carousel-inner">
+                            <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">
+                                <img th:src="@{/download/{id} (id=${file.id})}" width="160px"/>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
 
                 </td>
                 <td> <span th:text="${carro.modelo}"></span></td>

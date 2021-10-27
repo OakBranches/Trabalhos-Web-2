@@ -44,14 +44,9 @@ function atualizaTabelaCarros(context) {
         // // // CRIA UMA TABELA DINAMICA
         // var sessionVar = document.getElementById('propor').value;
         // console.log("propor "+ sessionVar);
-        // var oldtbody = document.getElementById("tbody");
-        // var table = document.createElement("tbody");
-        // table.setAttribute("id", "tbody");
-        // table.border = "1";
-        // table.style.border = "1px solid black";
-        // table.style.width = "400px";
-
-
+        var oldtbody = document.getElementById("tbody");
+        var table = document.createElement("tbody");
+        table.setAttribute("id", "tbody");
         // CRIA DEMAIS LINHAS COM OS VALORES
         let iHtml = ""
 

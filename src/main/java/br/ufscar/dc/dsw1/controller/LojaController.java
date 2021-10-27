@@ -84,7 +84,6 @@ public class LojaController {
 
     public boolean cnpjIsValid(String cnpj, Long Id){
         Usuario loja = service.buscaPorCnpj(cnpj);
-        boolean teste = Objects.equals(loja.getId(), Id);
-        return loja == null || teste;
+        return loja == null ||  Objects.equals(loja.getId(), Id);
     }
 }

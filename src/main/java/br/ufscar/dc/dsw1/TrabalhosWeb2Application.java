@@ -22,10 +22,10 @@ public class TrabalhosWeb2Application {
     public CommandLineRunner demo(ILojaDAO lojaDAO, IUsuarioDAO usuarioDAO, ICarroDAO carroDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, BCryptPasswordEncoder encoder) {
         return (args) -> {
 
-            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", "11111111111111", "BOa loja.");
+            Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", "11.111.111/1111-11", "BOa loja.");
             lojaDAO.save(l1);
 
-            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", "11111111111112", "BOa loja XD.");
+            Loja l2 = new Loja("loja2@loja.com", encoder.encode("loja2"), "Ensaio 2 Jr", "11.111.111/1111-12", "BOa loja XD.");
             lojaDAO.save(l2);
 
             Usuario u1 = new Usuario("ok@ok.com", encoder.encode("ok"), "Ok", 1);

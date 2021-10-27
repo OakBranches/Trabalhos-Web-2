@@ -46,6 +46,7 @@ public class ClienteController {
             service.excluirPorId(id);
             model.addAttribute("sucess", "client.delete.sucess");
         }
+        System.out.println("Tentativa de deletar");
         return "redirect:/cliente/listar";
     }
 

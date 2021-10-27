@@ -46,12 +46,13 @@ public class PropostaController {
     private IClienteService cliservice;
 
     @GetMapping("/create/{id}")
-    public String formClient(@PathVariable("id") Long id, Model model) {
+    public String formClient(@PathVariable("id") Long id, Model model, RedirectAttributes attr) {
         Carro carro = carservice.buscaPorId(id);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
 
         if (cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
+            attr.addFlashAttribute("fail", "proposta.existe");
             return "redirect:/home";
         }
 

@@ -41,8 +41,12 @@ function atualizaTabelaCarros(context) {
         var carros = JSON.parse(xmlHttp.responseText);
         console.log(carros[0]);
         // //
+        let propor = false;
         // // // CRIA UMA TABELA DINAMICA
-        // var sessionVar = document.getElementById('propor').value;
+        var sessionVar = document.getElementById('propor');
+        if (sessionVar != null){
+            propor = true;
+        }
         // console.log("propor "+ sessionVar);
         var oldtbody = document.getElementById("tbody");
         var table = document.createElement("tbody");
@@ -76,8 +80,11 @@ function atualizaTabelaCarros(context) {
             iHtml+= `<td> <span>${carro['km']}</span></td>`
             iHtml+= `<td> <span>${carro['valor']}</span></td>`
             iHtml+= `<td> <span>${carro['loja']}</span></td>`
-            iHtml+= `<td><a class="btn btn-info btn-sm" href="/proposta/create/${carro['id']}" role="button">`
-            iHtml+= `<ion-icon name="bookmark-outline"></ion-icon></a></td></tr>`
+            if (propor){
+                iHtml+= `<td><a class="btn btn-info btn-sm" href="/proposta/create/${carro['id']}" role="button">`
+                iHtml+= `<ion-icon name="bookmark-outline"></ion-icon></a></td>`
+            }
+            iHtml+='</tr>'
         }
 
         table.innerHTML = iHtml;

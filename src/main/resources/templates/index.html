@@ -14,8 +14,9 @@
 <div layout:fragment="corpo" class="text-center">
 <br />
 
-<input type='hidden' name='${boo}' value='${boo}' id='propor'/>
-<form name='form'>
+<input sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')" type='hidden' value='true' id='propor'/>
+
+    <form name='form'>
 
     <div align="center">
         <h1 th:text="#{lista_de_carros}"></h1><br>
@@ -43,7 +44,7 @@
                     <td class="bg-primary">Km</td>
                     <td class="bg-primary">Valor</td>
                     <td class="bg-primary">Loja</td>
-                    <td class="bg-primary">Propor</td>
+                    <td class="bg-primary" sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')">Propor</td>
                 </tr>
                 </thead>
                 <tbody id="tbody">
@@ -75,7 +76,7 @@
                     <td> <span th:text="${carro.km}"></span></td>
                     <td> <span th:text="${carro.valor}"></span></td>
                     <td> <span th:text="${carro.loja.nome}"></span></td>
-                    <td>
+                    <td sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')">
                         <a class="btn btn-info btn-sm" th:href="@{/proposta/create/{id} (id=${carro.id}) }"
                            role="button">
                             <ion-icon name="bookmark-outline"></ion-icon>

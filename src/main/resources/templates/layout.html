@@ -56,7 +56,12 @@
         <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-white">My Area</a></li>
       </ul>
 
-
+      <div class="text-end" style="padding-right: 50px">
+        <a th:href="@{''(lang=pt)}"><img alt=""
+                                         th:src="@{/image/BR.jpg}" style="width: 30px;" /></a> <a
+              th:href="@{''(lang=eo)}"><img alt=""
+                                            th:src="@{/image/ES.png}" style="width: 30px;" /></a>
+      </div>
 
       <div sec:authorize="!isAuthenticated()" class="text-end">
         <button form="login" type="submit" class="btn btn-outline-light me-2">Login</button>
@@ -76,11 +81,16 @@
                                          style="color:rgb(255, 255, 255);">
                                 airport_shuttle
                             </span></a></li>
-        <li><a th:href="@{/home}"  class="nav-link px-2 text-secondary">Home</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-white">My Area</a></li>
+        <li><a th:href="@{/home}"  class="nav-link px-2 text-white">Home</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-secondary">My Area</a></li>
       </ul>
 
-
+      <div class="text-end" style="padding-right: 50px">
+        <a th:href="@{''(lang=pt)}"><img alt=""
+                                         th:src="@{/image/BR.jpg}" style="width: 30px;" /></a> <a
+              th:href="@{''(lang=eo)}"><img alt=""
+                                            th:src="@{/image/ES.png}" style="width: 30px;" /></a>
+      </div>
 
       <div sec:authorize="!isAuthenticated()" class="text-end">
         <button form="login" type="submit" class="btn btn-outline-light me-2">Login</button>

@@ -16,6 +16,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
+import javax.jms.MessageProducer;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -33,6 +36,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/proposta")
@@ -45,6 +49,9 @@ public class PropostaController {
 
     @Autowired
     private IClienteService cliservice;
+
+    @Autowired
+    private JavaMailSender emailservice;
 
     @GetMapping("/create/{id}")
     public String formClient(@PathVariable("id") Long id, Model model, RedirectAttributes attr) {
@@ -88,28 +95,36 @@ public class PropostaController {
             System.out.println("Campos devem ser preenchidos");
             return "formAceito";
         }
-        attr.addFlashAttribute("sucess", "proposta.accept.sucess");
-        return setStatus(id, 1);
+        Proposta proposta = service.buscaPorId(id);
+        if(setStatus(proposta, 2, attr)){
+            attr.addFlashAttribute("sucess", "proposta.accept.sucess");
+            if(!acceptEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
+        }
+        return "redirect:/carro/listar";
     }
 
     @PostMapping("/reject/{id}")
     public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
 
+        Proposta proposta = service.buscaPorId(id);
+        if(setStatus(proposta, 2, attr)){
+            attr.addFlashAttribute("sucess", "proposta.reject.sucess");
+            if(!rejectEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
+        }
 
-        attr.addFlashAttribute("sucess", "proposta.reject.sucess");
-        return setStatus(id, 2);
+        return "redirect:/carro/listar";
     }
 
-    public String setStatus(@PathVariable("id") Long id,int status) {
+    public boolean setStatus(Proposta proposta, int status, RedirectAttributes attr) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-        Proposta proposta = service.buscaPorId(id);
         if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
-            return "redirect:/carro/listar";
+            attr.addFlashAttribute("sucess", "proposta.reject.fail");
+            return false;
         }
         proposta.setStatus(status);
         service.salvar(proposta);
-        return "redirect:/carro/listar";
+        return true;
     }
 
 
@@ -144,5 +159,45 @@ public class PropostaController {
         return "PainelCliente";
     }
 
+
+    boolean acceptEmail(Proposta proposta, FormAccept form){
+        String subject, body;
+        subject = String.format("Olá %s,sua proposta foi aceita!",proposta.getCliente().getNome());
+        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi aceita!\nA reunião será %s no link %s\nO vendedor deixou a mensagem %s",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo(), form.getData(), form.getLink(), form.getMensagem());
+        return sendEmail(proposta, subject, body);
+    }
+
+    boolean rejectEmail(Proposta proposta, FormReject form){
+        String subject, body;
+        subject = String.format("Olá %s,sua proposta foi recusada :(",proposta.getCliente().getNome());
+        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo());
+        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
+            body += "\nO vendedor deixou a mensagem: "+form.getMensagem();
+        }
+        if (form.getCondPag() != null && !form.getCondPag().isBlank()){
+            body += "\nO vendedor deixou uma contraProposta: "+form.getCondPag();
+        }
+        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
+            body += "\nO vendedor fez uma contraProposta de R$ "+form.getValor();
+        }
+        return sendEmail(proposta, subject, body);
+    }
+
+
+    boolean sendEmail(Proposta proposta, String subject, String body){
+        try {
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(proposta.getCliente().getEmail());
+            msg.setFrom("Katchau");
+            msg.setSubject(subject);
+            msg.setText(body);
+
+            emailservice.send(msg);
+        } catch(Exception e){
+            System.out.println("não foi possivel enviar o email");
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -74,12 +74,9 @@
                                 <table border="1" style="width: fit-content; border: 1px solid black">
                                     <thead class="bg-success">
                                     <tr>
-                                        <td class="bg-primary" th:text="#{modelo}"></td>
                                         <td class="bg-primary" th:text="#{valor}"></td>
                                         <td class="bg-primary" th:text="#{dataProp}"></td>
-                                        <td class="bg-primary"> LOJA </td>
-                                        <td class="bg-primary" th:text="#{km}"></td>
-                                        <td class="bg-primary" th:text="#{descricao}"></td>
+                                        <td class="bg-primary" th:text="#{Cliente}"></td>
                                         <td class="bg-primary" th:text="#{status}"></td>
 
                                     </tr>
@@ -90,10 +87,7 @@
                                         <td> <span th:text="${proposta.getDataStr()}"></span></td>
                                         <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
                                         <td> <span th:text="${proposta.getStatus() == 0? 'ABERTO' : (proposta.getStatus() == 1? 'ACEITO': 'NÃO ACEITO')}"></span></td>
-
-                                        <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>
-                                        <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/reject/'+${proposta.id}}">rejeitar</a></td>
-                                    </tr>
+                                        </tr>
                                     </tbody>
                                 </table>
 
@@ -120,12 +114,9 @@
                                         <table border="1" style="width: fit-content; border: 1px solid black">
                                             <thead class="bg-success">
                                             <tr>
-                                                <td class="bg-primary" th:text="#{modelo}"></td>
                                                 <td class="bg-primary" th:text="#{valor}"></td>
                                                 <td class="bg-primary" th:text="#{dataProp}"></td>
-                                                <td class="bg-primary"> LOJA </td>
-                                                <td class="bg-primary" th:text="#{km}"></td>
-                                                <td class="bg-primary" th:text="#{descricao}"></td>
+                                                <td class="bg-primary" th:text="#{Cliente}"></td>
                                                 <td class="bg-primary" th:text="#{status}"></td>
                                                 <td class="bg-primary" th:text="#{aceitar}"></td>
                                                 <td class="bg-primary" th:text="#{recusar}"></td>
@@ -134,12 +125,9 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="proposta: ${carro.propostas}" th:if="${proposta.getStatus()==0}">
-                                                <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
                                                 <td> <span th:text="${proposta.valor}"></span></td>
                                                 <td> <span th:text="${proposta.getDataStr()}"></span></td>
-                                                <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
-                                                <td> <span th:text="${proposta.carro.km}"></span></td>
-                                                <td> <span th:text="${proposta.carro.descricao}"></span></td>
+                                                <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
                                                 <td> <span th:text="#{aberto}"></span></td>
 
                                                 <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>

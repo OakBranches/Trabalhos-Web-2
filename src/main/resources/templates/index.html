@@ -31,20 +31,20 @@
         <div id="carros">
             <hr>
 
-            <b><p>Quantidade: <span id="qtd" th:text="${carros.size()}"></span></p></b>
+            <b><p><span th:text="#{quantidade}"></span>: <span id="qtd" th:text="${carros.size()}"></span></p></b>
             <table class="table table-striped table-hover table-bordered align-middle position-relative" style="width: 400px; border: 1px solid black;border-radius: 10px;">
                 <thead class="bg-success">
                 <tr>
                     <td class="bg-primary" th:text="#{Imagem}"></td>
-                    <td class="bg-primary">Modelo</td>
-                    <td class="bg-primary">Placa</td>
-                    <td class="bg-primary">Chassi</td>
-                    <td class="bg-primary">Descrição</td>
-                    <td class="bg-primary">Ano</td>
-                    <td class="bg-primary">Km</td>
-                    <td class="bg-primary">Valor</td>
-                    <td class="bg-primary">Loja</td>
-                    <td class="bg-primary" sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')">Propor</td>
+                    <td class="bg-primary" th:text="#{modelo}"></td>
+                    <td class="bg-primary" th:text="#{placa}"></td>
+                    <td class="bg-primary" th:text="#{chassi}"></td>
+                    <td class="bg-primary" th:text="#{descricao}"></td>
+                    <td class="bg-primary" th:text="#{ano}"></td>
+                    <td class="bg-primary" th:text="#{km}"></td>
+                    <td class="bg-primary" th:text="#{valor}"></td>
+                    <td class="bg-primary" th:text="#{loja}"></td>
+                    <td class="bg-primary" th:text="#{propor}" sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')"></td>
                 </tr>
                 </thead>
                 <tbody id="tbody">

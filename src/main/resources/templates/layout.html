@@ -147,11 +147,11 @@
     </div>
     <div sec:authorize="hasRole('ROLE_LOJA')" class="my-3">
       <ul class="nav nav-pills" style="flex-direction: column;">
-        <li class="nav-item"><span class="nav-link active">Carros</span></li>
-        <li class="nav-item"><a class="nav-link" href="/carro/create"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+        <li class="nav-item"><span th:text="#{carro}" class="nav-link active"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/carro/create"> <i class="oi oi-plus"></i> <span th:text="#{cadastrar}"></span>
         </a></li>
         <li class="nav-item"><a class="nav-link" href="/carro/listar"> <i class="oi oi-spreadsheet"></i>
-          <span>Listar</span>
+          <span th:text="#{listar}"></span>
         </a></li>
       </ul>
     </div>
@@ -170,7 +170,7 @@
         <label for="floatingPassword">Password</label>
       </div>
 
-      <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Log in</button>
+      <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Login</button>
     </form>
   </div>
 

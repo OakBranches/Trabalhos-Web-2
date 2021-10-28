@@ -39,13 +39,13 @@
 
         <div class="form-floating">
             <input type="text" class="form-control" th:field="*{mensagem}" id="floatingMensage" th:placeholder="Gostei"  th:classappend="${#fields.hasErrors('mensagem')} ? 'is-invalid'" >
-            <label for="floatingMensage">Mensagem</label>
+            <label th:text="#{mensagem}" for="floatingMensage"></label>
             <div class="invalid-feedback">
                 <span th:errors="*{mensagem}"></span>
             </div>
         </div>
 
-        <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Aceitar</button>
+        <button th:text="#{aceitar}" class="mt-5 mb-3 btn btn-lg btn-primary" type="submit"></button>
     </form>
 </div>
 </body>

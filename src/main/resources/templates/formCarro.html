@@ -36,7 +36,7 @@
             <label for="floatingAno" th:text="#{ano}"></label>
         </div>
         <div class="form-floating">
-            <input type="text" class="form-control" th:field="*{chassi}" id="floatingChassi" placeholder="aço inox" th:classappend="${#fields.hasErrors('chassi')} ? 'is-invalid'" />
+            <input type="text" class="form-control" th:field="*{chassi}" id="floatingChassi" placeholder="12" th:classappend="${#fields.hasErrors('chassi')} ? 'is-invalid'" />
 
             <div class="invalid-feedback">
                 <span th:errors="*{chassi}"></span>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" th:field="*{placa}" id="floatingPlaca" placeholder="1234567" th:classappend="${#fields.hasErrors('placa')} ? 'is-invalid'" />
+            <input type="text" class="form-control" th:field="*{placa}" id="floatingPlaca" placeholder="abc1d23" th:classappend="${#fields.hasErrors('placa')} ? 'is-invalid'" />
 
             <div class="invalid-feedback">
                 <span th:errors="*{placa}"></span>
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Cadastrar</button>
+        <button th:text="#{cadastrar}" class="mt-5 mb-3 btn btn-lg btn-primary" type="submit"></button>
 
     </form>
 </div>

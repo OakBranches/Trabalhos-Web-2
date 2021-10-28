@@ -35,7 +35,7 @@ public class ClienteService extends UsuarioService implements IClienteService {
         return !(dao.findClienteById(id).getPropostas().isEmpty());}
     @Transactional(readOnly = true)
     public boolean clienteTemPropostasAbertasNoCarro(Long id, Long car_id){
-        Predicate<Proposta> filtro = proposta -> (proposta.getId().equals(car_id) && proposta.getStatus() == 0);
+        Predicate<Proposta> filtro = proposta -> (proposta.getCarro().getId().equals(car_id) && proposta.getStatus() == 0);
         return dao.findClienteById(id).getPropostas().stream().anyMatch(filtro);
     }
     @Transactional(readOnly = true)

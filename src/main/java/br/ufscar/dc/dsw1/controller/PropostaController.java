@@ -61,8 +61,9 @@ public class PropostaController {
         Proposta proposta =  new Proposta();
         proposta.setCliente(cli);
         proposta.setCarro(carro);
-
+        System.out.println("\n" + proposta.toString());
         model.addAttribute("proposta",proposta);
+        System.out.println(proposta.toString());
         return "formProposta";
     }
 

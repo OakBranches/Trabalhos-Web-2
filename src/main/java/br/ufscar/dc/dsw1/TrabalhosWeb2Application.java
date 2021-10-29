@@ -6,9 +6,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,7 +24,7 @@ public class TrabalhosWeb2Application {
         SpringApplication.run(TrabalhosWeb2Application.class, args);
     }
     @Bean
-    public CommandLineRunner demo(ILojaDAO lojaDAO, IUsuarioDAO usuarioDAO, ICarroDAO carroDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, BCryptPasswordEncoder encoder) {
+    public CommandLineRunner demo(ILojaDAO lojaDAO, IUsuarioDAO usuarioDAO,IFileDAO fileDAO, ICarroDAO carroDAO, IClienteDAO clienteDAO, IPropostaDAO propostaDAO, BCryptPasswordEncoder encoder) {
         return (args) -> {
 
             Loja l1 = new Loja("loja@loja.com", encoder.encode("loja"), "Ensaio Jr", "11.111.111/1111-11", "BOa loja.");
@@ -56,7 +61,27 @@ public class TrabalhosWeb2Application {
             Proposta p2 = new Proposta(BigDecimal.valueOf(100), 0, "condicao boa", aux, car2, c2);
             propostaDAO.save(p2);
 
+            imagem(car1, fileDAO, 1);
+            imagem(car1, fileDAO, 2);
+            imagem(car2, fileDAO, 1);
+            imagem(car2, fileDAO, 2);
+            imagem(car3, fileDAO, 1);
+            imagem(car3, fileDAO, 2);
+
+
         };
+
     }
 
+    public void imagem(Carro car1, IFileDAO fileDAO, int foto){
+        try {
+            String nome = "paintcar"+ (foto == 2? "2.png":".png");
+            File file = new File(getClass().getResource("/static/image/"+ car1.getId()+"/"+nome).getFile());
+            Path path = file.toPath();
+            byte[] data = Files.readAllBytes(path);
+            FileEntity f = new FileEntity(car1.getId().toString() + nome, "image", data, car1);
+            fileDAO.save(f);
+        } catch (Exception ignored){
+        }
+    }
 }

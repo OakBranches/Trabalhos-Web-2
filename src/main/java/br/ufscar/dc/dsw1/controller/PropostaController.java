@@ -94,7 +94,7 @@ public class PropostaController {
             return "formAceito";
         }
         Proposta proposta = service.buscaPorId(id);
-        if(setStatus(proposta, 2, attr)){
+        if(setStatus(proposta, 1, attr)){
             attr.addFlashAttribute("sucess", "proposta.accept.sucess");
             if(!acceptEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
         }

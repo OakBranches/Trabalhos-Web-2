@@ -13,21 +13,21 @@
 
     <div class="row justify-content-center align-items-center">
         <form class="w-25" th:action="@{/proposta/reject/{id} (id=${id})}" th:object="${form}" method="post">
-                <h1 class="h3 mb-3 fw-normal">Recusar</h1>
+                <h1 th:text="#{recusar}" class="h3 mb-3 fw-normal">Recusar</h1>
 
             <div class="form-floating">
                 <input type="number" step="0.1" min="0" class="form-control" name="valor" id="floatingV" placeholder="10000,00" >
-                <label for="floatingV">Valor</label>
+                <label th:text="#{valor}" for="floatingV"></label>
             </div>
 
             <div class="form-floating">
                 <input type="text" class="form-control" name="condPag" id="floatingCond" placeholder="Parcelar em 3x" >
-                <label for="floatingCond">Condição de Pagamento</label>
+                <label th:text="#{condPag}" for="floatingCond"></label>
             </div>
 
             <div class="form-floating">
                 <input type="text"  class="form-control" name="mensagem" id="floatingMensage" placeholder="Mau">
-                <label for="floatingMensage">Mensagem</label>
+                <label th:text="#{mensagem}" for="floatingMensage"></label>
             </div>
 
             <button th:text="#{recusar}" class="mt-5 mb-3 btn btn-lg btn-primary" type="submit"></button>

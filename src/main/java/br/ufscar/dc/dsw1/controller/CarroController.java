@@ -101,7 +101,7 @@ public class CarroController {
             }
 		}
         System.out.println("terminou o cadastro");
-        return "redirect:/example";
+        return "redirect:/carro/listar";
     }
 
 }

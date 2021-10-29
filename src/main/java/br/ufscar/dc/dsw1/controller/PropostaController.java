@@ -59,19 +59,16 @@ public class PropostaController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
 
-        if (cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
+        if (carro ==null || cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
             attr.addFlashAttribute("fail", "proposta.existe");
-            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo");
+            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo ou o veiculo não existe");
             return "redirect:/home";
         }
 
-        Cliente cli = cliservice.buscaPorId(user.getId());
-        Proposta proposta =  new Proposta();
-        proposta.setCliente(cli);
-        proposta.setCarro(carro);
-        System.out.println("\n" + proposta.toString());
+        PropostaForm proposta =  new PropostaForm();
+        proposta.setCli_id(user.getId().intValue());
+        proposta.setCar_id(id.intValue());
         model.addAttribute("proposta",proposta);
-        System.out.println(proposta.toString());
         return "formProposta";
     }
 
@@ -130,10 +127,11 @@ public class PropostaController {
 
 
     @PostMapping("/salvar")
-    public String salvar(@Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr) {
+    public String salvar(@ModelAttribute("proposta") @Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr, Model model) {
         if (result.hasErrors()) {
-            attr.addFlashAttribute("sucess", "proposta.create.fail");
-            System.out.println("");
+            model.addAttribute("proposta", propostaForm);
+            attr.addFlashAttribute("fail", "proposta.create.fail");
+            System.out.println("Houve um erro ao registrar a proposta");
             return "formProposta";
         }
         Proposta proposta = new Proposta();

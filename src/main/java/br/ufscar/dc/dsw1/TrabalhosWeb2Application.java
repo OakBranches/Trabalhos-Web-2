@@ -67,10 +67,7 @@ public class TrabalhosWeb2Application {
             imagem(car2, fileDAO, 2);
             imagem(car3, fileDAO, 1);
             imagem(car3, fileDAO, 2);
-
-
         };
-
     }
 
     public void imagem(Carro car1, IFileDAO fileDAO, int foto){

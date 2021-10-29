@@ -177,7 +177,7 @@ public class PropostaController {
         if (form.getCondPag() != null && !form.getCondPag().isBlank()){
             body += "\nO vendedor deixou uma contraProposta: "+form.getCondPag();
         }
-        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
+        if (form.getValor() != null && !form.getValor().isBlank()){
             body += "\nO vendedor fez uma contraProposta de R$ "+form.getValor();
         }
         return sendEmail(proposta, subject, body);

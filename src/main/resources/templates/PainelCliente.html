@@ -30,7 +30,11 @@
             <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
             <td> <span th:text="${proposta.carro.km}"></span></td>
             <td> <span th:text="${proposta.carro.descricao}"></span></td>
-            <td> <span th:text="${proposta.getStatus() == 0? 'ABERTO' : (proposta.getStatus() == 1? 'ACEITO': 'NÃO ACEITO')}"></span></td>
+            <td th:switch="${proposta.getStatus()}">
+                <span th:case="0" th:text="#{abertoM}"></span>
+                <span th:case="1" th:text="#{aceitoM}"></span>
+                <span th:case="2" th:text="#{naoAceitoM}"></span>
+            </td>
         </tr>
         </tbody>
     </table>

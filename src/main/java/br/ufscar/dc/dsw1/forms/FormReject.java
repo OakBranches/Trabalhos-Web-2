@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class FormReject {
 
-    private float valor;
+    private String valor;
     private String condPag;
     private String mensagem;
 }

@@ -30,7 +30,7 @@
             </thead>
             <tbody>
             <tr>
-                <td> <span th:if="${carro.getImagens().isEmpty()}">Não há Imagem</span>
+                <td> <span th:if="${carro.getImagens().isEmpty()}">--</span>
                     <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
                         <div class="carousel-inner">
                             <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">
@@ -85,8 +85,12 @@
                                         <td> <span th:text="${proposta.valor}"></span></td>
                                         <td> <span th:text="${proposta.getDataStr()}"></span></td>
                                         <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
-                                        <td> <span th:text="${proposta.getStatus() == 0? 'ABERTO' : (proposta.getStatus() == 1? 'ACEITO': 'NÃO ACEITO')}"></span></td>
-                                        </tr>
+                                        <td th:switch="${proposta.getStatus()}">
+                                            <span th:case="0" th:text="#{abertoM}"></span>
+                                            <span th:case="1" th:text="#{aceitoM}"></span>
+                                            <span th:case="2" th:text="#{naoAceitoM}"></span>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
 
@@ -126,10 +130,21 @@
                                                 <td> <span th:text="${proposta.valor}"></span></td>
                                                 <td> <span th:text="${proposta.getDataStr()}"></span></td>
                                                 <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
-                                                <td> <span th:text="#{aberto}"></span></td>
+                                                <td> <span th:text="#{abertoM}"></span></td>
 
-                                                <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>
-                                                <td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/reject/'+${proposta.id}}">rejeitar</a></td>
+                                                <!--<td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>-->
+                                                <td>
+                                                    <a class="btn btn-info btn-sm" th:href="@{ '/proposta/accept/' +${proposta.id} }"
+                                                       role="button">
+                                                        <ion-icon name="thumbs-up-outline"></ion-icon>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger btn-sm" th:href="@{'/proposta/reject/' +${proposta.id} }"
+                                                       role="button">
+                                                        <ion-icon name="thumbs-down-outline"></ion-icon>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>

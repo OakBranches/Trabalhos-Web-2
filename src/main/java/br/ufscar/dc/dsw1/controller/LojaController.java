@@ -43,6 +43,7 @@ public class LojaController {
 
         if (service.LojaTemCarros(id)) {
             attr.addFlashAttribute("fail", "loja.delete.fail");
+            System.out.println("Não foi possivel deletar");
         } else {
             service.excluirPorId(id);
             attr.addFlashAttribute("sucess", "loja.delete.sucess");
@@ -63,6 +64,7 @@ public class LojaController {
 
         if (result.hasErrors()) {
             attr.addFlashAttribute("fail", "loja.create.fail");
+            System.out.println("Não foi possivel criar");
             return "formLoja";
         }
 

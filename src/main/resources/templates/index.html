@@ -49,7 +49,7 @@
                 </thead>
                 <tbody id="tbody">
                 <tr th:each="carro : ${carros}">
-                    <td> <span th:if="${carro.getImagens().isEmpty()}">Não há Imagem</span>
+                    <td> <span th:if="${carro.getImagens().isEmpty()}">--</span>
                         <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
                             <div class="carousel-inner">
                                    <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">

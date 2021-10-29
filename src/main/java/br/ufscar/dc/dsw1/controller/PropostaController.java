@@ -61,6 +61,7 @@ public class PropostaController {
 
         if (cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
             attr.addFlashAttribute("fail", "proposta.existe");
+            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo");
             return "redirect:/home";
         }
 
@@ -132,6 +133,7 @@ public class PropostaController {
     public String salvar(@Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr) {
         if (result.hasErrors()) {
             attr.addFlashAttribute("sucess", "proposta.create.fail");
+            System.out.println("");
             return "formProposta";
         }
         Proposta proposta = new Proposta();
@@ -170,7 +172,7 @@ public class PropostaController {
     boolean rejectEmail(Proposta proposta, FormReject form){
         String subject, body;
         subject = String.format("Olá %s,sua proposta foi recusada :(",proposta.getCliente().getNome());
-        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo());
+        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor(), proposta.getCarro().getModelo());
         if (form.getMensagem() != null && !form.getMensagem().isBlank()){
             body += "\nO vendedor deixou a mensagem: "+form.getMensagem();
         }

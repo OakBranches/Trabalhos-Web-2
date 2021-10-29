@@ -58,7 +58,7 @@ function atualizaTabelaCarros(context) {
             let carro = carros[i]
             iHtml += `<tr><td>`
             if (carro['imagens'].length === 0){
-                iHtml+='<span>Não há Imagem</span>'
+                iHtml+='<span>--</span>'
             }else {
                 iHtml+= `<div id="${'carouselExampleControls'+ carro['id']}" class="carousel slide" data-bs-ride="carousel" style="width: 300px"><div class="carousel-inner">`
                 for (let j = 0; j < carro['imagens'].length; j++) {

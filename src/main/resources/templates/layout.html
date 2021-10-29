@@ -52,8 +52,8 @@
                               style="color:rgb(255, 255, 255);">
                                 airport_shuttle
                             </span></a></li>
-        <li><a th:href="@{/home}"  class="nav-link px-2 text-secondary">Home</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-white">My Area</a></li>
+        <li><a th:href="@{/home}"  class="nav-link px-2 text-secondary" th:text="#{Home}"></a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-white" th:text="#{MeuPainel}"></a></li>
       </ul>
 
       <div class="text-end" style="padding-right: 50px">
@@ -64,13 +64,13 @@
       </div>
 
       <div sec:authorize="!isAuthenticated()" class="text-end">
-        <button form="login" type="submit" class="btn btn-outline-light me-2">Login</button>
+        <button form="login" type="submit" class="btn btn-outline-light me-2" th:text="#{Login}"></button>
       </div>
 
 
 
       <div sec:authorize="isAuthenticated()" class="text-end">
-        <button form="logout" type="submit" class="btn btn-outline-light me-2">Logout</button>
+        <button form="logout" type="submit" class="btn btn-outline-light me-2" th:text="#{Logout}"></button>
       </div>
     </div>
     <div layout:fragment="header_default" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -81,8 +81,8 @@
                                          style="color:rgb(255, 255, 255);">
                                 airport_shuttle
                             </span></a></li>
-        <li><a th:href="@{/home}"  class="nav-link px-2 text-white">Home</a></li>
-        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-secondary">My Area</a></li>
+        <li><a th:href="@{/home}"  class="nav-link px-2 text-white" th:text="#{Home}"></a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-secondary" th:text="#{MeuPainel}"></a></li>
       </ul>
 
       <div class="text-end" style="padding-right: 50px">
@@ -93,13 +93,13 @@
       </div>
 
       <div sec:authorize="!isAuthenticated()" class="text-end">
-        <button form="login" type="submit" class="btn btn-outline-light me-2">Login</button>
+        <button form="login" type="submit" class="btn btn-outline-light me-2" th:text="#{Login}"></button>
       </div>
 
 
 
       <div sec:authorize="isAuthenticated()" class="text-end">
-        <button form="logout" type="submit" class="btn btn-outline-light me-2">Logout</button>
+        <button form="logout" type="submit" class="btn btn-outline-light me-2" th:text="#{Logout}"></button>
       </div>
 
     </div>
@@ -111,47 +111,47 @@
 <nav class="row sidebar sidebar-open" style="flex:1 1 auto; flex-direction: row; background-color:beige;">
   <div layout:fragment="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-auto" style="width: fit-content;height: 100%;">
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <span class="fs-4">Opções</span>
+      <span class="fs-4" th:text="#{Opcoes}"></span>
     </a>
     <hr>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-3">
       <ul class="nav nav-pills" style="flex-direction: column;">
-        <li class="nav-item"><span class="nav-link active">Clientes</span></li>
-        <li class="nav-item"><a class="nav-link" href="/cliente/create"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+        <li class="nav-item"><span class="nav-link active" th:text="#{Clientes}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/cliente/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
         </a></li>
         <li class="nav-item"><a class="nav-link" href="/cliente/listar"> <i class="oi oi-spreadsheet"></i>
-          <span>Listar</span>
+          <span th:text="#{Listar}"></span>
         </a></li>
       </ul>
     </div>
     <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-3">
       <ul class="nav nav-pills" style="flex-direction: column;">
-        <li class="nav-item"><span class="nav-link active">Lojas</span></li>
-        <li class="nav-item"><a class="nav-link" href="/loja/create"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+        <li class="nav-item"><span class="nav-link active" th:text="#{Lojas}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/loja/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
         </a></li>
         <li class="nav-item"><a class="nav-link" href="/loja/listar"> <i class="oi oi-spreadsheet"></i>
-          <span>Listar</span>
+          <span th:text="#{Listar}"></span>
         </a></li>
       </ul>
     </div>
     <div sec:authorize="hasRole('ROLE_USER')" class="my-3">
       <ul class="nav nav-pills" style="flex-direction: column;">
-        <li class="nav-item"><span class="nav-link active">Propostas</span></li>
-        <li class="nav-item"><a class="nav-link" href="/home"> <i class="oi oi-plus"></i> <span>Fazer Proposta</span>
+        <li class="nav-item"><span class="nav-link active" th:text="#{Propostas}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/home"> <i class="oi oi-plus"></i> <span th:text="#{FazerPropostas}"></span>
         </a></li>
         <li class="nav-item"><a class="nav-link" href="/proposta/listar"> <i class="oi oi-spreadsheet"></i>
-          <span>Listar</span>
+          <span th:text="#{Listar}"></span>
         </a></li>
       </ul>
     </div>
     <div sec:authorize="hasRole('ROLE_LOJA')" class="my-3">
       <ul class="nav nav-pills" style="flex-direction: column;">
         <li class="nav-item"><span th:text="#{carro}" class="nav-link active"></span></li>
-        <li class="nav-item"><a class="nav-link" href="/carro/create"> <i class="oi oi-plus"></i> <span th:text="#{cadastrar}"></span>
+        <li class="nav-item"><a class="nav-link" href="/carro/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
         </a></li>
         <li class="nav-item"><a class="nav-link" href="/carro/listar"> <i class="oi oi-spreadsheet"></i>
-          <span th:text="#{listar}"></span>
+          <span th:text="#{Listar}"></span>
         </a></li>
       </ul>
     </div>
@@ -159,18 +159,18 @@
 
   <div layout:fragment="corpo" class="row justify-content-center align-items-center col-sm">
     <form class="w-25" th:action="@{/login}" method="post">
-      <h1 class="h3 mb-3 fw-normal">Login</h1>
+      <h1 class="h3 mb-3 fw-normal" th:text="#{Login}"></h1>
 
       <div class="form-floating">
         <input type="email" class="form-control" name="username" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput" th:text="#{Email}"></label>
       </div>
       <div class="form-floating">
         <input type="password"  class="form-control" name="password"  id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Password</label>
+        <label for="floatingPassword" th:text="#{Senha}"></label>
       </div>
 
-      <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit">Login</button>
+      <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit" th:text="#{Login}"></button>
     </form>
   </div>
 
@@ -182,7 +182,7 @@
 
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top my-3">
     <div class=" d-flex align-items-center">
-      <span class="text-muted">Feito por Matheus Ramos de Carvalho e Lorenzo Correia Maia</span>
+      <span class="text-muted"> <span th:text="#{FeitoPor}"></span> Matheus Ramos de Carvalho e Lorenzo Correia Maia</span>
 
     </div>
 

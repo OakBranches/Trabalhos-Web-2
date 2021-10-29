@@ -26,13 +26,13 @@ public class CarroForm {
     private float km;
 
     @NotBlank (message = "{NotBlank}")
-    @Size(min = 7, max = 7, message = "{Size.Carro.Placa}")
+    @Size(min = 7, max = 7, message="{Size.CarroForm.placa}")
     private String placa;
 
-    @NotBlank (message = "{NotBlank}")
+    @NotBlank (message="{Size.CarroForm.modelo}")
     private String modelo;
 
-    @NotBlank (message = "{NotBlank}")
+    @NotBlank (message="{NotBlank}")
     private String descricao;
 
     @NotBlank (message = "{NotBlank}")
@@ -43,7 +43,7 @@ public class CarroForm {
 
     @NotNull (message = "{NotBlank}")
     @NotEmpty (message = "{NotBlank}")
-    @Multipart
+    @Multipart (message = "{Multipart}")
     private List<MultipartFile> imagens;
 
     @Override

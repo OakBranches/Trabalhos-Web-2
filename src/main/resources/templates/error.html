@@ -14,7 +14,7 @@
 
 </head>		
 <body class="text-center">
-	<div>
+	<div th:if="${status == 404 || status == 403}">
 		<h1 class="h3 mb-3 font-weight-normal">
 			<i class="oi oi-warning"></i> 
 			<span th:text="${status}"></span>
@@ -28,6 +28,23 @@
 			<span th:text="#{${status + '.message'}}"></span><br />
 			<br /> <a class="btn btn-primary" type="button"
 				href="javascript:history.back()"><span th:text="#{previous.message}"></span></a>
+		</div>
+	</div>
+
+	<div th:if="${!(status == 404 || status == 403)}">
+		<h1 class="h3 mb-3 font-weight-normal">
+			<i class="oi oi-warning"></i>
+			<span th:text="${status}"></span>
+		</h1>
+
+		<h2 th:text="#{'default.error'}"></h2>
+
+		<hr/>
+
+		<div>
+			<span th:text="#{'default.message'}"></span><br />
+			<br /> <a class="btn btn-primary" type="button"
+					  href="javascript:history.back()"><span th:text="#{previous.message}"></span></a>
 		</div>
 	</div>
 </body>

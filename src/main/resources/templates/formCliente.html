@@ -59,8 +59,9 @@
             </div>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="email" autofocus="autofocus"
+                <input type="email"  class="form-control" id="email" autofocus="autofocus"
                        th:field="*{email}" th:placeholder="#{email}"
+                       th:readonly="${cliente!= null && cliente.id != null}"
                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
                 <label for="email" th:text="#{Email}"></label>
                 <div class="invalid-feedback">

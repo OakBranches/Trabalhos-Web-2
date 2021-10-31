@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-floating">
-            <input type="email" class="form-control" th:field="*{email}" id="floatingEmail" placeholder="loja@loja.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+            <input type="email" class="form-control" th:field="*{email}" th:readonly="${Loja.id != null}" id="floatingEmail" placeholder="loja@loja.com" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
             <label for="floatingEmail">E-mail</label>
             <div class="invalid-feedback">
                 <span th:errors="*{email}"></span>

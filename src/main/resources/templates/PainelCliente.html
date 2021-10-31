@@ -25,7 +25,7 @@
         <tbody>
         <tr th:each="proposta : ${propostas}">
             <td> <span th:text="${proposta.carro.getModelo()}"></span></td>
-            <td> <span th:text="${proposta.valor}"></span></td>
+            <td> <span th:text="${'R$ '+proposta.valor}"></span></td>
             <td> <span th:text="${proposta.getDataStr()}"></span></td>
             <td> <span th:text="${proposta.carro.loja.getNome()}"></span></td>
             <td> <span th:text="${proposta.carro.km}"></span></td>

@@ -55,7 +55,7 @@
                 <td> <span th:text="${carro.descricao}"></span></td>
                 <td> <span th:text="${carro.ano}"></span></td>
                 <td> <span th:text="${carro.km}"></span></td>
-                <td> <span th:text="${carro.valor}"></span></td>
+                <td> <span th:text="${'R$ '+carro.valor}"></span></td>
                 <td> <span th:text="${carro.loja.nome}"></span></td>
 
             </tr>
@@ -82,7 +82,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="proposta: ${carro.propostas}" th:if="${proposta.getStatus()!=0}">
-                                        <td> <span th:text="${proposta.valor}"></span></td>
+                                        <td> <span th:text="${'R$ '+proposta.valor}"></span></td>
                                         <td> <span th:text="${proposta.getDataStr()}"></span></td>
                                         <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
                                         <td>
@@ -127,7 +127,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="proposta: ${carro.propostas}" th:if="${proposta.getStatus()==0}">
-                                                <td> <span th:text="${proposta.valor}"></span></td>
+                                                <td> <span th:text="${'R$ '+proposta.valor}"></span></td>
                                                 <td> <span th:text="${proposta.getDataStr()}"></span></td>
                                                 <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
                                                 <td> <span th:text="#{abertoM}"></span></td>

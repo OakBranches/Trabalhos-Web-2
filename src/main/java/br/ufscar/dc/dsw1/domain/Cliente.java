@@ -58,7 +58,7 @@ public class Cliente extends Usuario implements Serializable {
 	}
 
 	public String getNascimentoStr(){
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		return format.format(nascimento);
 	}
 	@Override

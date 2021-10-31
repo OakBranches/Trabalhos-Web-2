@@ -62,7 +62,7 @@ public class Proposta implements Serializable {
 	}
 
 	public String getDataStr() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		return format.format(data);
 	}
 

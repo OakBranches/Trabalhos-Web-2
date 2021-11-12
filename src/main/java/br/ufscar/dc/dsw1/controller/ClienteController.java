@@ -29,13 +29,13 @@ public class ClienteController {
     @GetMapping("/create")
     public String formClient(Model model) {
         model.addAttribute("cliente", new Cliente());
-        return "formCliente";
+        return "adm/formCliente";
     }
 
     @GetMapping("/edit/{id}")
     public String formEditClient(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("cliente", service.buscaPorId(id));
-        return "formCliente";
+        return "adm/formCliente";
     }
 
     @GetMapping("/delete/{id}")
@@ -65,7 +65,7 @@ public class ClienteController {
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
             attr.addFlashAttribute("fail", "client.create.fail");
-            return "formCliente";
+            return "adm/formCliente";
         }
 
         System.out.println("senha = " + cliente.getSenha());
@@ -82,7 +82,7 @@ public class ClienteController {
     public String listar(ModelMap model, Locale locale) {
         model.addAttribute("clientes",service.buscarTodosClientes());
         model.addAttribute("locale", locale);
-        return "listarClientes";
+        return "adm/listarClientes";
     }
 
     public boolean cpfIsValid(String cpf, Long Id){

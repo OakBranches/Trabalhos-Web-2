@@ -3,7 +3,6 @@ package br.ufscar.dc.dsw1.controller;
 import br.ufscar.dc.dsw1.domain.Loja;
 import br.ufscar.dc.dsw1.domain.Usuario;
 import br.ufscar.dc.dsw1.services.spec.ILojaService;
-import br.ufscar.dc.dsw1.services.spec.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,13 +28,13 @@ public class LojaController {
     @GetMapping("/create")
     public String formLoja(Model model) {
         model.addAttribute("Loja", new Loja());
-        return "formLoja";
+        return "adm/formLoja";
     }
 
     @GetMapping("/edit/{id}")
     public String formEditLoja(ModelMap model, @PathVariable("id") Long id) {
         model.addAttribute("Loja", service.buscaPorId(id));
-        return "formLoja";
+        return "adm/formLoja";
     }
 
     @GetMapping("/delete/{id}")
@@ -65,7 +64,7 @@ public class LojaController {
         if (result.hasErrors()) {
             attr.addFlashAttribute("fail", "loja.create.fail");
             System.out.println("Não foi possivel criar");
-            return "formLoja";
+            return "adm/formLoja";
         }
 
         System.out.println("senha = " + Loja.getSenha());
@@ -81,7 +80,7 @@ public class LojaController {
     @GetMapping("/listar")
     public String listar(ModelMap model) {
         model.addAttribute("lojas",service.buscarTodasLojas());
-        return "listarLojas";
+        return "adm/listarLojas";
     }
 
     public boolean cnpjIsValid(String cnpj, Long Id){

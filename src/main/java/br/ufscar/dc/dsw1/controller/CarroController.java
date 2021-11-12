@@ -51,7 +51,7 @@ public class CarroController {
         List<Carro> carros = service.buscaPorId(user.getId()).getCarros();
         model.addAttribute("carros", carros);
         model.addAttribute("locale", locale);
-        return "PainelLoja";
+        return "loja/PainelLoja";
     }
 
     @GetMapping("/create")
@@ -60,7 +60,7 @@ public class CarroController {
             model.addAttribute("form", new CarroForm());
         model.addAttribute("files", service.buscarTodasLojas());
 
-        return "formCarro";
+        return "loja/formCarro";
     }
 
 
@@ -70,7 +70,7 @@ public class CarroController {
         if (result.hasErrors()) {
             System.out.println("Há erros");
             System.out.println(result.getAllErrors());
-            return "formCarro";
+            return "loja/formCarro";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();

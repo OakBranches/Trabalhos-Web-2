@@ -1,6 +1,5 @@
 package br.ufscar.dc.dsw1.controller;
 
-import br.ufscar.dc.dsw1.dao.IClienteDAO;
 import br.ufscar.dc.dsw1.domain.Carro;
 import br.ufscar.dc.dsw1.domain.Cliente;
 import br.ufscar.dc.dsw1.domain.Proposta;
@@ -12,15 +11,11 @@ import br.ufscar.dc.dsw1.security.UsuarioDetails;
 import br.ufscar.dc.dsw1.services.spec.ICarroService;
 import br.ufscar.dc.dsw1.services.spec.IClienteService;
 import br.ufscar.dc.dsw1.services.spec.IPropostaService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -30,14 +25,10 @@ import org.springframework.ui.Model;
 
 //import javax.jms.MessageProducer;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/proposta")
@@ -70,21 +61,21 @@ public class PropostaController {
         proposta.setCli_id(user.getId().intValue());
         proposta.setCar_id(id.intValue());
         model.addAttribute("proposta",proposta);
-        return "formProposta";
+        return "cliente/formProposta";
     }
 
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("id", id);
         model.addAttribute("form", new FormAccept());
-        return "formAceito";
+        return "loja/formAceito";
     }
 
     @GetMapping("/reject/{id}")
     public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("id", id);
         model.addAttribute("form", new FormReject());
-        return "formRecusa";
+        return "loja/formRecusa";
     }
 
     @PostMapping("/accept/{id}")
@@ -92,7 +83,7 @@ public class PropostaController {
         if (result.hasErrors()) {
             attr.addFlashAttribute("fail", "proposta.accept.fail");
             System.out.println("Campos devem ser preenchidos");
-            return "formAceito";
+            return "loja/formAceito";
         }
         Proposta proposta = service.buscaPorId(id);
         if(setStatus(proposta, 1, attr)){
@@ -133,7 +124,7 @@ public class PropostaController {
             model.addAttribute("proposta", propostaForm);
             attr.addFlashAttribute("fail", "proposta.create.fail");
             System.out.println("Houve um erro ao registrar a proposta");
-            return "formProposta";
+            return "cliente/formProposta";
         }
         Proposta proposta = new Proposta();
         proposta.setCondPag(propostaForm.getCondPag());
@@ -158,7 +149,7 @@ public class PropostaController {
         model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
         model.addAttribute("locale", locale);
 
-        return "PainelCliente";
+        return "cliente/PainelCliente";
     }
 
 

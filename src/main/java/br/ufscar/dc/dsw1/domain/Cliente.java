@@ -3,13 +3,16 @@ package br.ufscar.dc.dsw1.domain;
 import br.ufscar.dc.dsw1.validation.UniqueCPF;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -57,9 +60,9 @@ public class Cliente extends Usuario implements Serializable {
 		this.nascimento = nascimento;
 	}
 
-	public String getNascimentoStr(){
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		return format.format(nascimento);
+	public String getNascimentoStr(Locale locale){
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.FULL, locale);
+		return dateFormat.format(this.nascimento);
 	}
 	@Override
 	public String toString() {

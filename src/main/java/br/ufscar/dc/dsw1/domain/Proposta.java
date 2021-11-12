@@ -9,8 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @SuppressWarnings("serial")
 @Entity
@@ -61,9 +63,9 @@ public class Proposta implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public String getDataStr() {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		return format.format(data);
+	public String getDataStr(Locale locale) {
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.FULL, locale);
+		return dateFormat.format(this.data);
 	}
 
 	@Override

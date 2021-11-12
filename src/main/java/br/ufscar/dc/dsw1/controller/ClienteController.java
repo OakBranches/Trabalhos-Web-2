@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Locale;
 import java.util.Objects;
 
 @Controller
@@ -78,8 +79,9 @@ public class ClienteController {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap model) {
+    public String listar(ModelMap model, Locale locale) {
         model.addAttribute("clientes",service.buscarTodosClientes());
+        model.addAttribute("locale", locale);
         return "listarClientes";
     }
 

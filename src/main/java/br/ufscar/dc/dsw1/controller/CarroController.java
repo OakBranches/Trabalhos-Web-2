@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/carro")
@@ -44,11 +45,12 @@ public class CarroController {
     private IFileService fileService;
 
     @GetMapping("/listar")
-    public String index(Model model) {
+    public String index(Model model, Locale locale) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
         List<Carro> carros = service.buscaPorId(user.getId()).getCarros();
         model.addAttribute("carros", carros);
+        model.addAttribute("locale", locale);
         return "PainelLoja";
     }
 

@@ -30,7 +30,7 @@
         <td> <span th:text="${cli.getNome()}"></span></td>
         <td> <span th:text="${cli.getSexo()}"></span></td>
         <td> <span th:text="${cli.getTelefone()}"></span></td>
-        <td> <span th:text="${cli.getNascimentoStr()}"></span></td>
+        <td> <span th:text="${cli.getNascimentoStr(locale)}"></span></td>
         <td> <span th:text="${cli.getEmail()}"></span></td>
         <td>
             <a class="btn btn-info btn-sm" th:href="@{/cliente/edit/{id} (id=${cli.getId()}) }"

@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -150,11 +151,12 @@ public class PropostaController {
 
 
     @GetMapping("/listar")
-    public String listar(ModelMap model) {
+    public String listar(ModelMap model, Locale locale) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
         model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
+        model.addAttribute("locale", locale);
 
         return "PainelCliente";
     }

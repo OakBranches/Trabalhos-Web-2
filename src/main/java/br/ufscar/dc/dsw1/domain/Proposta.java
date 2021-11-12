@@ -40,7 +40,7 @@ public class Proposta implements Serializable {
 	//todo arrumar a mensagem
 	@Column(nullable = false)
 	@NotNull(message = "{NotBlank}")
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 
 	//todo arrumar a mensagem

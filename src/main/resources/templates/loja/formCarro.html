@@ -67,7 +67,7 @@
             <div class="invalid-feedback">
                 <span th:errors="*{placa}"></span>
             </div>
-            <label for="floatingPlaca" th:text="#{placa}"> XXXXXXX</label>
+            <label for="floatingPlaca" th:text="|#{placa} ${': XXXXXXX'}|"></label>
         </div>
 
         <div class="mb-3">

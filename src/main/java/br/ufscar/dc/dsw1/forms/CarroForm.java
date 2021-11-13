@@ -25,8 +25,8 @@ public class CarroForm {
     @NotNull (message = "{NotBlank}")
     private float km;
 
-    @NotBlank (message = "{NotBlank}")
     @Size(min = 7, max = 7, message="{Size.CarroForm.placa}")
+    @NotBlank (message = "{NotBlank}")
     private String placa;
 
     @NotBlank (message="{Size.CarroForm.modelo}")

@@ -71,7 +71,7 @@ public class ClienteController {
         System.out.println("senha = " + cliente.getSenha());
 
         cliente.setSenha(encoder.encode(cliente.getSenha()));
-
+        cliente.setPapel(3);
         service.salvar(cliente);
         attr.addFlashAttribute("sucess", "client.create.sucess");
 

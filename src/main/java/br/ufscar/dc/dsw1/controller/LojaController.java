@@ -70,7 +70,7 @@ public class LojaController {
         System.out.println("senha = " + Loja.getSenha());
 
         Loja.setSenha(encoder.encode(Loja.getSenha()));
-
+        Loja.setPapel(2);
         service.salvar(Loja);
         attr.addFlashAttribute("sucess", "loja.create.sucess");
 

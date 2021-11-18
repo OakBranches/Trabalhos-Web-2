@@ -35,40 +35,6 @@ public class ClienteController {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-
-//    @PostMapping("/salvar")
-//    public String salvar(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-//
-//        if(!service.emailIsValid(cliente)){
-//            result.rejectValue("email", "Unique.usuario.email");
-//        }
-//        if(!cpfIsValid(cliente.getCpf(), cliente.getId())){
-//            result.rejectValue("cpf", "Unique.cliente.CPF");
-//        }
-//
-//        if (result.hasErrors()) {
-//            System.out.println(result.getAllErrors());
-//            attr.addFlashAttribute("fail", "client.create.fail");
-//            return "adm/formCliente";
-//        }
-//
-//        System.out.println("senha = " + cliente.getSenha());
-//
-//        cliente.setSenha(encoder.encode(cliente.getSenha()));
-//        cliente.setPapel(3);
-//        service.salvar(cliente);
-//        attr.addFlashAttribute("sucess", "client.create.sucess");
-//
-//        return "redirect:/cliente/listar";
-//    }
-//
-//    @GetMapping("/listar")
-//    public String listar(ModelMap model, Locale locale) {
-//        model.addAttribute("clientes",service.buscarTodosClientes());
-//        model.addAttribute("locale", locale);
-//        return "adm/listarClientes";
-//    }
-//
     public boolean cpfIsValid(String cpf, Long Id){
         Usuario loja = service.buscaPorCpf(cpf);
         return cpf.length() == 14 && (loja == null || Objects.equals(loja.getId(), Id));

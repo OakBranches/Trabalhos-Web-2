@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,6 +42,7 @@ public class Loja extends Usuario implements Serializable {
 		this.descricao = descricao;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "loja")
 	private List<Carro> carros;
 

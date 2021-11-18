@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw1.domain;
 
 import br.ufscar.dc.dsw1.validation.UniqueCPF;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,7 @@ public class Cliente extends Usuario implements Serializable {
 	@Column(nullable = false, length = 256)
 	private String sexo;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Proposta> propostas;
 

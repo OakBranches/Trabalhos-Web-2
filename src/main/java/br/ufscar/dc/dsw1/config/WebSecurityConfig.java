@@ -41,20 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-				http.authorizeRequests()
-				.antMatchers("/login","/example", "/download/**", "/teste","/message", "/static/js/**","/results/**" ,"/js/**","/css/**", "/image/**", "/webjars/**", "/home").permitAll()
-				.antMatchers("/proposta/list", "/proposta/create/**", "proposta/listar").hasRole("USER")
-				.antMatchers("/cliente/**", "/loja/**").hasRole("ADMIN")
-				.antMatchers("/carro/list", "/proposta/accept/**", "/proposta/reject/**", "/carro/create").hasRole("LOJA")
-				.anyRequest().authenticated()
-			.and()
-				.formLogin()
-				.loginPage("/login")
-				.permitAll()
-			.and()
-				.logout()
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/")
-				.permitAll();
+		http.csrf().disable().authorizeRequests()
+		// Controladores REST
+		.antMatchers("/clientes", "/lojas").permitAll()
+		.antMatchers("/clientes/{\\d+}", "/lojas/{\\d+}").permitAll()
+		.antMatchers("/propostas/veiculos/{\\d+}").permitAll()
+		.antMatchers("/propostas/clientes/{\\d+}").permitAll()
+		.antMatchers("/veiculos/lojas/{\\d+}").permitAll()
+		.antMatchers("/veiculos/modelos/{\\w+}").permitAll()
+		// Demais linhas
+		.anyRequest().permitAll();
 	}
 }

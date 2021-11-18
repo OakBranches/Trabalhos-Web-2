@@ -45,152 +45,152 @@ public class PropostaController {
     @Autowired
     private JavaMailSender emailservice;
 
-    @GetMapping("/create/{id}")
-    public String formClient(@PathVariable("id") Long id, Model model, RedirectAttributes attr) {
-        Carro carro = carservice.buscaPorId(id);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-
-        if (carro ==null || cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
-            attr.addFlashAttribute("fail", "proposta.existe");
-            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo ou o veiculo não existe");
-            return "redirect:/home";
-        }
-
-        PropostaForm proposta =  new PropostaForm();
-        proposta.setCli_id(user.getId().intValue());
-        proposta.setCar_id(id.intValue());
-        model.addAttribute("proposta",proposta);
-        return "cliente/formProposta";
-    }
-
-    @GetMapping("/accept/{id}")
-    public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("id", id);
-        model.addAttribute("form", new FormAccept());
-        return "loja/formAceito";
-    }
-
-    @GetMapping("/reject/{id}")
-    public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("id", id);
-        model.addAttribute("form", new FormReject());
-        return "loja/formRecusa";
-    }
-
-    @PostMapping("/accept/{id}")
-    public String accept(@ModelAttribute("form") @Valid FormAccept form, BindingResult result, RedirectAttributes attr,  @PathVariable("id") Long id, ModelMap model) {
-        if (result.hasErrors()) {
-            attr.addFlashAttribute("fail", "proposta.accept.fail");
-            System.out.println("Campos devem ser preenchidos");
-            return "loja/formAceito";
-        }
-        Proposta proposta = service.buscaPorId(id);
-        if(setStatus(proposta, 1, attr)){
-            attr.addFlashAttribute("sucess", "proposta.accept.sucess");
-            if(!acceptEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
-        }
-        return "redirect:/carro/listar";
-    }
-
-    @PostMapping("/reject/{id}")
-    public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
-
-        Proposta proposta = service.buscaPorId(id);
-        if(setStatus(proposta, 2, attr)){
-            attr.addFlashAttribute("sucess", "proposta.reject.sucess");
-            if(!rejectEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
-        }
-
-        return "redirect:/carro/listar";
-    }
-
-    public boolean setStatus(Proposta proposta, int status, RedirectAttributes attr) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-        if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
-            attr.addFlashAttribute("sucess", "proposta.reject.fail");
-            return false;
-        }
-        proposta.setStatus(status);
-        service.salvar(proposta);
-        return true;
-    }
-
-
-    @PostMapping("/salvar")
-    public String salvar(@ModelAttribute("proposta") @Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("proposta", propostaForm);
-            attr.addFlashAttribute("fail", "proposta.create.fail");
-            System.out.println("Houve um erro ao registrar a proposta");
-            return "cliente/formProposta";
-        }
-        Proposta proposta = new Proposta();
-        proposta.setCondPag(propostaForm.getCondPag());
-        proposta.setData(new Date());
-        proposta.setValor(BigDecimal.valueOf(propostaForm.getValor()));
-        Cliente cli = cliservice.buscaPorId((long)propostaForm.getCli_id());
-        Carro car = carservice.buscaPorId((long) propostaForm.getCar_id());
-        proposta.setCliente(cli);
-        proposta.setCarro(car);
-        service.salvar(proposta);
-        attr.addFlashAttribute("sucess", "proposta.create.sucess");
-
-        return "redirect:/proposta/listar";
-    }
-
-
-    @GetMapping("/listar")
-    public String listar(ModelMap model, Locale locale) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-        model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
-        model.addAttribute("locale", locale);
-
-        return "cliente/PainelCliente";
-    }
-
-
-    boolean acceptEmail(Proposta proposta, FormAccept form){
-        String subject, body;
-        subject = String.format("Olá %s,sua proposta foi aceita!",proposta.getCliente().getNome());
-        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi aceita!\nA reunião será %s no link %s\nO vendedor deixou a mensagem %s",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo(), form.getData(), form.getLink(), form.getMensagem());
-        return sendEmail(proposta, subject, body);
-    }
-
-    boolean rejectEmail(Proposta proposta, FormReject form){
-        String subject, body;
-        subject = String.format("Olá %s,sua proposta foi recusada :(",proposta.getCliente().getNome());
-        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor(), proposta.getCarro().getModelo());
-        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
-            body += "\nO vendedor deixou a mensagem: "+form.getMensagem();
-        }
-        if (form.getCondPag() != null && !form.getCondPag().isBlank()){
-            body += "\nO vendedor deixou uma contraProposta: "+form.getCondPag();
-        }
-        if (form.getValor() != null && !form.getValor().isBlank()){
-            body += "\nO vendedor fez uma contraProposta de R$ "+form.getValor();
-        }
-        return sendEmail(proposta, subject, body);
-    }
-
-
-    boolean sendEmail(Proposta proposta, String subject, String body){
-        try {
-            SimpleMailMessage msg = new SimpleMailMessage();
-            msg.setTo(proposta.getCliente().getEmail());
-            msg.setFrom("Katchau");
-            msg.setSubject(subject);
-            msg.setText(body);
-
-            emailservice.send(msg);
-        } catch(Exception e){
-            System.out.println("não foi possivel enviar o email");
-            return false;
-        }
-        return true;
-    }
+//    @GetMapping("/create/{id}")
+//    public String formClient(@PathVariable("id") Long id, Model model, RedirectAttributes attr) {
+//        Carro carro = carservice.buscaPorId(id);
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+//
+//        if (carro ==null || cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
+//            attr.addFlashAttribute("fail", "proposta.existe");
+//            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo ou o veiculo não existe");
+//            return "redirect:/home";
+//        }
+//
+//        PropostaForm proposta =  new PropostaForm();
+//        proposta.setCli_id(user.getId().intValue());
+//        proposta.setCar_id(id.intValue());
+//        model.addAttribute("proposta",proposta);
+//        return "cliente/formProposta";
+//    }
+//
+//    @GetMapping("/accept/{id}")
+//    public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
+//        model.addAttribute("id", id);
+//        model.addAttribute("form", new FormAccept());
+//        return "loja/formAceito";
+//    }
+//
+//    @GetMapping("/reject/{id}")
+//    public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
+//        model.addAttribute("id", id);
+//        model.addAttribute("form", new FormReject());
+//        return "loja/formRecusa";
+//    }
+//
+//    @PostMapping("/accept/{id}")
+//    public String accept(@ModelAttribute("form") @Valid FormAccept form, BindingResult result, RedirectAttributes attr,  @PathVariable("id") Long id, ModelMap model) {
+//        if (result.hasErrors()) {
+//            attr.addFlashAttribute("fail", "proposta.accept.fail");
+//            System.out.println("Campos devem ser preenchidos");
+//            return "loja/formAceito";
+//        }
+//        Proposta proposta = service.buscaPorId(id);
+//        if(setStatus(proposta, 1, attr)){
+//            attr.addFlashAttribute("sucess", "proposta.accept.sucess");
+//            if(!acceptEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
+//        }
+//        return "redirect:/carro/listar";
+//    }
+//
+//    @PostMapping("/reject/{id}")
+//    public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
+//
+//        Proposta proposta = service.buscaPorId(id);
+//        if(setStatus(proposta, 2, attr)){
+//            attr.addFlashAttribute("sucess", "proposta.reject.sucess");
+//            if(!rejectEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
+//        }
+//
+//        return "redirect:/carro/listar";
+//    }
+//
+//    public boolean setStatus(Proposta proposta, int status, RedirectAttributes attr) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+//        if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
+//            attr.addFlashAttribute("sucess", "proposta.reject.fail");
+//            return false;
+//        }
+//        proposta.setStatus(status);
+//        service.salvar(proposta);
+//        return true;
+//    }
+//
+//
+//    @PostMapping("/salvar")
+//    public String salvar(@ModelAttribute("proposta") @Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr, Model model) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("proposta", propostaForm);
+//            attr.addFlashAttribute("fail", "proposta.create.fail");
+//            System.out.println("Houve um erro ao registrar a proposta");
+//            return "cliente/formProposta";
+//        }
+//        Proposta proposta = new Proposta();
+//        proposta.setCondPag(propostaForm.getCondPag());
+//        proposta.setData(new Date());
+//        proposta.setValor(BigDecimal.valueOf(propostaForm.getValor()));
+//        Cliente cli = cliservice.buscaPorId((long)propostaForm.getCli_id());
+//        Carro car = carservice.buscaPorId((long) propostaForm.getCar_id());
+//        proposta.setCliente(cli);
+//        proposta.setCarro(car);
+//        service.salvar(proposta);
+//        attr.addFlashAttribute("sucess", "proposta.create.sucess");
+//
+//        return "redirect:/proposta/listar";
+//    }
+//
+//
+//    @GetMapping("/listar")
+//    public String listar(ModelMap model, Locale locale) {
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+//        model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
+//        model.addAttribute("locale", locale);
+//
+//        return "cliente/PainelCliente";
+//    }
+//
+//
+//    boolean acceptEmail(Proposta proposta, FormAccept form){
+//        String subject, body;
+//        subject = String.format("Olá %s,sua proposta foi aceita!",proposta.getCliente().getNome());
+//        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi aceita!\nA reunião será %s no link %s\nO vendedor deixou a mensagem %s",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo(), form.getData(), form.getLink(), form.getMensagem());
+//        return sendEmail(proposta, subject, body);
+//    }
+//
+//    boolean rejectEmail(Proposta proposta, FormReject form){
+//        String subject, body;
+//        subject = String.format("Olá %s,sua proposta foi recusada :(",proposta.getCliente().getNome());
+//        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor(), proposta.getCarro().getModelo());
+//        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
+//            body += "\nO vendedor deixou a mensagem: "+form.getMensagem();
+//        }
+//        if (form.getCondPag() != null && !form.getCondPag().isBlank()){
+//            body += "\nO vendedor deixou uma contraProposta: "+form.getCondPag();
+//        }
+//        if (form.getValor() != null && !form.getValor().isBlank()){
+//            body += "\nO vendedor fez uma contraProposta de R$ "+form.getValor();
+//        }
+//        return sendEmail(proposta, subject, body);
+//    }
+//
+//
+//    boolean sendEmail(Proposta proposta, String subject, String body){
+//        try {
+//            SimpleMailMessage msg = new SimpleMailMessage();
+//            msg.setTo(proposta.getCliente().getEmail());
+//            msg.setFrom("Katchau");
+//            msg.setSubject(subject);
+//            msg.setText(body);
+//
+//            emailservice.send(msg);
+//        } catch(Exception e){
+//            System.out.println("não foi possivel enviar o email");
+//            return false;
+//        }
+//        return true;
+//    }
 
 }

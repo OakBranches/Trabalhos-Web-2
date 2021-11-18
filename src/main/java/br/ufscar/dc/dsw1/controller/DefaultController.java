@@ -27,44 +27,44 @@ public class DefaultController {
     IFileService fileservice;
 
 
-    @GetMapping("/home")
-    public String home(Model model){
-        model.addAttribute("carros", service.buscarTodos());
-        return "index";
-    }
-
-    @GetMapping("/painel")
-    public String painel(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-
-        switch (user.getPapel()){
-            case 2:
-                return "redirect:/carro/listar";
-            case 3:
-                return "redirect:/proposta/listar";
-            case 1:
-                return "redirect:/loja/listar";
-            default:
-                return "redirect:/home";
-        }
-    }
-
-    @GetMapping(value = "/download/{id}")
-    public void download(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long id) {
-        FileEntity entity = fileservice.buscarPorId(id);
-
-        // set content type
-        response.setContentType(entity.getType());
-
-        try {
-            // copies all bytes to an output stream
-            response.getOutputStream().write(entity.getData());
-
-            // flushes output stream
-            response.getOutputStream().flush();
-        } catch (IOException e) {
-            System.out.println("Error :- " + e.getMessage());
-        }
-    }
+//    @GetMapping("/home")
+//    public String home(Model model){
+//        model.addAttribute("carros", service.buscarTodos());
+//        return "index";
+//    }
+//
+//    @GetMapping("/painel")
+//    public String painel(Model model){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
+//
+//        switch (user.getPapel()){
+//            case 2:
+//                return "redirect:/carro/listar";
+//            case 3:
+//                return "redirect:/proposta/listar";
+//            case 1:
+//                return "redirect:/loja/listar";
+//            default:
+//                return "redirect:/home";
+//        }
+//    }
+//
+//    @GetMapping(value = "/download/{id}")
+//    public void download(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long id) {
+//        FileEntity entity = fileservice.buscarPorId(id);
+//
+//        // set content type
+//        response.setContentType(entity.getType());
+//
+//        try {
+//            // copies all bytes to an output stream
+//            response.getOutputStream().write(entity.getData());
+//
+//            // flushes output stream
+//            response.getOutputStream().flush();
+//        } catch (IOException e) {
+//            System.out.println("Error :- " + e.getMessage());
+//        }
+//    }
 }

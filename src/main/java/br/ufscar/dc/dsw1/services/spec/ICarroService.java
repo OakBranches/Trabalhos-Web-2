@@ -12,4 +12,6 @@ public interface ICarroService {
     List<Carro> buscarTodos();
     List<Carro> buscarTodosComNome(String nome);
     List<Carro> buscarTodosDaLoja(String cnpj);
+    List<Carro> buscarTodosDaLoja(Long id);
+
 }

@@ -11,7 +11,11 @@ import br.ufscar.dc.dsw1.security.UsuarioDetails;
 import br.ufscar.dc.dsw1.services.spec.ICarroService;
 import br.ufscar.dc.dsw1.services.spec.IClienteService;
 import br.ufscar.dc.dsw1.services.spec.IPropostaService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -25,13 +29,17 @@ import org.springframework.ui.Model;
 
 //import javax.jms.MessageProducer;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-@Controller
-@RequestMapping("/proposta")
+@CrossOrigin
+@RestController
 public class PropostaController {
     @Autowired
     private IPropostaService service;
@@ -45,152 +53,73 @@ public class PropostaController {
     @Autowired
     private JavaMailSender emailservice;
 
-//    @GetMapping("/create/{id}")
-//    public String formClient(@PathVariable("id") Long id, Model model, RedirectAttributes attr) {
-//        Carro carro = carservice.buscaPorId(id);
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-//
-//        if (carro ==null || cliservice.clienteTemPropostasAbertasNoCarro(user.getId(),carro.getId())){
-//            attr.addFlashAttribute("fail", "proposta.existe");
-//            System.out.println("Não foi possivel criar, pois o cliente já tem uma proposta aberta para esse veiculo ou o veiculo não existe");
-//            return "redirect:/home";
-//        }
-//
-//        PropostaForm proposta =  new PropostaForm();
-//        proposta.setCli_id(user.getId().intValue());
-//        proposta.setCar_id(id.intValue());
-//        model.addAttribute("proposta",proposta);
-//        return "cliente/formProposta";
-//    }
-//
-//    @GetMapping("/accept/{id}")
-//    public String acceptForm(@PathVariable("id") Long id, ModelMap model) {
-//        model.addAttribute("id", id);
-//        model.addAttribute("form", new FormAccept());
-//        return "loja/formAceito";
-//    }
-//
-//    @GetMapping("/reject/{id}")
-//    public String rejectForm(@PathVariable("id") Long id, ModelMap model) {
-//        model.addAttribute("id", id);
-//        model.addAttribute("form", new FormReject());
-//        return "loja/formRecusa";
-//    }
-//
-//    @PostMapping("/accept/{id}")
-//    public String accept(@ModelAttribute("form") @Valid FormAccept form, BindingResult result, RedirectAttributes attr,  @PathVariable("id") Long id, ModelMap model) {
-//        if (result.hasErrors()) {
-//            attr.addFlashAttribute("fail", "proposta.accept.fail");
-//            System.out.println("Campos devem ser preenchidos");
-//            return "loja/formAceito";
-//        }
-//        Proposta proposta = service.buscaPorId(id);
-//        if(setStatus(proposta, 1, attr)){
-//            attr.addFlashAttribute("sucess", "proposta.accept.sucess");
-//            if(!acceptEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
-//        }
-//        return "redirect:/carro/listar";
-//    }
-//
-//    @PostMapping("/reject/{id}")
-//    public String reject(@ModelAttribute("form") FormReject form, @PathVariable("id") Long id, ModelMap model, RedirectAttributes attr) {
-//
-//        Proposta proposta = service.buscaPorId(id);
-//        if(setStatus(proposta, 2, attr)){
-//            attr.addFlashAttribute("sucess", "proposta.reject.sucess");
-//            if(!rejectEmail(proposta, form)) attr.addFlashAttribute("fail", "email.fail");
-//        }
-//
-//        return "redirect:/carro/listar";
-//    }
-//
-//    public boolean setStatus(Proposta proposta, int status, RedirectAttributes attr) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-//        if (!Objects.equals(proposta.getCarro().getLoja().getId(), user.getId())){
-//            attr.addFlashAttribute("sucess", "proposta.reject.fail");
-//            return false;
-//        }
-//        proposta.setStatus(status);
-//        service.salvar(proposta);
-//        return true;
-//    }
-//
-//
-//    @PostMapping("/salvar")
-//    public String salvar(@ModelAttribute("proposta") @Valid PropostaForm propostaForm, BindingResult result, RedirectAttributes attr, Model model) {
-//        if (result.hasErrors()) {
-//            model.addAttribute("proposta", propostaForm);
-//            attr.addFlashAttribute("fail", "proposta.create.fail");
-//            System.out.println("Houve um erro ao registrar a proposta");
-//            return "cliente/formProposta";
-//        }
-//        Proposta proposta = new Proposta();
-//        proposta.setCondPag(propostaForm.getCondPag());
-//        proposta.setData(new Date());
-//        proposta.setValor(BigDecimal.valueOf(propostaForm.getValor()));
-//        Cliente cli = cliservice.buscaPorId((long)propostaForm.getCli_id());
-//        Carro car = carservice.buscaPorId((long) propostaForm.getCar_id());
-//        proposta.setCliente(cli);
-//        proposta.setCarro(car);
-//        service.salvar(proposta);
-//        attr.addFlashAttribute("sucess", "proposta.create.sucess");
-//
-//        return "redirect:/proposta/listar";
-//    }
-//
-//
-//    @GetMapping("/listar")
-//    public String listar(ModelMap model, Locale locale) {
-//
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-//        model.addAttribute("propostas",service.buscarTodosPorClienteId(user.getId()));
-//        model.addAttribute("locale", locale);
-//
-//        return "cliente/PainelCliente";
-//    }
-//
-//
-//    boolean acceptEmail(Proposta proposta, FormAccept form){
-//        String subject, body;
-//        subject = String.format("Olá %s,sua proposta foi aceita!",proposta.getCliente().getNome());
-//        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi aceita!\nA reunião será %s no link %s\nO vendedor deixou a mensagem %s",proposta.getCliente().getNome(), proposta.getValor().floatValue(), proposta.getCarro().getModelo(), form.getData(), form.getLink(), form.getMensagem());
-//        return sendEmail(proposta, subject, body);
-//    }
-//
-//    boolean rejectEmail(Proposta proposta, FormReject form){
-//        String subject, body;
-//        subject = String.format("Olá %s,sua proposta foi recusada :(",proposta.getCliente().getNome());
-//        body = String.format("Olá %s,sua proposta de R$ %f no carro de modelo %s foi recusada.\n",proposta.getCliente().getNome(), proposta.getValor(), proposta.getCarro().getModelo());
-//        if (form.getMensagem() != null && !form.getMensagem().isBlank()){
-//            body += "\nO vendedor deixou a mensagem: "+form.getMensagem();
-//        }
-//        if (form.getCondPag() != null && !form.getCondPag().isBlank()){
-//            body += "\nO vendedor deixou uma contraProposta: "+form.getCondPag();
-//        }
-//        if (form.getValor() != null && !form.getValor().isBlank()){
-//            body += "\nO vendedor fez uma contraProposta de R$ "+form.getValor();
-//        }
-//        return sendEmail(proposta, subject, body);
-//    }
-//
-//
-//    boolean sendEmail(Proposta proposta, String subject, String body){
-//        try {
-//            SimpleMailMessage msg = new SimpleMailMessage();
-//            msg.setTo(proposta.getCliente().getEmail());
-//            msg.setFrom("Katchau");
-//            msg.setSubject(subject);
-//            msg.setText(body);
-//
-//            emailservice.send(msg);
-//        } catch(Exception e){
-//            System.out.println("não foi possivel enviar o email");
-//            return false;
-//        }
-//        return true;
-//    }
+    @GetMapping(path = "/propostas/veiculos/{id}")
+    public ResponseEntity<List<Proposta>> lista(@PathVariable("id") long id) {
+        Carro carro = carservice.buscaPorId(id);
+
+        if (carro.getPropostas().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(carro.getPropostas());
+    }
+
+    private boolean isJSONValid(String jsonInString) {
+        try {
+            return new ObjectMapper().readTree(jsonInString) != null;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private Long toLong(Object id){
+        if (id != null){
+            if (id instanceof Integer) {
+                return ((Integer) id).longValue();
+            } else {
+                return (Long) id;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void parse(@Valid Proposta proposta, JSONObject map) throws ParseException {
+
+        Object id = map.get("id");
+        proposta.setId(toLong(id));
+
+        proposta.setValor(BigDecimal.valueOf((double) map.get("valor")));
+        proposta.setStatus((int) map.get("status"));
+        proposta.setCondPag((String) map.get("condPag"));
+        proposta.setData(new SimpleDateFormat("yyyy-MM-dd").parse((String) map.get("data")));
+
+        proposta.setCliente(cliservice.buscaPorId(toLong(map.get("cliente"))));
+        proposta.setCarro(carservice.buscaPorId(toLong(map.get("carro"))));
+
+        if (proposta.getCarro() == null || proposta.getCliente() == null ||
+                cliservice.clienteTemPropostasAbertasNoCarro(proposta.getCliente().getId(), proposta.getCarro().getId())){
+            throw new ParseException("ID errado", 1);
+        }
+    }
+
+    @PostMapping(path = "/propostas/veiculos/{id}")
+    @ResponseBody
+    public ResponseEntity<Proposta> cria(@RequestBody JSONObject json) {
+
+        try {
+            if (isJSONValid(json.toString())) {
+                Proposta proposta = new Proposta();
+                json.replace("id", null);
+                parse(proposta, json);
+                service.salvar(proposta);
+                return ResponseEntity.ok(proposta);
+            } else {
+                return ResponseEntity.badRequest().body(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+        }
+    }
 
 }

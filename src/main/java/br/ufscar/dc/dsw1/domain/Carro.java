@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,14 +54,16 @@ public class Carro implements Serializable {
 	@Column(nullable = false)
 	private int ano;
 
-
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "loja_id")
 	private Loja loja;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "carro")
 	private List<Proposta> propostas;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "carro")
 	private List<FileEntity> imagens;
 

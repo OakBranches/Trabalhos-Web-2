@@ -66,7 +66,7 @@ public class RestAPIController {
         }
 
         if (!validator.validate(proposta).isEmpty()){
-            throw new ParseException("Proposta invalida", 1);
+            throw new ParseException(validator.validate(proposta).toString(), 1);
         }
     }
 
@@ -89,6 +89,7 @@ public class RestAPIController {
         cliente.setSexo((String) map.get("sexo"));
         cliente.setEmail((String) map.get("email"));
         cliente.setNome((String) map.get("nome"));
+        cliente.setTelefone((String) map.get("telefone"));
         cliente.setSenha((String) map.get("senha"));
         cliente.setNascimento(new SimpleDateFormat("yyyy-MM-dd").parse((String) map.get("nascimento")));
 
@@ -97,7 +98,7 @@ public class RestAPIController {
         }
 
         if (!validator.validate(cliente).isEmpty()){
-            throw new ParseException("Cliente invalido", 1);
+            throw new ParseException(validator.validate(cliente).toString(), 1);
         }
 
     }
@@ -119,7 +120,7 @@ public class RestAPIController {
         carro.setPlaca((String) map.get("placa"));
 
         if (!validator.validate(carro).isEmpty()){
-            throw new ParseException("Carro invalido", 1);
+            throw new ParseException(validator.validate(carro).toString(), 1);
         }
 
     }
@@ -301,11 +302,13 @@ public class RestAPIController {
     @DeleteMapping(path = "/clientes/{id}")
     public ResponseEntity<Boolean> removeCli(@PathVariable("id") long id) {
 
-        Cliente Cliente = cliservice.buscaPorId(id);
+        Cliente cliente = cliservice.buscaPorId(id);
 
-        if (Cliente == null) {
+        if (cliente == null ) {
             return ResponseEntity.notFound().build();
-        } else {
+        } else if (cliservice.clienteTemPropostas(cliente.getId())){
+            return ResponseEntity.unprocessableEntity().build();
+        } else{
             cliservice.excluirPorId(id);
             return ResponseEntity.noContent().build();
         }
@@ -343,7 +346,7 @@ public class RestAPIController {
         }
 
         if (!validator.validate(loja).isEmpty()){
-            throw new ParseException("Loja invalida", 1);
+            throw new ParseException(validator.validate(loja).toString(), 1);
         }
 
     }
@@ -421,11 +424,15 @@ public class RestAPIController {
     @DeleteMapping(path = "/lojas/{id}")
     public ResponseEntity<Boolean> remove(@PathVariable("id") long id) {
 
-        Loja Loja = lojaservice.buscaPorId(id);
+        Loja loja = lojaservice.buscaPorId(id);
 
-        if (Loja == null) {
+        if (loja == null ) {
             return ResponseEntity.notFound().build();
-        } else {
+        }
+        else if (lojaservice.LojaTemCarros(loja.getId())){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        else {
             lojaservice.excluirPorId(id);
             return ResponseEntity.noContent().build();
         }

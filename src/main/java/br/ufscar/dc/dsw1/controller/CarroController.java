@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import javax.validation.Validator;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -39,7 +40,10 @@ import java.util.Objects;
 public class CarroController {
 
     @Autowired
-    ILojaService service;
+    Validator validator;
+
+    @Autowired
+    ILojaService lojaservice;
 
     @Autowired
     ICarroService carservice;
@@ -47,47 +51,38 @@ public class CarroController {
     @Autowired
     private IFileService fileService;
 
-//    @PostMapping(path = "/create", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-//    public String createCar(@ModelAttribute("form") @Valid CarroForm form, BindingResult result, RedirectAttributes attr) {
-//
-//        if (result.hasErrors()) {
-//            System.out.println("Há erros");
-//            System.out.println(result.getAllErrors());
-//            return "loja/formCarro";
-//        }
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Usuario user = ((UsuarioDetails) authentication.getPrincipal()).getUsuario();
-//        Loja loja = service.buscaPorId(user.getId());
-//        Carro carro = new Carro(BigDecimal.valueOf(form.getValor()), BigDecimal.valueOf(form.getKm()), form.getPlaca(), form.getModelo(), form.getDescricao(), form.getChassi(), form.getAno(), loja);
-//        carro = carservice.salvar(carro);
-//        System.out.println(carro);
-//        int count = 0;
-//
-//        List<MultipartFile> file = form.getImagens();
-//
-//        for (int i=0; i< file.size(); i++) {
-//
-//			try {
-//                String fileName = StringUtils.cleanPath(file.get(i).getOriginalFilename());
-//                FileEntity entity = new FileEntity(fileName, file.get(i).getContentType(), file.get(i).getBytes(), carro);
-//                System.out.println(entity);
-//                if (entity.isImage()) {
-//                    count++;
-//                    System.out.println("salvando");
-//                    fileService.salvar(entity);
-//                }
-//
-//                if(count >= 10){
-//                    break;
-//                }
-//
-//            } catch(IOException e){
-//                System.out.println("Ocorreu um erro ao pegar as imagens");
-//            }
-//		}
-//        System.out.println("terminou o cadastro");
-//        return "redirect:/carro/listar";
-//    }
+    @PutMapping(path = "/veiculos/fotos/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Carro> upImage(@PathVariable("id") long id, @RequestPart List<MultipartFile> fotos) {
+
+        Carro carro = carservice.buscaPorId(id);
+        List<FileEntity> imagens = carro.getImagens();
+        for (int j=0; j < imagens.size(); j++){
+            fileService.excluir(imagens.get(j).getId());
+        }
+
+        int count = 0;
+
+        for (int i=0; i< fotos.size(); i++) {
+			try {
+                String fileName = StringUtils.cleanPath(fotos.get(i).getOriginalFilename());
+                FileEntity entity = new FileEntity(fileName, fotos.get(i).getContentType(), fotos.get(i).getBytes(), carro);
+                System.out.println(entity);
+                if (entity.isImage()) {
+                    count++;
+                    System.out.println("salvando");
+                    fileService.salvar(entity);
+                }
+
+                if(count >= 10){
+                    break;
+                }
+
+            } catch(IOException e){
+                System.out.println("Ocorreu um erro ao pegar as imagens");
+            }
+		}
+        return ResponseEntity.ok(carro);
+    }
 
     private boolean isJSONValid(String jsonInString) {
         try {
@@ -97,31 +92,39 @@ public class CarroController {
         }
     }
 
-//    @SuppressWarnings("unchecked")
-//    private void parse(@Valid Loja loja, JSONObject map) throws ParseException {
-//
-//        Object id = map.get("id");
-//        if (id != null){
-//            System.out.println(id);
-//            if (id instanceof Integer) {
-//                loja.setId(((Integer) id).longValue());
-//            } else {
-//                loja.setId((Long) id);
-//            }
-//        }
-//
-//        loja.setPapel(2);
-//        loja.setCnpj((String) map.get("cnpj"));
-//        loja.setDescricao((String) map.get("descricao"));
-//        loja.setEmail((String) map.get("email"));
-//        loja.setNome((String) map.get("nome"));
-//        loja.setSenha((String) map.get("senha"));
-//
-//        if (!cnpjIsValid(loja.getCnpj(), loja.getId()) || !service.emailIsValid(loja)){
-//            throw new ParseException("Loja já cadastrado", 1);
-//        }
-//
-//    }
+
+    private Long toLong(Object id){
+        if (id != null){
+            if (id instanceof Integer) {
+                return ((Integer) id).longValue();
+            } else {
+                return (Long) id;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void carParse(@Valid Carro carro, JSONObject map) throws ParseException {
+
+        Object id = map.get("id");
+        if (id != null){
+            carro.setId(toLong(id));
+        }
+
+        carro.setAno((int) map.get("ano"));
+        carro.setChassi((String) map.get("chassi"));
+        carro.setDescricao((String) map.get("descricao"));
+        carro.setValor((BigDecimal) BigDecimal.valueOf((double) map.get("valor")));
+        carro.setKm((BigDecimal) BigDecimal.valueOf((double) map.get("km")));
+        carro.setModelo((String) map.get("modelo"));
+        carro.setPlaca((String) map.get("placa"));
+
+        if (!validator.validate(carro).isEmpty()){
+            throw new ParseException("Carro invalido", 1);
+        }
+
+    }
 
 
     @GetMapping(path = "/veiculos/lojas/{id}")
@@ -143,14 +146,25 @@ public class CarroController {
     }
 
 
-//    @PostMapping(path = "/veiculos/lojas/{id}")
-//    public ResponseEntity<Carro> cria(@PathVariable("id") long id) {
-//
-//        List<Carro> carros = carservice.buscarTodosDaLoja(id);
-//        if (carros.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(carros);
-//    }
+    @PostMapping(path = "/veiculos/lojas/{id}")
+    @ResponseBody
+    public ResponseEntity<Carro> cria(@PathVariable("id") long id, @RequestBody JSONObject json) {
+
+        try {
+            if (isJSONValid(json.toString())) {
+                Carro carro = new Carro();
+                json.replace("id", null);
+                carro.setLoja(lojaservice.buscaPorId(id));
+                carParse(carro, json);
+                carservice.salvar(carro);
+                return ResponseEntity.ok(carro);
+            } else {
+                return ResponseEntity.badRequest().body(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+        }
+    }
 
 }

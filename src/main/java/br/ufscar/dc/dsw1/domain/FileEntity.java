@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,10 +23,12 @@ public class FileEntity extends AbstractEntity<Long> {
 
 	@NotNull
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "carro_id")
 	private Carro carro;
 
 	@Lob
+	@JsonIgnore
 	private byte[] data;
 
 	public FileEntity() {

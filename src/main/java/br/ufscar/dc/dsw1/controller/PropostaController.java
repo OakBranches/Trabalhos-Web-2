@@ -83,7 +83,7 @@ public class PropostaController {
     }
 
     @SuppressWarnings("unchecked")
-    private void parse(@Valid Proposta proposta, JSONObject map) throws ParseException {
+    private void parse(Proposta proposta, JSONObject map) throws ParseException {
 
         Object id = map.get("id");
         proposta.setId(toLong(id));
@@ -94,7 +94,6 @@ public class PropostaController {
         proposta.setData(new SimpleDateFormat("yyyy-MM-dd").parse((String) map.get("data")));
 
         proposta.setCliente(cliservice.buscaPorId(toLong(map.get("cliente"))));
-        proposta.setCarro(carservice.buscaPorId(toLong(map.get("carro"))));
 
         if (proposta.getCarro() == null || proposta.getCliente() == null ||
                 cliservice.clienteTemPropostasAbertasNoCarro(proposta.getCliente().getId(), proposta.getCarro().getId())){
@@ -104,12 +103,13 @@ public class PropostaController {
 
     @PostMapping(path = "/propostas/veiculos/{id}")
     @ResponseBody
-    public ResponseEntity<Proposta> cria(@RequestBody JSONObject json) {
+    public ResponseEntity<Proposta> cria(@PathVariable("id") long id, @RequestBody JSONObject json) {
 
         try {
             if (isJSONValid(json.toString())) {
                 Proposta proposta = new Proposta();
                 json.replace("id", null);
+                proposta.setCarro(carservice.buscaPorId(id));
                 parse(proposta, json);
                 service.salvar(proposta);
                 return ResponseEntity.ok(proposta);

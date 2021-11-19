@@ -54,8 +54,9 @@ public class Carro implements Serializable {
 	@Column(nullable = false)
 	private int ano;
 
-	@JsonIgnore
+
 	@ManyToOne
+	@NotNull
 	@JoinColumn(name = "loja_id")
 	private Loja loja;
 
@@ -63,7 +64,7 @@ public class Carro implements Serializable {
 	@OneToMany(mappedBy = "carro")
 	private List<Proposta> propostas;
 
-	@JsonIgnore
+
 	@OneToMany(mappedBy = "carro")
 	private List<FileEntity> imagens;
 

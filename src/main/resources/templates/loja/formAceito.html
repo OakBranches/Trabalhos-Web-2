@@ -1,0 +1,45 @@
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Katchau</title>
+</head>
+<body>
+<div layout:fragment="header_home" style="" class=""></div>
+<div layout:fragment="corpo" class="row justify-content-center align-items-center" style="flex:1; justify-content:center">
+    <div style="width: fit-content;">
+        <form  th:action="@{/proposta/accept/{id} (id=${id})}" class="justify-content-center align-items-center" th:object="${form}" method="post" >
+            <h1 class="h3 mb-3 fw-normal">Aceitar</h1>
+
+            <div class="form-floating">
+                <input type="datetime-local" class="form-control" th:field="*{data}" id="floatingData" th:placeholder="#{data}"  th:classappend="${#fields.hasErrors('data')} ? 'is-invalid'" >
+                <label for="floatingData" th:text="#{data}"></label>
+                <div class="invalid-feedback">
+                    <span th:errors="*{data}"></span>
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" th:field="*{link}" id="floatingLinkReu" th:placeholder="meet.com"  th:classappend="${#fields.hasErrors('link')} ? 'is-invalid'" >
+                <label for="floatingLinkReu">Link da reunião</label>
+                <div class="invalid-feedback">
+                    <span th:errors="*{link}"></span>
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" th:field="*{mensagem}" id="floatingMensage" th:placeholder="Gostei"  th:classappend="${#fields.hasErrors('mensagem')} ? 'is-invalid'" >
+                <label th:text="#{mensagem}" for="floatingMensage"></label>
+                <div class="invalid-feedback">
+                    <span th:errors="*{mensagem}"></span>
+                </div>
+            </div>
+
+            <button th:text="#{aceitar}" class="mt-5 mb-3 btn btn-lg btn-primary" type="submit"></button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

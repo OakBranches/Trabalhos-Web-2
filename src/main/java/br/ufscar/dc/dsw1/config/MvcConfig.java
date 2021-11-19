@@ -19,6 +19,8 @@ import java.util.Locale;
 public class MvcConfig implements WebMvcConfigurer {
 
 	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("redirect:/home");
+		registry.addViewController("/login").setViewName("login");
 	}
 
 	@Bean

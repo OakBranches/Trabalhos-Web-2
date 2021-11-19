@@ -1,0 +1,198 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <title>Katchau</title>
+
+  <script src="/js/ListaCarrosAJAX.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+
+  <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <!-- Custom styles for this template -->
+  <style>
+    ::-webkit-scrollbar {
+      width: 0px!important;
+    }
+  </style>
+  <script>
+
+  </script>
+</head>
+
+<body class="d-flex flex-column" style="min-height:100vh;">
+
+<form hidden id="login" th:action="@{/login}" th:method="GET"></form>
+<form hidden id="logout" th:action="@{/logout}" th:method="POST"></form>
+
+<header class="p-3 bg-dark text-white">
+  <div class="container">
+    <div layout:fragment="header_home" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a th:href="@{/home}" class="nav-link px-2 text-white">KATCHAU</a></li>
+        <li><a th:href="@{/home}" ><span class="material-icons nav-link px-2"
+                              style="color:rgb(255, 255, 255);">
+                                airport_shuttle
+                            </span></a></li>
+        <li><a th:href="@{/home}"  class="nav-link px-2 text-secondary" th:text="#{Home}"></a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-white" th:text="#{MeuPainel}"></a></li>
+      </ul>
+
+      <div class="text-end" style="padding-right: 50px">
+        <a th:href="@{''(lang=pt)}"><img alt=""
+                                         th:src="@{/image/BR.jpg}" style="width: 30px; height: 20px;" /></a> <a
+              th:href="@{''(lang=eo)}"><img alt=""
+                                            th:src="@{/image/ES.png}" style="width: 30px; height: 20px;" /></a>
+      </div>
+
+      <div sec:authorize="!isAuthenticated()" class="text-end">
+        <button form="login" type="submit" class="btn btn-outline-light me-2" th:text="#{Login}"></button>
+      </div>
+
+
+
+      <div sec:authorize="isAuthenticated()" class="text-end">
+        <button form="logout" type="submit" class="btn btn-outline-light me-2" th:text="#{Logout}"></button>
+      </div>
+    </div>
+    <div layout:fragment="header_default" class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a th:href="@{/home}" class="nav-link px-2 text-white">KATCHAU</a></li>
+        <li><a th:href="@{/home}" ><span class="material-icons nav-link px-2"
+                                         style="color:rgb(255, 255, 255);">
+                                airport_shuttle
+                            </span></a></li>
+        <li><a th:href="@{/home}"  class="nav-link px-2 text-white" th:text="#{Home}"></a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}"  class="nav-link px-2 text-secondary" th:text="#{MeuPainel}"></a></li>
+      </ul>
+
+      <div class="text-end" style="padding-right: 50px">
+        <a th:href="@{''(lang=pt)}"><img alt=""
+                                         th:src="@{/image/BR.jpg}" style="width: 30px; height: 20px;" /></a> <a
+              th:href="@{''(lang=eo)}"><img alt=""
+                                            th:src="@{/image/ES.png}" style="width: 30px; height: 20px;" /></a>
+      </div>
+
+      <div sec:authorize="!isAuthenticated()" class="text-end">
+        <button form="login" type="submit" class="btn btn-outline-light me-2" th:text="#{Login}"></button>
+      </div>
+
+
+
+      <div sec:authorize="isAuthenticated()" class="text-end">
+        <button form="logout" type="submit" class="btn btn-outline-light me-2" th:text="#{Logout}"></button>
+      </div>
+
+    </div>
+  </div>
+</header>
+<div th:replace="fragments/alert"></div>
+
+
+<nav class="row sidebar sidebar-open" style="flex:1 1 auto; flex-direction: row; background-color:beige;">
+  <div layout:fragment="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-auto" style="width: fit-content;height: 100%;">
+    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <span class="fs-4" th:text="#{Opcoes}"></span>
+    </a>
+    <hr>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-3">
+      <ul class="nav nav-pills" style="flex-direction: column;">
+        <li class="nav-item"><span class="nav-link active" th:text="#{Clientes}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/cliente/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
+        </a></li>
+        <li class="nav-item"><a class="nav-link" href="/cliente/listar"> <i class="oi oi-spreadsheet"></i>
+          <span th:text="#{Listar}"></span>
+        </a></li>
+      </ul>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-3">
+      <ul class="nav nav-pills" style="flex-direction: column;">
+        <li class="nav-item"><span class="nav-link active" th:text="#{Lojas}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/loja/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
+        </a></li>
+        <li class="nav-item"><a class="nav-link" href="/loja/listar"> <i class="oi oi-spreadsheet"></i>
+          <span th:text="#{Listar}"></span>
+        </a></li>
+      </ul>
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')" class="my-3">
+      <ul class="nav nav-pills" style="flex-direction: column;">
+        <li class="nav-item"><span class="nav-link active" th:text="#{Propostas}"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/home"> <i class="oi oi-plus"></i> <span th:text="#{FazerPropostas}"></span>
+        </a></li>
+        <li class="nav-item"><a class="nav-link" href="/proposta/listar"> <i class="oi oi-spreadsheet"></i>
+          <span th:text="#{Listar}"></span>
+        </a></li>
+      </ul>
+    </div>
+    <div sec:authorize="hasRole('ROLE_LOJA')" class="my-3">
+      <ul class="nav nav-pills" style="flex-direction: column;">
+        <li class="nav-item"><span th:text="#{carro}" class="nav-link active"></span></li>
+        <li class="nav-item"><a class="nav-link" href="/carro/create"> <i class="oi oi-plus"></i> <span th:text="#{Cadastrar}"></span>
+        </a></li>
+        <li class="nav-item"><a class="nav-link" href="/carro/listar"> <i class="oi oi-spreadsheet"></i>
+          <span th:text="#{Listar}"></span>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div layout:fragment="corpo" class="row justify-content-center align-items-center col-sm">
+    <form class="w-25" th:action="@{/login}" method="post">
+      <h1 class="h3 mb-3 fw-normal" th:text="#{Login}"></h1>
+
+      <div class="form-floating">
+        <input type="email" class="form-control" name="username" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput" th:text="#{Email}"></label>
+      </div>
+      <div class="form-floating">
+        <input type="password"  class="form-control" name="password"  id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword" th:text="#{Senha}"></label>
+      </div>
+
+      <button class="mt-5 mb-3 btn btn-lg btn-primary" type="submit" th:text="#{Login}"></button>
+    </form>
+  </div>
+
+</nav>
+
+
+
+<div class="container">
+
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top my-3">
+    <div class=" d-flex align-items-center">
+      <span class="text-muted"> <span th:text="#{FeitoPor}"></span> Matheus Ramos de Carvalho e Lorenzo Correia Maia</span>
+
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#github"></use></svg></a></li>
+    </ul>
+  </footer>
+
+</div>
+
+</body>
+
+</html>

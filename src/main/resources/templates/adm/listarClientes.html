@@ -1,0 +1,54 @@
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Katchau</title>
+</head>
+<body>
+<div layout:fragment="header_home" style="" class=""></div>
+
+<div layout:fragment="corpo" class="row justify-content-center align-items-center " style="flex:1; overflow:hidden;">
+    <div style="width: fit-content">
+<table class="col table table-striped table-hover table-bordered align-middle"  style="border: 1px solid black;width: fit-content;overflow: hidden; background-color: whitesmoke">
+    <thead class="bg-success">
+    <tr>
+        <td class="bg-primary" th:text="#{cpf}"></td>
+        <td class="bg-primary" th:text="#{nome}"></td>
+        <td class="bg-primary" th:text="#{sexo}"></td>
+        <td class="bg-primary" th:text="#{telefone}"></td>
+        <td class="bg-primary" th:text="#{nascimento}"></td>
+        <td class="bg-primary" th:text="#{email}"></td>
+        <td class="bg-primary" th:text="#{editar}"></td>
+        <td class="bg-primary" th:text="#{deletar}"></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="info" th:each="cli : ${clientes}">
+        <td> <span th:text="${cli.cpf}"></span></td>
+        <td> <span th:text="${cli.getNome()}"></span></td>
+        <td> <span th:text="${cli.getSexo()}"></span></td>
+        <td> <span th:text="${cli.getTelefone()}"></span></td>
+        <td> <span th:text="${cli.getNascimentoStr(locale)}"></span></td>
+        <td> <span th:text="${cli.getEmail()}"></span></td>
+        <td>
+            <a class="btn btn-info btn-sm" th:href="@{/cliente/edit/{id} (id=${cli.getId()}) }"
+               role="button">
+                <ion-icon name="create-outline"></ion-icon>
+            </a>
+
+        </td>
+        <td>
+            <a class="btn btn-danger btn-sm" th:href="@{/cliente/delete/{id} (id=${cli.getId()}) }"
+               role="button">
+                <ion-icon name="trash-outline"></ion-icon>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

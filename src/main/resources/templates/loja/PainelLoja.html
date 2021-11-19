@@ -1,0 +1,169 @@
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Katchau</title>
+
+</head>
+<body>
+<div layout:fragment="header_home" style="" class=""></div>
+
+<div layout:fragment="corpo" >
+    <div th:each="carro : ${carros}" class="row justify-content-center align-items-center">
+        <br>
+        <div style="width: fit-content">
+        <table border="1" class="col table table-striped table-hover table-bordered align-middle position-relative" style="width: fit-content; border: 1px solid black;border-radius: 10px;">
+            <thead class="bg-success">
+            <tr>
+                <td class="bg-primary" th:text="#{imagem}"></td>
+                <td class="bg-primary" th:text="#{modelo}"></td>
+                <td class="bg-primary" th:text="#{placa}"></td>
+                <td class="bg-primary" th:text="#{chassi}"></td>
+                <td class="bg-primary" th:text="#{descricao}"></td>
+                <td class="bg-primary" th:text="#{ano}"></td>
+                <td class="bg-primary" th:text="#{km}"></td>
+                <td class="bg-primary" th:text="#{valor}"></td>
+                <td class="bg-primary" th:text="#{loja}"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td> <span th:if="${carro.getImagens().isEmpty()}">--</span>
+                    <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
+                        <div class="carousel-inner">
+                            <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">
+                                <img th:src="@{/download/{id} (id=${file.id})}" width="160px"/>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+
+                </td>
+                <td> <span th:text="${carro.modelo}"></span></td>
+                <td> <span th:text="${carro.placa}"></span></td>
+                <td> <span th:text="${carro.chassi}"></span></td>
+                <td> <span th:text="${carro.descricao}"></span></td>
+                <td> <span th:text="${carro.ano}"></span></td>
+                <td> <span th:text="${carro.km}"></span></td>
+                <td> <span th:text="${'R$ '+carro.valor}"></span></td>
+                <td> <span th:text="${carro.loja.nome}"></span></td>
+
+            </tr>
+            <tr >
+                <td th:colspan="9">
+                <div class="accordion" th:id="${'accordion-Example' + carro.id}">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header"  th:id="${'heading-One' + carro.id}">
+                            <button th:text="#{proposta.fechadas}"class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#collapse-One' + carro.id}" aria-expanded="false" th:aria-controls="${'collapse-One' + carro.id}">
+                            </button>
+                        </h2>
+                        <div th:id="${'collapse-One' + carro.id}" class="accordion-collapse collapse" th:aria-labelledby="${'heading-One' + carro.id}" th:data-bs-parent="${'#accordion-Example' + carro.id}">
+                            <div class="accordion-body row justify-content-center align-items-center">
+                                <div >
+                                <table class="col table table-striped table-hover table-bordered align-middle position-relative" style="width: fit-content; border: 1px solid black;border-radius: 10px;" >
+                                    <thead class="bg-success">
+                                    <tr>
+                                        <td class="bg-primary" th:text="#{valor}"></td>
+                                        <td class="bg-primary" th:text="#{dataProp}"></td>
+                                        <td class="bg-primary" th:text="#{Cliente}"></td>
+                                        <td class="bg-primary" th:text="#{status}"></td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="proposta: ${carro.propostas}" th:if="${proposta.getStatus()!=0}">
+                                        <td> <span th:text="${'R$ '+proposta.valor}"></span></td>
+                                        <td> <span th:text="${proposta.getDataStr(locale)}"></span></td>
+                                        <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
+                                        <td>
+                                            <span th:if="${proposta.getStatus()==0}" th:text="#{abertoM}"></span>
+                                            <span th:if="${proposta.getStatus()==1}" th:text="#{aceitoM}"></span>
+                                            <span th:if="${proposta.getStatus()==2}" th:text="#{naoAceitoM}"></span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </td>
+
+            </tr>
+            <tr >
+                <td th:colspan="9">
+                    <div class="accordion" th:id="${'accordionExample' + carro.id}">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"  th:id="${'headingOne' + carro.id}">
+                                <button th:text="#{proposta.abertas}" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#collapseOne' + carro.id}" aria-expanded="false" th:aria-controls="${'collapseOne' + carro.id}">
+                                </button>
+                            </h2>
+                            <div th:id="${'collapseOne' + carro.id}" class="accordion-collapse collapse" th:aria-labelledby="${'headingOne' + carro.id}" th:data-bs-parent="${'#accordionExample' + carro.id}">
+                                <div class="accordion-body row justify-content-center align-items-center">
+                                    <div >
+                                        <table class="col table table-striped table-hover table-bordered align-middle position-relative" style="width: fit-content; border: 1px solid black;border-radius: 10px;">
+                                            <thead class="bg-success">
+                                            <tr>
+                                                <td class="bg-primary" th:text="#{valor}"></td>
+                                                <td class="bg-primary" th:text="#{dataProp}"></td>
+                                                <td class="bg-primary" th:text="#{Cliente}"></td>
+                                                <td class="bg-primary" th:text="#{status}"></td>
+                                                <td class="bg-primary" th:text="#{aceitar}"></td>
+                                                <td class="bg-primary" th:text="#{recusar}"></td>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="proposta: ${carro.propostas}" th:if="${proposta.getStatus()==0}">
+                                                <td> <span th:text="${'R$ '+proposta.valor}"></span></td>
+                                                <td> <span th:text="${proposta.getDataStr(locale)}"></span></td>
+                                                <td> <span th:text="${proposta.getCliente().getNome()}"></span></td>
+                                                <td> <span th:text="#{abertoM}"></span></td>
+
+                                                <!--<td th:if="${proposta.status == 0}"> <a th:href="@{'/proposta/accept/'+${proposta.id}}">aceitar</a></td>-->
+                                                <td>
+                                                    <a class="btn btn-info btn-sm" th:href="@{ '/proposta/accept/' +${proposta.id} }"
+                                                       role="button">
+                                                        <ion-icon name="thumbs-up-outline"></ion-icon>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger btn-sm" th:href="@{'/proposta/reject/' +${proposta.id} }"
+                                                       role="button">
+                                                        <ion-icon name="thumbs-down-outline"></ion-icon>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

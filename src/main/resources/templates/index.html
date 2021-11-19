@@ -1,0 +1,93 @@
+<html  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+       layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Katchau</title>
+
+    <script src="/js/ListaCarrosAJAX.js"></script>
+</head>
+<body>
+<div layout:fragment="header_default" style="" class=""></div>
+<div layout:fragment="sidebar" style="" class=""></div>
+<div layout:fragment="corpo" class="text-center">
+<br />
+
+<input sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')" type='hidden' value='true' id='propor'/>
+
+    <form name='form'>
+
+    <div align="center">
+        <h1 th:text="#{lista_de_carros}"></h1><br>
+        <div class="input-group rounded" style="width: 300px">
+            <input type="search" class="form-control rounded" th:placeholder="#{modelo}" aria-label="Search"
+                   aria-describedby="search-addon" id="carro" name="carro"  onkeyUp="getCarros('${pageContext.request.contextPath}')"/>
+            <span class="input-group-text border-0" id="search-addon">
+            <ion-icon name="search-outline"></ion-icon>
+            </span>
+        </div>
+
+        <div id="carros">
+            <hr>
+
+            <b><p><span th:text="#{quantidade}"></span>: <span id="qtd" th:text="${carros.size()}"></span></p></b>
+            <table class="table table-striped table-hover table-bordered align-middle position-relative" style="width: 400px; border: 1px solid black;border-radius: 10px;">
+                <thead class="bg-success">
+                <tr>
+                    <td class="bg-primary" th:text="#{Imagem}"></td>
+                    <td class="bg-primary" th:text="#{modelo}"></td>
+                    <td class="bg-primary" th:text="#{placa}"></td>
+                    <td class="bg-primary" th:text="#{chassi}"></td>
+                    <td class="bg-primary" th:text="#{descricao}"></td>
+                    <td class="bg-primary" th:text="#{ano}"></td>
+                    <td class="bg-primary" th:text="#{km}"></td>
+                    <td class="bg-primary" th:text="#{valor}"></td>
+                    <td class="bg-primary" th:text="#{loja}"></td>
+                    <td class="bg-primary" th:text="#{propor}" sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')"></td>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <tr th:each="carro : ${carros}">
+                    <td> <span th:if="${carro.getImagens().isEmpty()}">--</span>
+                        <div th:if="${!carro.getImagens().isEmpty()}" th:id="${'carouselExampleControls'+ carro.id}" class="carousel slide" data-bs-ride="carousel" style="width: 300px">
+                            <div class="carousel-inner">
+                                   <div th:each="file,iter : ${carro.getImagens()}" th:class="${'carousel-item' +  (iter.index == 0? ' active':'')}">
+                                        <img th:src="@{/download/{id} (id=${file.id})}" width="160px"/>
+                                    </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" th:data-bs-target="${'#carouselExampleControls'+ carro.id}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
+
+                    </td>
+                    <td> <span th:text="${carro.modelo}"></span></td>
+                    <td> <span th:text="${carro.placa}"></span></td>
+                    <td> <span th:text="${carro.chassi}"></span></td>
+                    <td> <span th:text="${carro.descricao}"></span></td>
+                    <td> <span th:text="${carro.ano}"></span></td>
+                    <td> <span th:text="${carro.km}"></span></td>
+                    <td> <span th:text="${'R$ '+carro.valor}"></span></td>
+                    <td> <span th:text="${carro.loja.nome}"></span></td>
+                    <td sec:authorize="!isAuthenticated() || hasRole('ROLE_USER')">
+                        <a class="btn btn-info btn-sm" th:href="@{/proposta/create/{id} (id=${carro.id}) }"
+                           role="button">
+                            <ion-icon name="bookmark-outline"></ion-icon>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+</div>
+</body>
+</html>

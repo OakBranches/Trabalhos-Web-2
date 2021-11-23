@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -40,7 +41,7 @@ public class CarroRestController extends AbstractRestController{
 
 
     @SuppressWarnings("unchecked")
-    private void carParse(@Valid Carro carro, JSONObject map) throws ParseException {
+    private void carParse(@Valid Carro carro, JSONObject map) throws ParseException, ValidationException{
 
         Object id = map.get("id");
         if (id != null){
@@ -56,7 +57,7 @@ public class CarroRestController extends AbstractRestController{
         carro.setPlaca((String) map.get("placa"));
 
         if (!validator.validate(carro).isEmpty()){
-            throw new ParseException(validator.validate(carro).toString(), 1);
+            throw new ValidationException();
         }
 
     }
@@ -76,6 +77,9 @@ public class CarroRestController extends AbstractRestController{
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
+        }
+        catch (ValidationException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         catch (Exception e) {
             e.printStackTrace();

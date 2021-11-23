@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.io.IOException;
 import java.text.ParseException;
@@ -34,7 +35,7 @@ public class ClienteRestController extends AbstractRestController{
 
 
     @SuppressWarnings("unchecked")
-    private void cliParse(@Valid Cliente cliente, JSONObject map) throws ParseException {
+    private void cliParse(@Valid Cliente cliente, JSONObject map) throws ParseException, ValidationException {
 
         Object id = map.get("id");
         if (id != null){
@@ -56,7 +57,7 @@ public class ClienteRestController extends AbstractRestController{
         cliente.setNascimento(new SimpleDateFormat("yyyy-MM-dd").parse((String) map.get("nascimento")));
 
         if (!cpfIsValid(cliente.getCpf(), cliente.getId()) || !cliservice.emailIsValid(cliente)){
-            throw new ParseException("Cliente já cadastrado", 1);
+            throw new ValidationException();
         }
 
         if (!validator.validate(cliente).isEmpty()){
@@ -107,7 +108,13 @@ public class ClienteRestController extends AbstractRestController{
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
-        } catch (Exception e) {
+
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        } catch (ParseException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
@@ -148,7 +155,7 @@ public class ClienteRestController extends AbstractRestController{
         if (cliente == null ) {
             return ResponseEntity.notFound().build();
         } else if (cliservice.clienteTemPropostas(cliente.getId())){
-            return ResponseEntity.unprocessableEntity().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         } else{
             cliservice.excluirPorId(id);
             return ResponseEntity.noContent().build();

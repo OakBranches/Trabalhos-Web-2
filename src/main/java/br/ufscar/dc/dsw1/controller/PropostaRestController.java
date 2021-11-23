@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -36,7 +37,7 @@ public class PropostaRestController extends AbstractRestController{
 
 
     @SuppressWarnings("unchecked")
-    private void parseProp(Proposta proposta, JSONObject map) throws ParseException {
+    private void parseProp(Proposta proposta, JSONObject map) throws ParseException, ValidationException {
 
         Object id = map.get("id");
         proposta.setId(toLong(id));
@@ -50,7 +51,7 @@ public class PropostaRestController extends AbstractRestController{
 
         if (proposta.getCarro() == null || proposta.getCliente() == null ||
                 cliservice.clienteTemPropostasAbertasNoCarro(proposta.getCliente().getId(), proposta.getCarro().getId())){
-            throw new ParseException("ID errado", 1);
+            throw new ValidationException();
         }
 
         if (!validator.validate(proposta).isEmpty()){
@@ -83,7 +84,13 @@ public class PropostaRestController extends AbstractRestController{
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
-        } catch (Exception e) {
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        catch (ParseException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }

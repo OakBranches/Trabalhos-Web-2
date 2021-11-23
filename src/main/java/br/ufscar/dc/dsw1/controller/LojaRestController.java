@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.io.IOException;
 import java.text.ParseException;
@@ -39,7 +40,7 @@ public class LojaRestController extends AbstractRestController{
 
 
     @SuppressWarnings("unchecked")
-    private void lojaParse(@Valid Loja loja, JSONObject map) throws ParseException {
+    private void lojaParse(@Valid Loja loja, JSONObject map) throws ParseException, ValidationException {
 
         Object id = map.get("id");
         if (id != null){
@@ -59,7 +60,7 @@ public class LojaRestController extends AbstractRestController{
         loja.setSenha((String) map.get("senha"));
 
         if (!cnpjIsValid(loja.getCnpj(), loja.getId()) || !lojaservice.emailIsValid(loja)){
-            throw new ParseException("Loja já cadastrada", 1);
+            throw new ValidationException();
         }
 
         if (!validator.validate(loja).isEmpty()){
@@ -105,6 +106,10 @@ public class LojaRestController extends AbstractRestController{
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        } catch (ParseException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
@@ -147,7 +152,7 @@ public class LojaRestController extends AbstractRestController{
             return ResponseEntity.notFound().build();
         }
         else if (lojaservice.LojaTemCarros(loja.getId())){
-            return ResponseEntity.unprocessableEntity().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         else {
             lojaservice.excluirPorId(id);

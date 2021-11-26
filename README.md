@@ -1,4 +1,4 @@
-# Trabalho-Web-2
+# Trabalho-Web-3
 Esse preojeto consiste na implementação dos requisitos referentes ao documento de requisitos disponível no AVA da disciplina.
 
 ## Participantes:
@@ -51,7 +51,11 @@ senha: loja2
 ```
 
 
+## Como testar a API REST
 
+Ha dois arquivos collections na raiz do repositório: 
+- um chamado Insomnia que pode ser importado no Insomnia
+- um chamado Postman.postman_collection que pode ser importado no Postman
 
 
 ## Requisitos
@@ -102,6 +106,37 @@ R9:
 Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
 
 R10:
+
+(X) Implementado ( ) Parcialmente implementado ( ) Não implementado
+Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
+
+
+R11:
+
+(X) Implementado ( ) Parcialmente implementado ( ) Não implementado
+Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
+
+
+R12:
+
+(X) Implementado ( ) Parcialmente implementado ( ) Não implementado
+Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
+
+
+R13:
+
+(X) Implementado ( ) Parcialmente implementado ( ) Não implementado
+Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
+
+
+
+R14:
+
+(X) Implementado ( ) Parcialmente implementado ( ) Não implementado
+Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
+
+
+R15:
 
 (X) Implementado ( ) Parcialmente implementado ( ) Não implementado
 Divisão na implementação da funcionalidade: Membro1 (50%) e Membro2 (50%)
